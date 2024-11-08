@@ -21,4 +21,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "EstimateAI"
 include(":app")
- 
+include(":core:database")
+include(":core:resource")
+include(":core:shared-prefs")
+include(":core:api")
+include(":feature:registration")
