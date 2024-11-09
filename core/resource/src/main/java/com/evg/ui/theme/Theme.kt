@@ -1,4 +1,4 @@
-package com.evg.estimateai.ui.theme
+package com.evg.ui.theme
 
 import android.app.Activity
 import android.os.Build

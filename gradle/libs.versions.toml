@@ -1,15 +1,22 @@
 [versions]
-agp = "8.5.0"
-kotlin = "1.9.0"
+agp = "8.5.2"
+kotlin = "2.0.0"
+ksp = "2.0.0-1.0.21"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.9.3"
-composeBom = "2024.04.01"
+composeBom = "2024.10.01"
 appcompat = "1.7.0"
-material = "1.12.0"
+graphql = "4.1.0"
+koin = "4.0.0"
+rxkotlin = "3.0.1"
+realm = "7.0.0-beta"
+orbit = "9.0.0"
+navigation = "2.8.3"
+#material = "1.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -23,14 +30,42 @@ androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+# androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+# androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+# material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+#Apollo GraphQL
+appolo-graphql = { group = "com.apollographql.apollo", name = "apollo-runtime", version.ref = "graphql" }
+
+# Koin
+di-koin = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+# di-koin-navigation = { group = "io.insert-koin", name = "koin-androidx-navigation", version.ref = "koin" }
+di-koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+# di-koin-test = { group = "io.insert-koin", name = "koin-androidx-test", version.ref = "koin" }
+
+# RxKotlin
+rxkotlin = { group = "io.reactivex.rxjava3", name = "rxkotlin", version.ref = "rxkotlin" }
+
+# Realm
+realm = { group = "io.realm", name = "realm-android", version.ref = "realm" }
+
+# MVI Orbit
+mvi-orbit-core = { group = "org.orbit-mvi", name = "orbit-core", version.ref = "orbit" }
+mvi-orbit-viewmodel = { group = "org.orbit-mvi", name = "orbit-viewmodel", version.ref = "orbit" }
+mvi-orbit-compose = { group = "org.orbit-mvi", name = "orbit-compose", version.ref = "orbit" }
+# mvi-orbit-test = { group = "org.orbit-mvi", name = "orbit-test", version.ref = "orbit" }
+
+# Navigation
+androidx-ui-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-
+jetbrains-kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlin-serializable = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+appolo-graphql-plugin = { id = "com.apollographql.apollo", version.ref = "graphql" }
+# realm-plugin = { id = "com.apollographql.apollo", version.ref = "graphql" }

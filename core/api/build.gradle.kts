@@ -1,11 +1,13 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.jetbrains.kotlin.ksp)
+    alias(libs.plugins.appolo.graphql.plugin)
 }
 
 android {
     namespace = "com.evg.api"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 26
@@ -34,9 +36,20 @@ android {
 
 dependencies {
 
+
+    // GraphQL
+    implementation(libs.appolo.graphql)
+
+    // Koin
+    implementation(libs.di.koin)
+
+    // RxKotlin
+    implementation(libs.rxkotlin)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    //implementation(libs.material)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
