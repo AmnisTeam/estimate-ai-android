@@ -5,28 +5,26 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
-import com.evg.shared_prefs.di.sharedPrefsModule
-import com.evg.shared_prefs.domain.repository.SharedPrefsRepository
 import com.evg.ui.theme.EstimateAITheme
-import org.koin.android.ext.android.inject
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.GlobalContext.startKoin
-import org.koin.core.logger.Level
+import com.evg.ui.theme.AppSize
+import com.evg.ui.theme.AppStyle
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            EstimateAITheme {
+            val currentStyle = remember { mutableStateOf(AppStyle.Purple) }
+            val currentFontSize = remember { mutableStateOf(AppSize.Medium) }
+
+            EstimateAITheme(
+                style = currentStyle.value,
+                textSize = currentFontSize.value,
+            ) {
                 MainScreen()
             }
         }

@@ -3,17 +3,17 @@ package com.evg.registration.presentation
 import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.evg.registration.domain.model.User
 import com.evg.registration.presentation.mvi.RegistrationSideEffect
 import com.evg.registration.presentation.mvi.RegistrationViewModel
 import com.evg.ui.theme.EstimateAITheme
+import com.evg.ui.theme.AppTheme
 import org.koin.androidx.compose.koinViewModel
-import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
@@ -21,7 +21,7 @@ fun RegistrationScreen(
     viewModel: RegistrationViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
-    //val state = viewModel.collectAsState().value
+    //val state = viewModel.collectAsStateWithLifecycle().value
 
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
@@ -30,7 +30,15 @@ fun RegistrationScreen(
     }
 
     Text(text = "Hello")
-    Button(onClick = {
+    Button(
+
+        colors = ButtonColors(
+            contentColor = AppTheme.colors.buttonColor,
+            containerColor = AppTheme.colors.buttonColor,
+            disabledContentColor = AppTheme.colors.buttonColor,
+            disabledContainerColor = AppTheme.colors.buttonColor,
+        ),
+        onClick = {
         viewModel.registrationUser(user = User(email = "qwe", password = "zxc"))
     }) {
     }
