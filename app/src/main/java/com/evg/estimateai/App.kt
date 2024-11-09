@@ -1,6 +1,7 @@
 package com.evg.estimateai
 
 import android.app.Application
+import com.evg.api.di.apiModule
 import com.evg.registration.di.registrationModule
 import com.evg.shared_prefs.di.sharedPrefsModule
 import org.koin.android.ext.koin.androidContext
@@ -14,7 +15,7 @@ class App: Application() {
         startKoin {
             androidLogger(Level.DEBUG) //TODO
             androidContext(this@App)
-            modules(sharedPrefsModule, registrationModule)
+            modules(sharedPrefsModule, registrationModule, apiModule)
         }
     }
 }

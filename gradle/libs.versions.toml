@@ -36,7 +36,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 # material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
-#Apollo GraphQL
+# Apollo GraphQL
 appolo-graphql = { group = "com.apollographql.apollo", name = "apollo-runtime", version.ref = "graphql" }
 
 # Koin
@@ -46,7 +46,7 @@ di-koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", ve
 # di-koin-test = { group = "io.insert-koin", name = "koin-androidx-test", version.ref = "koin" }
 
 # RxKotlin
-rxkotlin = { group = "io.reactivex.rxjava3", name = "rxkotlin", version.ref = "rxkotlin" }
+# rxkotlin = { group = "io.reactivex.rxjava3", name = "rxkotlin", version.ref = "rxkotlin" }
 
 # Realm
 realm = { group = "io.realm", name = "realm-android", version.ref = "realm" }

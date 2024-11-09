@@ -34,6 +34,13 @@ android {
     }
 }
 
+apollo {
+    service("service") {
+        packageName.set("com.evg.api")
+        srcDir(file("src/main/java/com/evg/api/domain/graphql"))
+    }
+}
+
 dependencies {
 
 
@@ -42,9 +49,6 @@ dependencies {
 
     // Koin
     implementation(libs.di.koin)
-
-    // RxKotlin
-    implementation(libs.rxkotlin)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

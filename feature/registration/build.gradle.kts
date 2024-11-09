@@ -37,9 +37,6 @@ android {
 dependencies {
     implementation(project(":core:resource"))
 
-    // RxKotlin
-    implementation(libs.rxkotlin)
-
     // Koin
     implementation(libs.di.koin)
     implementation(libs.di.koin.compose)
