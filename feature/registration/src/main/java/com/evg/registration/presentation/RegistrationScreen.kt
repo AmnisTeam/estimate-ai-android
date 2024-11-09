@@ -12,12 +12,13 @@ import com.evg.registration.domain.model.User
 import com.evg.registration.presentation.mvi.RegistrationSideEffect
 import com.evg.registration.presentation.mvi.RegistrationViewModel
 import com.evg.ui.theme.EstimateAITheme
+import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun RegistrationScreen(
-    viewModel: RegistrationViewModel = viewModel<RegistrationViewModel>()
+    viewModel: RegistrationViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
     //val state = viewModel.collectAsState().value
@@ -30,7 +31,7 @@ fun RegistrationScreen(
 
     Text(text = "Hello")
     Button(onClick = {
-        viewModel.registrationUser(user = User(email = "qwe", password = "zxc"), registrationCallback = {})
+        viewModel.registrationUser(user = User(email = "qwe", password = "zxc"))
     }) {
     }
 

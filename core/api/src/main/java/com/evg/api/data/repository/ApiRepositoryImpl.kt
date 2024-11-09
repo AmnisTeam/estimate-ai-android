@@ -10,7 +10,7 @@ import com.evg.api.type.UserRegistration
 class ApiRepositoryImpl(
     private val apolloClient: ApolloClient,
 ): ApiRepository {
-    override suspend fun registrationUser(user: UserRegistration): ServerResult<RegisterUserMutation.RegisterUser, RegistrationError> {
+    override suspend fun registrationUser(user: UserRegistration): ServerResult<Unit, RegistrationError> { //RegisterUserMutation.RegisterUser
         return try {
             val userResponse = apolloClient
                 .mutation(RegisterUserMutation(data = user))
@@ -18,7 +18,10 @@ class ApiRepositoryImpl(
                 .data
                 ?.registerUser
 
-            return ServerResult.Success(userResponse!!)
+            if (userResponse == null) {
+                return ServerResult.Error(RegistrationError.UNKNOWN)
+            }
+            ServerResult.Success(Unit)
         } catch (e: Exception) {
             ServerResult.Error(RegistrationError.UNKNOWN)
         }

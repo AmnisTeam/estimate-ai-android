@@ -7,5 +7,5 @@ import com.evg.api.type.UserRegistration
 import com.evg.api.type.UserRegistrationResponse
 
 interface ApiRepository {
-    suspend fun registrationUser(user: UserRegistration): ServerResult<RegisterUserMutation.RegisterUser, RegistrationError>
+    suspend fun registrationUser(user: UserRegistration): ServerResult<Unit, RegistrationError>
 }

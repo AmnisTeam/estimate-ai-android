@@ -36,6 +36,7 @@ android {
 
 dependencies {
     implementation(project(":core:resource"))
+    implementation(project(":core:api"))
 
     // Koin
     implementation(libs.di.koin)
