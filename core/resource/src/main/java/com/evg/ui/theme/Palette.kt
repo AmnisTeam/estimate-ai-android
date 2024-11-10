@@ -3,10 +3,15 @@ package com.evg.ui.theme
 import androidx.compose.ui.graphics.Color
 
 data class AppPalette(
-    val mainColor: Color,
-    val singleTheme: Color,
-    val oppositeTheme: Color,
-    val buttonColor: Color,
+    val primary: Color,
+    val background: Color,
+
+    val text: Color,
+
+    // TextField
+    val textField: Color,
+    val textFieldName: Color,
+    val textFieldBackground: Color,
 )
 
 enum class AppStyle {
@@ -14,40 +19,27 @@ enum class AppStyle {
 }
 
 
-val baseLightPalette = AppPalette(
-    mainColor = Color.White,
-    singleTheme = Color.White,
-    oppositeTheme = Color.Black,
-    buttonColor = Color(0xFFEFEEEE)
-)
-
 val baseDarkPalette = AppPalette(
-    mainColor = Color.Black,
-    singleTheme = Color.Black,
-    oppositeTheme = Color.White,
-    buttonColor = Color(0xFF2D2D31)
+    primary = Color(0xFFC6B8FF),
+    background = Color(0xFF161622),
+
+    text = Color(0xFFFFFFFF),
+
+    // TextField
+    textField = Color(0xFF6C6D8D),
+    textFieldName = Color(0xFFAAAAAA),
+    textFieldBackground = Color(0xFF1C1C2D),
 )
 
-val purpleDarkPalette = baseDarkPalette.copy(
-    mainColor = Color(0xFF9749E6)
+val baseLightPalette = AppPalette(
+    primary = Color(0xFFC6B8FF),
+    background = Color(0xFFFFFFFF),  // Светлый фон для светлой темы
+
+    text = Color(0xFF000000),  // Тёмный текст на светлом фоне
+
+    // TextField
+    textField = Color(0xFF6C6D8D),
+    textFieldName = Color(0xFFAAAAAA),
+    textFieldBackground = Color(0xFFF1F1F1),  // Светлый фон для текстовых полей
 )
 
-
-
-
-
-
-
-
-
-
-
-
-/*
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
-
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)*/

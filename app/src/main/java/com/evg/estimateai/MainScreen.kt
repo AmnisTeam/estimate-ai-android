@@ -15,8 +15,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.evg.registration.presentation.RegistrationScreen
-import com.evg.ui.LocalNavHostController
+import com.evg.registration.presentation.RegistrationRoot
+import com.evg.LocalNavHostController
+import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
 
 @Composable
@@ -39,6 +40,7 @@ fun MainScreen() {
     CompositionLocalProvider(LocalNavHostController provides navController) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
+            containerColor = AppTheme.colors.background,
         ) { paddingValues ->
             Box(
                 modifier = Modifier
@@ -55,7 +57,7 @@ fun MainScreen() {
                     composable(
                         route = "registration"
                     ) {
-                        RegistrationScreen()
+                        RegistrationRoot()
                     }
                 }
             }

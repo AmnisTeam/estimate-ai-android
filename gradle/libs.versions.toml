@@ -16,7 +16,7 @@ rxkotlin = "3.0.1"
 realm = "7.0.0-beta"
 orbit = "9.0.0"
 navigation = "2.8.3"
-#material = "1.12.0"
+material = "1.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,7 +34,7 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 # androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-# material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 # Apollo GraphQL
 appolo-graphql = { group = "com.apollographql.apollo", name = "apollo-runtime", version.ref = "graphql" }

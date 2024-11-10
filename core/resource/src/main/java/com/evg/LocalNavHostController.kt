@@ -1,4 +1,4 @@
-package com.evg.ui
+package com.evg
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.navigation.NavHostController

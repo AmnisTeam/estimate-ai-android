@@ -16,8 +16,8 @@ enum class AppSize {
 
 val mediumTextSize = AppTypography(
     heading = TextStyle(
-        fontSize = 28.sp,
-        fontWeight = FontWeight.Bold,
+        fontSize = 26.sp,
+        fontWeight = FontWeight.Normal,
     ),
     body = TextStyle(
         fontSize = 16.sp,

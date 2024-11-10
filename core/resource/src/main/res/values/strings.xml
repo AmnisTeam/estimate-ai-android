@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">EstimateAI</string>
+
+    <!--Registration screen-->
+    <string name="welcome">Welcome!</string>
+    <string name="create_account_progress">Create an account so you don’t lose your preferences and progress on any</string>
+    <string name="email">Email</string>
+    <string name="enter_email">Enter your email</string>
+    <string name="password">Password</string>
+    <string name="enter_password">Enter your password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="enter_password_again">Enter your password again</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="i_already_have_account">I already have account</string>
+    <string name="log_in">Log in</string>
+
+</resources>

@@ -49,6 +49,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     //debugImplementation(libs.androidx.ui.test.manifest)
 
+    // Material
+    implementation(libs.material)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -14,12 +14,12 @@ fun EstimateAITheme(
     val colors = when (darkTheme) {
         true -> {
             when (style) {
-                AppStyle.Purple -> purpleDarkPalette
+                AppStyle.Purple -> baseDarkPalette
             }
         }
         false -> {
             when (style) {
-                AppStyle.Purple -> purpleDarkPalette
+                AppStyle.Purple -> baseLightPalette
             }
         }
     }
