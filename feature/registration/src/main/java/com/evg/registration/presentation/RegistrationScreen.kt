@@ -1,8 +1,13 @@
 package com.evg.registration.presentation
 
 import android.content.res.Configuration
+import android.util.Patterns
+import android.widget.Toast
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,18 +19,26 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ripple.RippleAlpha
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RippleConfiguration
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -44,6 +57,7 @@ import androidx.navigation.NavHostController
 import com.evg.registration.domain.model.User
 import com.evg.resource.R
 import com.evg.ui.custom.AuthorizationTextField
+import com.evg.ui.extensions.clickableRipple
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.BorderRadius
 import com.evg.ui.theme.EstimateAITheme
@@ -58,13 +72,13 @@ fun RegistrationScreen(
     val context = LocalContext.current
     //val state = viewModel.collectAsStateWithLifecycle().value
     var emailText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(TextFieldValue(""))
+        mutableStateOf(TextFieldValue("test@mail.com"))
     }
     var passwordText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(TextFieldValue(""))
+        mutableStateOf(TextFieldValue("12345678"))
     }
     var passwordRepeatText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(TextFieldValue(""))
+        mutableStateOf(TextFieldValue("12345678"))
     }
 
     val welcomeText = stringResource(R.string.welcome)
@@ -79,6 +93,11 @@ fun RegistrationScreen(
     val iAlreadyHaveAccountText = stringResource(R.string.i_already_have_account)
     val logInText = stringResource(R.string.log_in)
 
+    val errorInvalidEmail = stringResource(R.string.error_invalid_email)
+    val errorPasswordMismatch = stringResource(R.string.error_password_mismatch)
+    val errorEmptyPassword = stringResource(R.string.error_empty_password)
+    val errorPasswordMinLength = stringResource(R.string.error_password_min_length)
+    val errorPasswordMaxLength = stringResource(R.string.error_password_max_length)
 
     Column(
         modifier = Modifier
@@ -163,7 +182,19 @@ fun RegistrationScreen(
                 disabledContentColor = Color.Unspecified,
             ),
             onClick = {
-                registrationUser(User(email = "qwe", password = "zxc"))
+                if (!Patterns.EMAIL_ADDRESS.matcher(emailText.text).matches()) {
+                    Toast.makeText(context, errorInvalidEmail, Toast.LENGTH_SHORT).show()
+                } else if (passwordText.text != passwordRepeatText.text) {
+                    Toast.makeText(context, errorPasswordMismatch, Toast.LENGTH_SHORT).show()
+                } else if (passwordText.text.isEmpty()) {
+                    Toast.makeText(context, errorEmptyPassword, Toast.LENGTH_SHORT).show()
+                } else if (passwordText.text.length < 8) {
+                    Toast.makeText(context, errorPasswordMinLength, Toast.LENGTH_SHORT).show()
+                } else if (passwordText.text.length >= 24) {
+                    Toast.makeText(context, errorPasswordMaxLength, Toast.LENGTH_SHORT).show()
+                } else {
+                    registrationUser(User(email = "qwe", password = "zxc"))
+                }
             }
         ) {
             Text(
@@ -185,7 +216,8 @@ fun RegistrationScreen(
         ) {
             Text(
                 modifier = Modifier
-                    .clickable {
+                    .clip(shape = RoundedCornerShape(5.dp))
+                    .clickableRipple {
 
                     },
                 text = buildAnnotatedString {

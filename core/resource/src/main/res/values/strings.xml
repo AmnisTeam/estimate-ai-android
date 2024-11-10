@@ -14,4 +14,10 @@
     <string name="i_already_have_account">I already have account</string>
     <string name="log_in">Log in</string>
 
+    <string name="error_invalid_email">Invalid email address</string>
+    <string name="error_password_mismatch">Passwords do not match</string>
+    <string name="error_empty_password">Password cannot be empty</string>
+    <string name="error_password_min_length">Minimum password length is 8 characters</string>
+    <string name="error_password_max_length">Maximum password length is 24 characters</string>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.evg.ui.custom
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -35,6 +36,7 @@ import com.evg.resource.R
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.BorderRadius
 import com.evg.ui.theme.EstimateAITheme
+import java.lang.Error
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,6 +45,7 @@ fun AuthorizationTextField(
     placeholder: String,
     value: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit,
+    //isError: Boolean = false,
     isPassword: Boolean = false,
 ) {
     var passwordVisible by remember { mutableStateOf(!isPassword) }
@@ -63,8 +66,13 @@ fun AuthorizationTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(45.dp)
-                .clip(RoundedCornerShape(BorderRadius)),
-            textStyle = AppTheme.typography.body.copy(
+                .clip(RoundedCornerShape(BorderRadius))
+                /*.then(
+                    if (isError) {
+                        Modifier.border(1.dp, color = Color.Red, shape = RoundedCornerShape(BorderRadius))
+                    } else { Modifier }
+                )*/,
+                textStyle = AppTheme.typography.body.copy(
                 color = AppTheme.colors.text
             ),
             cursorBrush = SolidColor(AppTheme.colors.primary),
@@ -100,10 +108,12 @@ fun AuthorizationTextField(
                     },
                     singleLine = true,
                     enabled = true,
+                    //isError = isError,
                     interactionSource = remember { MutableInteractionSource() },
                     colors = TextFieldDefaults.colors().copy(
                         focusedContainerColor = AppTheme.colors.textFieldBackground,
                         unfocusedContainerColor = AppTheme.colors.textFieldBackground,
+                        errorContainerColor = AppTheme.colors.textFieldBackground,
                         unfocusedIndicatorColor = Color.Transparent,
                     )
                 )
@@ -123,6 +133,7 @@ fun AuthorizationTextFieldPreview(darkTheme: Boolean = true) {
                 placeholder = "Enter your email",
                 value = TextFieldValue(text = "test.email@mail.com"),
                 onValueChange = {},
+                //isError = true,
                 isPassword = true,
             )
         }
