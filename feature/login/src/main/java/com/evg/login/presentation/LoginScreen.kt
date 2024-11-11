@@ -1,9 +1,10 @@
-package com.evg.registration.presentation
+package com.evg.login.presentation
 
-import android.util.Patterns
-import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,8 +40,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.evg.registration.domain.model.User
-import com.evg.registration.presentation.mvi.RegistrationState
+import com.evg.login.domain.model.User
+import com.evg.login.presentation.mvi.LoginState
 import com.evg.resource.R
 import com.evg.ui.custom.AuthorizationTextField
 import com.evg.ui.extensions.clickableRipple
@@ -55,13 +56,12 @@ import com.evg.ui.theme.VerticalPadding
 import com.evg.ui.theme.AuthorizationWelcomeTextSpaceBy
 
 @Composable
-fun RegistrationScreen(
+fun LoginScreen(
     navigation: NavHostController,
-    state: RegistrationState,
-    registrationUser: (User) -> Unit,
+    state: LoginState,
+    loginUser: (User) -> Unit,
 ) {
-    val context = LocalContext.current
-    val isRegistrationLoading = state.isRegistrationLoading
+    val isLoginLoading = state.isLoginLoading
 
     var emailText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue("test@mail.com"))
@@ -69,27 +69,17 @@ fun RegistrationScreen(
     var passwordText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue("12345678"))
     }
-    var passwordRepeatText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(TextFieldValue("12345678"))
-    }
 
     val welcomeText = stringResource(R.string.welcome)
-    val createAccountProgressText = stringResource(R.string.create_account_progress)
+    val loginAccountProgressText = stringResource(R.string.login_account_progress)
     val emailLabel = stringResource(R.string.email)
     val enterEmailPlaceholder = stringResource(R.string.enter_email)
     val passwordLabel = stringResource(R.string.password)
     val enterPasswordPlaceholder = stringResource(R.string.enter_password)
-    val confirmPasswordLabel = stringResource(R.string.confirm_password)
-    val enterPasswordAgainPlaceholder = stringResource(R.string.enter_password_again)
-    val signUpText = stringResource(R.string.sign_up)
-    val iAlreadyHaveAccountText = stringResource(R.string.i_already_have_account)
+    val iDontHaveAccountText = stringResource(R.string.i_dont_have_account)
     val logInText = stringResource(R.string.log_in)
-
-    val errorInvalidEmail = stringResource(R.string.error_invalid_email)
-    val errorPasswordMismatch = stringResource(R.string.error_password_mismatch)
-    val errorEmptyPassword = stringResource(R.string.error_empty_password)
-    val errorPasswordMinLength = stringResource(R.string.error_password_min_length)
-    val errorPasswordMaxLength = stringResource(R.string.error_password_max_length)
+    val signUpText = stringResource(R.string.sign_up)
+    val forgotPasswordText = stringResource(R.string.forgot_password)
 
     Column(
         modifier = Modifier
@@ -123,7 +113,7 @@ fun RegistrationScreen(
                 color = AppTheme.colors.text,
             )
             Text(
-                text = createAccountProgressText,
+                text = loginAccountProgressText,
                 textAlign = TextAlign.Center,
                 style = AppTheme.typography.body.copy(
                     fontWeight = FontWeight.Light,
@@ -150,12 +140,25 @@ fun RegistrationScreen(
                 onValueChange = { newText -> passwordText = newText },
                 isPassword = true,
             )
-            AuthorizationTextField(
-                filedName = confirmPasswordLabel,
-                placeholder = enterPasswordAgainPlaceholder,
-                value = passwordRepeatText,
-                onValueChange = { newText -> passwordRepeatText = newText },
-                isPassword = true,
+        }
+
+        Spacer(modifier = Modifier.height(AuthorizationTextFieldSpaceBy))
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.End,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                modifier = Modifier
+                    .clip(shape = RoundedCornerShape(5.dp))
+                    .clickableRipple {
+
+                    },
+                text = forgotPasswordText,
+                style = AppTheme.typography.body,
+                color = AppTheme.colors.primary,
             )
         }
 
@@ -173,29 +176,69 @@ fun RegistrationScreen(
                 disabledContainerColor = AppTheme.colors.primary.copy(alpha = 0.7f),
                 disabledContentColor = AppTheme.colors.background.copy(alpha = 0.8f),
             ),
-            enabled = !isRegistrationLoading,
+            enabled = !isLoginLoading,
             onClick = {
-                if (!Patterns.EMAIL_ADDRESS.matcher(emailText.text).matches()) {
-                    Toast.makeText(context, errorInvalidEmail, Toast.LENGTH_SHORT).show()
-                } else if (passwordText.text != passwordRepeatText.text) {
-                    Toast.makeText(context, errorPasswordMismatch, Toast.LENGTH_SHORT).show()
-                } else if (passwordText.text.isEmpty()) {
-                    Toast.makeText(context, errorEmptyPassword, Toast.LENGTH_SHORT).show()
-                } else if (passwordText.text.length < 8) {
-                    Toast.makeText(context, errorPasswordMinLength, Toast.LENGTH_SHORT).show()
-                } else if (passwordText.text.length >= 24) {
-                    Toast.makeText(context, errorPasswordMaxLength, Toast.LENGTH_SHORT).show()
-                } else {
-                    registrationUser(User(email = emailText.text, password = passwordText.text))
-                }
+                loginUser(User(email = emailText.text, password = passwordText.text))
             }
         ) {
             Text(
-                text = signUpText,
+                text = logInText,
                 color = AppTheme.colors.background,
                 style = AppTheme.typography.body.copy(
                     fontWeight = FontWeight.Bold,
                 ),
+            )
+        }
+
+        Spacer(modifier = Modifier.height(AuthorizationTextFieldSpaceBy))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 10.dp)
+                    .weight(1f)
+                    .height(3.dp)
+                    .clip(shape = RoundedCornerShape(BorderRadius))
+                    .background(AppTheme.colors.textField)
+            )
+            Text(
+                text = "or continue with",
+                style = AppTheme.typography.body,
+                color = AppTheme.colors.textFieldName,
+            )
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 10.dp)
+                    .weight(1f)
+                    .height(3.dp)
+                    .clip(shape = RoundedCornerShape(BorderRadius))
+                    .background(AppTheme.colors.textField)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(AuthorizationTextFieldSpaceBy))
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(AuthorizationTextFieldSpaceBy, Alignment.CenterHorizontally)
+        ) {
+            LoginCard(
+                backgroundColor = Color.White,
+                icon = painterResource(R.drawable.apple),
+                onClick = {}
+            )
+            LoginCard(
+                backgroundColor = null,
+                icon = painterResource(R.drawable.google),
+                onClick = {}
+            )
+            LoginCard(
+                backgroundColor = null,
+                icon = painterResource(R.drawable.discord),
+                onClick = {}
             )
         }
 
@@ -211,16 +254,16 @@ fun RegistrationScreen(
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(5.dp))
                     .clickableRipple {
-                        navigation.navigate("login") {
-                            popUpTo("registration") {
+                        navigation.navigate("registration") {
+                            popUpTo("login") {
                                 inclusive = true
                             }
                         }
                     },
                 text = buildAnnotatedString {
-                    this.append("$iAlreadyHaveAccountText ")
+                    this.append("$iDontHaveAccountText ")
                     withStyle(style = SpanStyle(color = AppTheme.colors.primary)) {
-                        append(logInText)
+                        append(signUpText)
                     }
                 },
                 textAlign = TextAlign.Center,
@@ -233,15 +276,15 @@ fun RegistrationScreen(
 
 @Composable
 @Preview(showBackground = true)
-fun RegistrationScreenPreview(darkTheme: Boolean = true) {
+fun LoginScreenPreview(darkTheme: Boolean = true) {
     EstimateAITheme(darkTheme = darkTheme) {
         Surface(color = AppTheme.colors.background) {
-            RegistrationScreen(
+            LoginScreen(
                 navigation = NavHostController(LocalContext.current),
-                state = RegistrationState(
-                    isRegistrationLoading = false,
+                state = LoginState(
+                    isLoginLoading = false,
                 ),
-                registrationUser = {}
+                loginUser = {}
             )
         }
     }

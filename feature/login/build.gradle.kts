@@ -1,14 +1,13 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.kotlin.serializable)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.jetbrains.kotlin.ksp)
-    // alias(libs.plugins.realm.plugin)
 }
 
 android {
-    namespace = "com.evg.database"
-    compileSdk = 35
+    namespace = "com.evg.login"
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 26
@@ -36,13 +35,29 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:resource"))
+    implementation(project(":core:api"))
 
-    // Realm
-    // implementation(libs.realm)
+    // Koin
+    implementation(libs.di.koin)
+    implementation(libs.di.koin.compose)
+
+    // MVI Orbit
+    implementation(libs.mvi.orbit.core)
+    implementation(libs.mvi.orbit.viewmodel)
+    implementation(libs.mvi.orbit.compose)
+
+    // Navigation
+    implementation(libs.androidx.ui.navigation)
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    //implementation(libs.material)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -3,7 +3,7 @@
 
     <!--Registration screen-->
     <string name="welcome">Welcome!</string>
-    <string name="create_account_progress">Create an account so you don’t lose your preferences and progress on any</string>
+    <string name="create_account_progress">Create an account so you don’t lose your preferences and progress</string>
     <string name="email">Email</string>
     <string name="enter_email">Enter your email</string>
     <string name="password">Password</string>
@@ -12,7 +12,6 @@
     <string name="enter_password_again">Enter your password again</string>
     <string name="sign_up">Sign Up</string>
     <string name="i_already_have_account">I already have account</string>
-    <string name="log_in">Log in</string>
 
     <string name="error_invalid_email">Invalid email address</string>
     <string name="error_password_mismatch">Passwords do not match</string>
@@ -28,6 +27,11 @@
     <string name="unknown_error">Unknown Error</string>
     <string name="email_exists">Unknown Error</string>
 
+    <!--Login screen-->
+    <string name="log_in">Log in</string>
+    <string name="login_account_progress">Log in to your account so you don’t lose your preferences and progress</string>
+    <string name="i_dont_have_account">I don\'t have account</string>
+    <string name="forgot_password">Forgot your password?</string>
 
 
 </resources>

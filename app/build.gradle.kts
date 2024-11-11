@@ -56,6 +56,7 @@ dependencies {
     implementation(project(":core:shared-prefs"))
     implementation(project(":core:api"))
     implementation(project(":feature:registration"))
+    implementation(project(":feature:login"))
 
     // Koin
     implementation(libs.di.koin)

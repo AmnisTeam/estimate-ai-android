@@ -9,6 +9,7 @@ type Query {
 
 type Mutation {
   registerUser(data: UserRegistration!): UserRegistrationResponse!
+  loginUser(data: UserLogin!): UserLoginResponse!
 }
 
 input UserRegistration {
@@ -17,5 +18,14 @@ input UserRegistration {
 }
 
 type UserRegistrationResponse {
+  code: Int!
+}
+
+input UserLogin {
+  email: String!
+  password: String!
+}
+
+type UserLoginResponse {
   code: Int!
 }
