@@ -1,13 +1,7 @@
 package com.evg.registration.presentation
 
-import android.content.res.Configuration
 import android.util.Patterns
 import android.widget.Toast
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,21 +13,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ripple.RippleAlpha
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RippleConfiguration
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -50,11 +37,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.evg.registration.domain.model.User
+import com.evg.registration.presentation.mvi.RegistrationState
 import com.evg.resource.R
 import com.evg.ui.custom.AuthorizationTextField
 import com.evg.ui.extensions.clickableRipple
@@ -67,10 +53,12 @@ import com.evg.ui.theme.VerticalPadding
 @Composable
 fun RegistrationScreen(
     navigation: NavHostController,
+    state: RegistrationState,
     registrationUser: (User) -> Unit,
 ) {
     val context = LocalContext.current
-    //val state = viewModel.collectAsStateWithLifecycle().value
+    val isRegistrationLoading = state.isRegistrationLoading
+
     var emailText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue("test@mail.com"))
     }
@@ -178,9 +166,10 @@ fun RegistrationScreen(
             colors = ButtonColors(
                 containerColor = AppTheme.colors.primary,
                 contentColor = Color.Unspecified,
-                disabledContainerColor = Color.Unspecified,
-                disabledContentColor = Color.Unspecified,
+                disabledContainerColor = AppTheme.colors.primary.copy(alpha = 0.7f),
+                disabledContentColor = AppTheme.colors.background.copy(alpha = 0.8f),
             ),
+            enabled = !isRegistrationLoading,
             onClick = {
                 if (!Patterns.EMAIL_ADDRESS.matcher(emailText.text).matches()) {
                     Toast.makeText(context, errorInvalidEmail, Toast.LENGTH_SHORT).show()
@@ -193,7 +182,7 @@ fun RegistrationScreen(
                 } else if (passwordText.text.length >= 24) {
                     Toast.makeText(context, errorPasswordMaxLength, Toast.LENGTH_SHORT).show()
                 } else {
-                    registrationUser(User(email = "qwe", password = "zxc"))
+                    registrationUser(User(email = emailText.text, password = passwordText.text))
                 }
             }
         ) {
@@ -241,6 +230,9 @@ fun RegistrationScreenPreview(darkTheme: Boolean = true) {
         Surface(color = AppTheme.colors.background) {
             RegistrationScreen(
                 navigation = NavHostController(LocalContext.current),
+                state = RegistrationState(
+                    isRegistrationLoading = false,
+                ),
                 registrationUser = {}
             )
         }

@@ -6,6 +6,5 @@ enum class RegistrationError: Error {
     SERVER_ERROR,
     SERIALIZATION,
     EMAIL_EXIST,
-    PASSWORD_MISMATCH,
     UNKNOWN,
 }

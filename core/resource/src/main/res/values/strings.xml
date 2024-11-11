@@ -20,4 +20,14 @@
     <string name="error_password_min_length">Minimum password length is 8 characters</string>
     <string name="error_password_max_length">Maximum password length is 24 characters</string>
 
+    <string name="registration_success">Registration success. Check your email</string>
+    <string name="request_timeout">Request Timeout</string>
+    <string name="too_many_requests">Too Many Requests</string>
+    <string name="server_error">Server Error</string>
+    <string name="serialization_error">Serialization Error</string>
+    <string name="unknown_error">Unknown Error</string>
+    <string name="email_exists">Unknown Error</string>
+
+
+
 </resources>

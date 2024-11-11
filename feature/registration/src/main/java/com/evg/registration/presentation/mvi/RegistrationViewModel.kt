@@ -10,22 +10,18 @@ import org.orbitmvi.orbit.viewmodel.container
 class RegistrationViewModel(
     private val registrationUseCases: RegistrationUseCases,
 ): ContainerHost<RegistrationState, RegistrationSideEffect>, ViewModel() {
-
-    // Include `orbit-viewmodel` for the factory function
     override val container = container<RegistrationState, RegistrationSideEffect>(RegistrationState())
 
-    fun registrationUser(user: User/*, registrationCallback: (String) -> Unit*/) = intent {
-        val test = registrationUseCases.registrationUseCase.invoke(user = user)
-        when (test) {
+    fun registrationUser(user: User) = intent {
+        reduce { state.copy(isRegistrationLoading = true) }
+        when (val response = registrationUseCases.registrationUseCase.invoke(user = user)) {
             is ServerResult.Success -> {
-                postSideEffect(RegistrationSideEffect.RegistrationStatus("Registration... $user"))
+                postSideEffect(RegistrationSideEffect.RegistrationSuccess)
             }
             is ServerResult.Error -> {
-                postSideEffect(RegistrationSideEffect.RegistrationStatus("Registration error"))
+                postSideEffect(RegistrationSideEffect.RegistrationFail(error = response.error))
             }
         }
-        /*reduce {
-            state.copy(total = state.total)
-        }*/
+        reduce { state.copy(isRegistrationLoading = false) }
     }
 }
