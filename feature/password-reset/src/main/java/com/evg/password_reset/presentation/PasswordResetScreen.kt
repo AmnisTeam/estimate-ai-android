@@ -1,10 +1,7 @@
-package com.evg.login.presentation
+package com.evg.password_reset.presentation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,8 +37,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.evg.login.domain.model.User
-import com.evg.login.presentation.mvi.LoginState
+import com.evg.password_reset.domain.model.PasswordReset
+import com.evg.password_reset.presentation.mvi.PasswordResetState
 import com.evg.resource.R
 import com.evg.ui.custom.AuthorizationTextField
 import com.evg.ui.extensions.clickableRipple
@@ -49,37 +46,30 @@ import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.AuthorizationIconSize
 import com.evg.ui.theme.AuthorizationSpaceBy
 import com.evg.ui.theme.AuthorizationTextFieldSpaceBy
+import com.evg.ui.theme.AuthorizationWelcomeTextSpaceBy
 import com.evg.ui.theme.BorderRadius
 import com.evg.ui.theme.EstimateAITheme
 import com.evg.ui.theme.HorizontalPadding
 import com.evg.ui.theme.VerticalPadding
-import com.evg.ui.theme.AuthorizationWelcomeTextSpaceBy
 
 @Composable
-fun LoginScreen(
+fun PasswordResetScreen(
     navigation: NavHostController,
-    state: LoginState,
-    loginUser: (User) -> Unit,
+    state: PasswordResetState,
+    passwordReset: (PasswordReset) -> Unit,
 ) {
-    val isLoginLoading = state.isLoginLoading
+    val isEmailResetLoading = state.isEmailResetLoading
 
     var emailText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue("test@mail.com"))
     }
-    var passwordText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(TextFieldValue("12345678"))
-    }
 
-    val welcomeText = stringResource(R.string.welcome)
-    val loginAccountProgressText = stringResource(R.string.login_account_progress)
+    val passwordResetText = stringResource(R.string.password_reset)
     val emailLabel = stringResource(R.string.email)
     val enterEmailPlaceholder = stringResource(R.string.enter_email)
-    val passwordLabel = stringResource(R.string.password)
-    val enterPasswordPlaceholder = stringResource(R.string.enter_password)
-    val iDontHaveAccountText = stringResource(R.string.i_dont_have_account)
+    val iAlreadyHaveAccountText = stringResource(R.string.i_already_have_account)
+    val resetText = stringResource(R.string.reset)
     val logInText = stringResource(R.string.log_in)
-    val signUpText = stringResource(R.string.sign_up)
-    val forgotPasswordText = stringResource(R.string.forgot_password)
 
     Column(
         modifier = Modifier
@@ -106,16 +96,8 @@ fun LoginScreen(
                 contentDescription = null,
             )
             Text(
-                text = welcomeText,
+                text = passwordResetText,
                 style = AppTheme.typography.heading.copy(
-                    fontWeight = FontWeight.Light,
-                ),
-                color = AppTheme.colors.text,
-            )
-            Text(
-                text = loginAccountProgressText,
-                textAlign = TextAlign.Center,
-                style = AppTheme.typography.body.copy(
                     fontWeight = FontWeight.Light,
                 ),
                 color = AppTheme.colors.text,
@@ -123,6 +105,7 @@ fun LoginScreen(
         }
 
         Spacer(modifier = Modifier.height(AuthorizationSpaceBy))
+        Spacer(modifier = Modifier.weight(0.3f))
 
         Column(
             verticalArrangement = Arrangement.spacedBy(AuthorizationTextFieldSpaceBy),
@@ -132,37 +115,6 @@ fun LoginScreen(
                 placeholder = enterEmailPlaceholder,
                 value = emailText,
                 onValueChange = { newText -> emailText = newText }
-            )
-            AuthorizationTextField(
-                filedName = passwordLabel,
-                placeholder = enterPasswordPlaceholder,
-                value = passwordText,
-                onValueChange = { newText -> passwordText = newText },
-                isPassword = true,
-            )
-        }
-
-        Spacer(modifier = Modifier.height(AuthorizationTextFieldSpaceBy))
-
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.End,
-            verticalArrangement = Arrangement.Center,
-        ) {
-            Text(
-                modifier = Modifier
-                    .clip(shape = RoundedCornerShape(5.dp))
-                    .clickableRipple {
-                        navigation.navigate("password_reset") {
-                            popUpTo("login") {
-                                inclusive = true
-                            }
-                        }
-                    },
-                text = forgotPasswordText,
-                style = AppTheme.typography.body,
-                color = AppTheme.colors.primary,
             )
         }
 
@@ -180,69 +132,17 @@ fun LoginScreen(
                 disabledContainerColor = AppTheme.colors.primary.copy(alpha = 0.7f),
                 disabledContentColor = AppTheme.colors.background.copy(alpha = 0.8f),
             ),
-            enabled = !isLoginLoading,
+            enabled = !isEmailResetLoading,
             onClick = {
-                loginUser(User(email = emailText.text, password = passwordText.text))
+                passwordReset(PasswordReset(email = emailText.text))
             }
         ) {
             Text(
-                text = logInText,
+                text = resetText,
                 color = AppTheme.colors.background,
                 style = AppTheme.typography.body.copy(
                     fontWeight = FontWeight.Bold,
                 ),
-            )
-        }
-
-        Spacer(modifier = Modifier.height(AuthorizationTextFieldSpaceBy))
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Box(
-                modifier = Modifier
-                    .padding(horizontal = 10.dp)
-                    .weight(1f)
-                    .height(3.dp)
-                    .clip(shape = RoundedCornerShape(BorderRadius))
-                    .background(AppTheme.colors.textField)
-            )
-            Text(
-                text = "or continue with",
-                style = AppTheme.typography.body,
-                color = AppTheme.colors.textFieldName,
-            )
-            Box(
-                modifier = Modifier
-                    .padding(horizontal = 10.dp)
-                    .weight(1f)
-                    .height(3.dp)
-                    .clip(shape = RoundedCornerShape(BorderRadius))
-                    .background(AppTheme.colors.textField)
-            )
-        }
-
-        Spacer(modifier = Modifier.height(AuthorizationTextFieldSpaceBy))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(AuthorizationTextFieldSpaceBy, Alignment.CenterHorizontally)
-        ) {
-            LoginCard(
-                backgroundColor = Color.White,
-                icon = painterResource(R.drawable.apple),
-                onClick = {}
-            )
-            LoginCard(
-                backgroundColor = null,
-                icon = painterResource(R.drawable.google),
-                onClick = {}
-            )
-            LoginCard(
-                backgroundColor = null,
-                icon = painterResource(R.drawable.discord),
-                onClick = {}
             )
         }
 
@@ -258,16 +158,16 @@ fun LoginScreen(
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(5.dp))
                     .clickableRipple {
-                        navigation.navigate("registration") {
-                            popUpTo("login") {
+                        navigation.navigate("login") {
+                            popUpTo("registration") {
                                 inclusive = true
                             }
                         }
                     },
                 text = buildAnnotatedString {
-                    this.append("$iDontHaveAccountText ")
+                    this.append("$iAlreadyHaveAccountText ")
                     withStyle(style = SpanStyle(color = AppTheme.colors.primary)) {
-                        append(signUpText)
+                        append(logInText)
                     }
                 },
                 textAlign = TextAlign.Center,
@@ -280,15 +180,15 @@ fun LoginScreen(
 
 @Composable
 @Preview(showBackground = true)
-fun LoginScreenPreview(darkTheme: Boolean = true) {
+fun PasswordResetScreenPreview(darkTheme: Boolean = true) {
     EstimateAITheme(darkTheme = darkTheme) {
         Surface(color = AppTheme.colors.background) {
-            LoginScreen(
+            PasswordResetScreen(
                 navigation = NavHostController(LocalContext.current),
-                state = LoginState(
-                    isLoginLoading = false,
+                state = PasswordResetState(
+                    isEmailResetLoading = false,
                 ),
-                loginUser = {}
+                passwordReset = {}
             )
         }
     }

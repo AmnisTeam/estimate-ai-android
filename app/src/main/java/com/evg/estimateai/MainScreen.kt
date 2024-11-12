@@ -18,6 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import com.evg.registration.presentation.RegistrationRoot
 import com.evg.LocalNavHostController
 import com.evg.login.presentation.LoginRoot
+import com.evg.password_reset.presentation.PasswordResetRoot
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
 
@@ -64,6 +65,11 @@ fun MainScreen() {
                         route = "login"
                     ) {
                         LoginRoot()
+                    }
+                    composable(
+                        route = "password_reset"
+                    ) {
+                        PasswordResetRoot()
                     }
                 }
             }

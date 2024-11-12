@@ -8,11 +8,12 @@ type Query {
 }
 
 type Mutation {
-  registerUser(data: UserRegistration!): UserRegistrationResponse!
-  loginUser(data: UserLogin!): UserLoginResponse!
+  registerUser(data: UserRegistrationDTO!): UserRegistrationResponse!
+  loginUser(data: UserLoginDTO!): UserLoginResponse!
+  passwordReset(data: PasswordResetDTO!): PasswordResetResponse!
 }
 
-input UserRegistration {
+input UserRegistrationDTO {
   email: String!
   password: String!
 }
@@ -21,11 +22,19 @@ type UserRegistrationResponse {
   code: Int!
 }
 
-input UserLogin {
+input UserLoginDTO {
   email: String!
   password: String!
 }
 
 type UserLoginResponse {
+  code: Int!
+}
+
+input PasswordResetDTO {
+  email: String!
+}
+
+type PasswordResetResponse {
   code: Int!
 }

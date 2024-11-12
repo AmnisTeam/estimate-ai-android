@@ -1,4 +1,4 @@
-mutation RegisterUser($data: UserRegistration!) {
+mutation RegisterUser($data: UserRegistrationDTO!) {
     registerUser(data: $data) {
         code
     }

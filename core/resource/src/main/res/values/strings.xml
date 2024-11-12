@@ -33,5 +33,8 @@
     <string name="i_dont_have_account">I don\'t have account</string>
     <string name="forgot_password">Forgot your password?</string>
 
+    <!--Registration screen-->
+    <string name="password_reset">Password reset</string>
+    <string name="reset">Reset</string>
 
 </resources>
