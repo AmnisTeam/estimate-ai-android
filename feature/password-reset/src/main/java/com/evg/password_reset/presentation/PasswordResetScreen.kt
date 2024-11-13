@@ -40,6 +40,7 @@ import androidx.navigation.NavHostController
 import com.evg.password_reset.domain.model.PasswordReset
 import com.evg.password_reset.presentation.mvi.PasswordResetState
 import com.evg.resource.R
+import com.evg.ui.custom.AuthorizationButton
 import com.evg.ui.custom.AuthorizationTextField
 import com.evg.ui.extensions.clickableRipple
 import com.evg.ui.theme.AppTheme
@@ -121,30 +122,13 @@ fun PasswordResetScreen(
         Spacer(modifier = Modifier.height(AuthorizationSpaceBy))
         Spacer(modifier = Modifier.weight(1f))
 
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(45.dp),
-            shape = RoundedCornerShape(BorderRadius),
-            colors = ButtonColors(
-                containerColor = AppTheme.colors.primary,
-                contentColor = Color.Unspecified,
-                disabledContainerColor = AppTheme.colors.primary.copy(alpha = 0.7f),
-                disabledContentColor = AppTheme.colors.background.copy(alpha = 0.8f),
-            ),
-            enabled = !isEmailResetLoading,
+        AuthorizationButton(
+            isLoading = isEmailResetLoading,
             onClick = {
                 passwordReset(PasswordReset(email = emailText.text))
-            }
-        ) {
-            Text(
-                text = resetText,
-                color = AppTheme.colors.background,
-                style = AppTheme.typography.body.copy(
-                    fontWeight = FontWeight.Bold,
-                ),
-            )
-        }
+            },
+            buttonText = resetText,
+        )
 
         Spacer(modifier = Modifier.height(AuthorizationSpaceBy))
 

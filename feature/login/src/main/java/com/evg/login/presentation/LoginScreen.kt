@@ -43,6 +43,7 @@ import androidx.navigation.NavHostController
 import com.evg.login.domain.model.User
 import com.evg.login.presentation.mvi.LoginState
 import com.evg.resource.R
+import com.evg.ui.custom.AuthorizationButton
 import com.evg.ui.custom.AuthorizationTextField
 import com.evg.ui.extensions.clickableRipple
 import com.evg.ui.theme.AppTheme
@@ -169,30 +170,13 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(AuthorizationSpaceBy))
         Spacer(modifier = Modifier.weight(1f))
 
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(45.dp),
-            shape = RoundedCornerShape(BorderRadius),
-            colors = ButtonColors(
-                containerColor = AppTheme.colors.primary,
-                contentColor = Color.Unspecified,
-                disabledContainerColor = AppTheme.colors.primary.copy(alpha = 0.7f),
-                disabledContentColor = AppTheme.colors.background.copy(alpha = 0.8f),
-            ),
-            enabled = !isLoginLoading,
+        AuthorizationButton(
+            isLoading = isLoginLoading,
             onClick = {
                 loginUser(User(email = emailText.text, password = passwordText.text))
-            }
-        ) {
-            Text(
-                text = logInText,
-                color = AppTheme.colors.background,
-                style = AppTheme.typography.body.copy(
-                    fontWeight = FontWeight.Bold,
-                ),
-            )
-        }
+            },
+            buttonText = logInText,
+        )
 
         Spacer(modifier = Modifier.height(AuthorizationTextFieldSpaceBy))
 

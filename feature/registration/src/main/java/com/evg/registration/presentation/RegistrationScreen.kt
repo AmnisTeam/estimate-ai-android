@@ -42,6 +42,7 @@ import androidx.navigation.NavHostController
 import com.evg.registration.domain.model.User
 import com.evg.registration.presentation.mvi.RegistrationState
 import com.evg.resource.R
+import com.evg.ui.custom.AuthorizationButton
 import com.evg.ui.custom.AuthorizationTextField
 import com.evg.ui.extensions.clickableRipple
 import com.evg.ui.theme.AppTheme
@@ -162,18 +163,8 @@ fun RegistrationScreen(
         Spacer(modifier = Modifier.height(AuthorizationSpaceBy))
         Spacer(modifier = Modifier.weight(1f))
 
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(45.dp),
-            shape = RoundedCornerShape(BorderRadius),
-            colors = ButtonColors(
-                containerColor = AppTheme.colors.primary,
-                contentColor = Color.Unspecified,
-                disabledContainerColor = AppTheme.colors.primary.copy(alpha = 0.7f),
-                disabledContentColor = AppTheme.colors.background.copy(alpha = 0.8f),
-            ),
-            enabled = !isRegistrationLoading,
+        AuthorizationButton(
+            isLoading = isRegistrationLoading,
             onClick = {
                 if (!Patterns.EMAIL_ADDRESS.matcher(emailText.text).matches()) {
                     Toast.makeText(context, errorInvalidEmail, Toast.LENGTH_SHORT).show()
@@ -188,16 +179,9 @@ fun RegistrationScreen(
                 } else {
                     registrationUser(User(email = emailText.text, password = passwordText.text))
                 }
-            }
-        ) {
-            Text(
-                text = signUpText,
-                color = AppTheme.colors.background,
-                style = AppTheme.typography.body.copy(
-                    fontWeight = FontWeight.Bold,
-                ),
-            )
-        }
+            },
+            buttonText = signUpText,
+        )
 
         Spacer(modifier = Modifier.height(AuthorizationSpaceBy))
 
