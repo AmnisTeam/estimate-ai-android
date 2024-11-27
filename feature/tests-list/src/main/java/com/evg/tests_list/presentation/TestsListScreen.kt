@@ -25,6 +25,7 @@ import com.evg.model.TestIcons
 import com.evg.model.TestLevelColors
 import com.evg.resource.R
 import com.evg.tests_list.domain.model.FinishedTest
+import com.evg.tests_list.domain.model.LoadingTest
 import com.evg.tests_list.presentation.model.TestState
 import com.evg.tests_list.presentation.mvi.TestsListState
 import com.evg.ui.custom.RoundedButton
@@ -64,6 +65,17 @@ fun TestsListScreen(
                     ),
                     onClick = {},
                 )
+                /*LoadingTestTile(
+                    loadingTest = TestState.LoadingTest(
+                        loadingTest = LoadingTest(
+                            icon = TestIcons.ESSAY,
+                            title = "Title name example",
+                            description = "Write an essay on any topic. Your English level will be estimated based on it.",
+                            progress = 59,
+                        ),
+                    ),
+                    onClick = {},
+                )*/
             }
         }
     }

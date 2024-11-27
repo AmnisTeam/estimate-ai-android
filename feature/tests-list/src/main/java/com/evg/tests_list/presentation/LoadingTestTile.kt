@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -18,14 +19,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.evg.model.TestIcons
-import com.evg.model.TestLevelColors
-import com.evg.tests_list.domain.model.FinishedTest
+import com.evg.tests_list.domain.model.LoadingTest
 import com.evg.tests_list.presentation.model.TestState
 import com.evg.ui.extensions.clickableRipple
 import com.evg.ui.theme.AppTheme
@@ -33,8 +33,8 @@ import com.evg.ui.theme.BorderRadius
 import com.evg.ui.theme.EstimateAITheme
 
 @Composable
-fun FinishedTestTile(
-    finishedTest: TestState.FinishedTest,
+fun LoadingTestTile(
+    loadingTest: TestState.LoadingTest,
     onClick: () -> Unit,
 ) {
     val paddings = 10.dp
@@ -54,7 +54,7 @@ fun FinishedTestTile(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            val icon = when(finishedTest.finishedTest.icon) {
+            val icon = when(loadingTest.loadingTest.icon) {
                 TestIcons.ESSAY -> Icons.Filled.Face
             }
             Icon(
@@ -74,43 +74,49 @@ fun FinishedTestTile(
                 Text(
                     modifier = Modifier
                         .weight(1f),
-                    text = finishedTest.finishedTest.title,
+                    text = loadingTest.loadingTest.title,
                     style = AppTheme.typography.body,
                     color = AppTheme.colors.text,
                 )
                 Text(
                     modifier = Modifier
                         .weight(1f),
-                    text = finishedTest.finishedTest.description,
+                    text = loadingTest.loadingTest.description,
                     style = AppTheme.typography.small,
                     color = AppTheme.colors.textField,
                     overflow = TextOverflow.Ellipsis,
                 )
             }
 
-            Text(
-                text = finishedTest.finishedTest.level,
-                fontSize = 25.sp,
-                fontWeight = FontWeight.Bold,
-                color = finishedTest.finishedTest.levelColor.color,
-            )
+            Box(
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    color = AppTheme.colors.primary,
+                )
+                Text(
+                    modifier = Modifier,
+                    text = "${loadingTest.loadingTest.progress}%",
+                    color = AppTheme.colors.text,
+                    fontSize = 11.sp,
+                )
+            }
         }
     }
 }
 
 @Composable
 @Preview(showBackground = true)
-fun FinishedTestTilePreview(darkTheme: Boolean = true) {
+fun LoadingTestTilePreview(darkTheme: Boolean = true) {
     EstimateAITheme(darkTheme = darkTheme) {
         Surface(color = AppTheme.colors.background) {
-            FinishedTestTile(
-                finishedTest = TestState.FinishedTest(
-                    finishedTest = FinishedTest(
+            LoadingTestTile(
+                loadingTest = TestState.LoadingTest(
+                    loadingTest = LoadingTest(
                         icon = TestIcons.ESSAY,
                         title = "Title name example",
                         description = "Write an essay on any topic. Your English level will be estimated based on it.",
-                        level = "A2",
-                        levelColor = TestLevelColors.A2,
+                        progress = 59,
                     ),
                 ),
                 onClick = {},
