@@ -25,6 +25,7 @@ import com.evg.registration.presentation.RegistrationRoot
 import com.evg.LocalNavHostController
 import com.evg.login.presentation.LoginRoot
 import com.evg.password_reset.presentation.PasswordResetRoot
+import com.evg.test_select.presentation.TestSelectRoot
 import com.evg.tests_list.presentation.TestsListRoot
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
@@ -58,36 +59,31 @@ fun MainScreen() {
                 }
             }
         ) { paddingValues ->
-            /*Box(
-                modifier = Modifier
-                    .padding(
-                        top = paddingValues.calculateTopPadding(),
-                        start = paddingValues.calculateStartPadding(layoutDirection),
-                        end = paddingValues.calculateEndPadding(layoutDirection)
-                    )
-            ) {*/
-                NavHost(
-                    navController = navController,
-                    startDestination = startDestination,
-                    modifier = Modifier.padding(paddingValues)
-                ) {
-                    // Без BottomBar
-                    composable("registration") { RegistrationRoot() }
-                    composable("login") { LoginRoot() }
-                    composable( "password_reset") { PasswordResetRoot() }
+            NavHost(
+                navController = navController,
+                startDestination = startDestination,
+                modifier = Modifier.padding(paddingValues)
+            ) {
+                // Без BottomBar
+                composable("registration") { RegistrationRoot() }
+                composable("login") { LoginRoot() }
+                composable( "password_reset") { PasswordResetRoot() }
 
-                    // С BottomBar
-                    composable(route = BottomBarScreen.Statistics.route) {
-                        //
-                    }
-                    composable(route = BottomBarScreen.Tests.route) {
-                        TestsListRoot()
-                    }
-                    composable(route = BottomBarScreen.Account.route) {
-                        //
-                    }
+                composable( "tests-list") { TestsListRoot() }
+                composable( "test-select") { TestSelectRoot() }
+
+
+                // С BottomBar
+                composable(route = BottomBarScreen.Statistics.route) {
+                    //
                 }
-            //}
+                composable(route = BottomBarScreen.Tests.route) {
+                    TestsListRoot()
+                }
+                composable(route = BottomBarScreen.Account.route) {
+                    //
+                }
+            }
         }
     }
 }

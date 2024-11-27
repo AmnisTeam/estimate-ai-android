@@ -19,12 +19,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.evg.model.TestIcons
+import com.evg.resource.R
 import com.evg.tests_list.domain.model.LoadingTest
 import com.evg.tests_list.presentation.model.TestState
 import com.evg.ui.extensions.clickableRipple
@@ -55,13 +57,13 @@ fun LoadingTestTile(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             val icon = when(loadingTest.loadingTest.icon) {
-                TestIcons.ESSAY -> Icons.Filled.Face
+                TestIcons.ESSAY -> painterResource(id = R.drawable.essay)
             }
             Icon(
                 modifier = Modifier
-                    .padding(vertical = paddings)
+                    .padding(vertical = 20.dp)
                     .size(50.dp),
-                imageVector = icon,
+                painter = icon,
                 contentDescription = null,
                 tint = AppTheme.colors.text,
             )

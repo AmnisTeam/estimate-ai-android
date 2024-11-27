@@ -32,6 +32,7 @@ import com.evg.ui.custom.RoundedButton
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
 import com.evg.ui.theme.HorizontalPadding
+import com.evg.ui.theme.HorizontalPaddingTile
 import com.evg.ui.theme.VerticalPadding
 import com.evg.ui.theme.darkAddButtonColor
 import com.evg.ui.theme.lightAddButtonColor
@@ -45,7 +46,7 @@ fun TestsListScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(
-                horizontal = HorizontalPadding,
+                horizontal = HorizontalPaddingTile,
                 vertical = VerticalPadding,
             ),
     ) {
@@ -92,7 +93,7 @@ fun TestsListScreen(
             icon = painterResource(id = R.drawable.plus),
             iconColor = AppTheme.colors.primary,
             onClick = {
-
+                navigation.navigate("test-select")
             },
         )
     }

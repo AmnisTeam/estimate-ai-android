@@ -1,5 +1,6 @@
-package com.evg.tests_list.presentation
+package com.evg.test_select.presentation
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,27 +20,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.evg.model.TestIcons
-import com.evg.model.TestLevelColors
 import com.evg.resource.R
-import com.evg.tests_list.domain.model.FinishedTest
-import com.evg.tests_list.presentation.model.TestState
+import com.evg.test_select.presentation.model.TestType
 import com.evg.ui.extensions.clickableRipple
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.BorderRadius
 import com.evg.ui.theme.EstimateAITheme
 
 @Composable
-fun FinishedTestTile(
-    finishedTest: TestState.FinishedTest,
+fun TestTypeTile(
+    testType: TestType,
     onClick: () -> Unit,
 ) {
-    val paddings = 10.dp
+    val paddings = 20.dp
 
     Box(
         modifier = Modifier
@@ -52,17 +49,17 @@ fun FinishedTestTile(
         Row(
             modifier = Modifier
                 .padding(horizontal = paddings)
-                .height(80.dp)
+                .height(150.dp)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            val icon = when(finishedTest.finishedTest.icon) {
+            val icon = when (testType.icon) {
                 TestIcons.ESSAY -> painterResource(id = R.drawable.essay)
             }
             Icon(
                 modifier = Modifier
-                    .padding(vertical = 20.dp)
-                    .size(50.dp),
+                    .padding(vertical = paddings)
+                    .size(70.dp),
                 painter = icon,
                 contentDescription = null,
                 tint = AppTheme.colors.text,
@@ -76,46 +73,35 @@ fun FinishedTestTile(
                 Text(
                     modifier = Modifier
                         .weight(1f),
-                    text = finishedTest.finishedTest.title,
+                    text = testType.title,
                     style = AppTheme.typography.body,
                     color = AppTheme.colors.text,
                 )
                 Text(
                     modifier = Modifier
                         .weight(1f),
-                    text = finishedTest.finishedTest.description,
+                    text = testType.description,
                     style = AppTheme.typography.small,
                     color = AppTheme.colors.textField,
                     overflow = TextOverflow.Ellipsis,
                 )
             }
-
-            Text(
-                text = finishedTest.finishedTest.level,
-                fontSize = 25.sp,
-                fontWeight = FontWeight.Bold,
-                color = finishedTest.finishedTest.levelColor.color,
-            )
         }
     }
 }
 
 @Composable
-@Preview(showBackground = true)
-fun FinishedTestTilePreview(darkTheme: Boolean = true) {
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+fun TestTypeTilePreview(darkTheme: Boolean = true) {
     EstimateAITheme(darkTheme = darkTheme) {
         Surface(color = AppTheme.colors.background) {
-            FinishedTestTile(
-                finishedTest = TestState.FinishedTest(
-                    finishedTest = FinishedTest(
-                        icon = TestIcons.ESSAY,
-                        title = "Title name example",
-                        description = "Write an essay on any topic. Your English level will be estimated based on it.",
-                        level = "A2",
-                        levelColor = TestLevelColors.A2,
-                    ),
+            TestTypeTile(
+                testType = TestType(
+                    icon = TestIcons.ESSAY,
+                    title = "The essay test",
+                    description = "Write an essay on any topic. Your English level will be estimated based on it",
                 ),
-                onClick = {},
+                onClick = {}
             )
         }
     }

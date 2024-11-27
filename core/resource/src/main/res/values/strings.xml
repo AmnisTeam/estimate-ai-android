@@ -37,4 +37,7 @@
     <string name="password_reset">Password reset</string>
     <string name="reset">Reset</string>
 
+    <!--Test select screen-->
+    <string name="select_test_type">Select the test type</string>
+
 </resources>
