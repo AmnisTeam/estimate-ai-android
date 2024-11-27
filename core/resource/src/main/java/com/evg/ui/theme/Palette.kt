@@ -12,6 +12,9 @@ data class AppPalette(
     val textField: Color,
     val textFieldName: Color,
     val textFieldBackground: Color,
+
+    // BottomBar
+    val bottomBarSelected: Color,
 )
 
 enum class AppStyle {
@@ -29,6 +32,9 @@ val baseDarkPalette = AppPalette(
     textField = Color(0xFF6C6D8D),
     textFieldName = Color(0xFFAAAAAA),
     textFieldBackground = Color(0xFF1C1C2D),
+
+    // BottomBar
+    bottomBarSelected = Color(0xFF342F52),
 )
 
 val baseLightPalette = AppPalette(
@@ -41,5 +47,8 @@ val baseLightPalette = AppPalette(
     textField = Color(0xFF6C6D8D),
     textFieldName = Color(0xFFAAAAAA),
     textFieldBackground = Color(0xFFF1F1F1),  // Светлый фон для текстовых полей
+
+    // BottomBar
+    bottomBarSelected = Color(0xFF342F52),
 )
 

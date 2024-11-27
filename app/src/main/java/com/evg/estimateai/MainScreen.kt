@@ -1,6 +1,11 @@
 package com.evg.estimateai
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -14,11 +19,13 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.evg.registration.presentation.RegistrationRoot
 import com.evg.LocalNavHostController
 import com.evg.login.presentation.LoginRoot
 import com.evg.password_reset.presentation.PasswordResetRoot
+import com.evg.tests_list.presentation.TestsListRoot
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
 
@@ -36,43 +43,51 @@ fun MainScreen() {
     }*/
     val startDestination = "login"
 
-    // val activity = (LocalContext.current as Activity)
-    // activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
+    val currentDestination = navController.currentBackStackEntryAsState().value?.destination?.route
     CompositionLocalProvider(LocalNavHostController provides navController) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             containerColor = AppTheme.colors.background,
+            bottomBar = {
+                AnimatedVisibility(
+                    visible = currentDestination in BottomBarScreen.allRoutes,
+                    enter = fadeIn() + slideInVertically { it },
+                    exit = fadeOut() + slideOutVertically { it },
+                ) {
+                    BottomBar(navController)
+                }
+            }
         ) { paddingValues ->
-            Box(
+            /*Box(
                 modifier = Modifier
                     .padding(
                         top = paddingValues.calculateTopPadding(),
                         start = paddingValues.calculateStartPadding(layoutDirection),
                         end = paddingValues.calculateEndPadding(layoutDirection)
                     )
-            ) {
+            ) {*/
                 NavHost(
                     navController = navController,
                     startDestination = startDestination,
+                    modifier = Modifier.padding(paddingValues)
                 ) {
-                    composable(
-                        route = "registration"
-                    ) {
-                        RegistrationRoot()
+                    // Без BottomBar
+                    composable("registration") { RegistrationRoot() }
+                    composable("login") { LoginRoot() }
+                    composable( "password_reset") { PasswordResetRoot() }
+
+                    // С BottomBar
+                    composable(route = BottomBarScreen.Statistics.route) {
+                        //
                     }
-                    composable(
-                        route = "login"
-                    ) {
-                        LoginRoot()
+                    composable(route = BottomBarScreen.Tests.route) {
+                        TestsListRoot()
                     }
-                    composable(
-                        route = "password_reset"
-                    ) {
-                        PasswordResetRoot()
+                    composable(route = BottomBarScreen.Account.route) {
+                        //
                     }
                 }
-            }
+            //}
         }
     }
 }

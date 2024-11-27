@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.sp
 data class AppTypography(
     val heading: TextStyle,
     val body: TextStyle,
+    val small: TextStyle,
 )
 
 enum class AppSize {
@@ -21,6 +22,10 @@ val mediumTextSize = AppTypography(
     ),
     body = TextStyle(
         fontSize = 16.sp,
+        fontWeight = FontWeight.Normal,
+    ),
+    small = TextStyle(
+        fontSize = 12.sp,
         fontWeight = FontWeight.Normal,
     ),
 )

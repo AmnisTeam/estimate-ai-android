@@ -58,6 +58,7 @@ dependencies {
     implementation(project(":feature:registration"))
     implementation(project(":feature:login"))
     implementation(project(":feature:password-reset"))
+    implementation(project(":feature:tests-list"))
 
     // Koin
     implementation(libs.di.koin)

@@ -2,11 +2,11 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.jetbrains.kotlin.ksp)
+//    alias(libs.plugins.jetbrains.kotlin.ksp)
 }
 
 android {
-    namespace = "com.evg.login"
+    namespace = "com.evg.tests_list"
     compileSdk = 35
 
     defaultConfig {

@@ -6,6 +6,7 @@ import com.evg.login.di.loginModule
 import com.evg.password_reset.di.passwordResetModule
 import com.evg.registration.di.registrationModule
 import com.evg.shared_prefs.di.sharedPrefsModule
+import com.evg.tests_list.di.testsListModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
@@ -17,7 +18,7 @@ class App: Application() {
         startKoin {
             androidLogger(Level.DEBUG) //TODO
             androidContext(this@App)
-            modules(sharedPrefsModule, registrationModule, loginModule, passwordResetModule, apiModule)
+            modules(sharedPrefsModule, apiModule, registrationModule, loginModule, passwordResetModule, testsListModule)
         }
     }
 }
