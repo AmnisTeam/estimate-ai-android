@@ -30,6 +30,7 @@ import com.evg.tests_list.presentation.model.TestState
 import com.evg.tests_list.presentation.mvi.TestsListState
 import com.evg.ui.custom.RoundedButton
 import com.evg.ui.theme.AppTheme
+import com.evg.ui.theme.ButtonPadding
 import com.evg.ui.theme.EstimateAITheme
 import com.evg.ui.theme.HorizontalPadding
 import com.evg.ui.theme.HorizontalPaddingTile
@@ -88,7 +89,7 @@ fun TestsListScreen(
         RoundedButton(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(25.dp),
+                .padding(ButtonPadding),
             backgroundColor = if (isSystemInDarkTheme()) darkAddButtonColor else lightAddButtonColor,
             icon = painterResource(id = R.drawable.plus),
             iconColor = AppTheme.colors.primary,

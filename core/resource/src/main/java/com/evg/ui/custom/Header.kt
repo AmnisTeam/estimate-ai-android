@@ -33,6 +33,8 @@ fun Header(
     title: String,
 ) {
     Column {
+        Spacer(modifier = Modifier.height(VerticalPadding))
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
@@ -57,7 +59,7 @@ fun Header(
             )
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(VerticalPadding))
 
         Box(
             modifier = Modifier

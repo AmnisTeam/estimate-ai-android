@@ -72,7 +72,7 @@ fun AuthorizationTextField(
                         Modifier.border(1.dp, color = Color.Red, shape = RoundedCornerShape(BorderRadius))
                     } else { Modifier }
                 )*/,
-                textStyle = AppTheme.typography.body.copy(
+            textStyle = AppTheme.typography.body.copy(
                 color = AppTheme.colors.text
             ),
             cursorBrush = SolidColor(AppTheme.colors.primary),

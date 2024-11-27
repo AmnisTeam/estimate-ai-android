@@ -32,8 +32,6 @@ fun TestSelectScreen(
         modifier = Modifier
             .fillMaxSize(),
     ) {
-        Spacer(modifier = Modifier.height(VerticalPadding))
-
         Header(
             navigation = navigation,
             title = stringResource(id = R.string.select_test_type)

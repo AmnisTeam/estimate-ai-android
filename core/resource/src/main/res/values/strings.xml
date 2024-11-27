@@ -39,5 +39,10 @@
 
     <!--Test select screen-->
     <string name="select_test_type">Select the test type</string>
+    <string name="essay_test_description">Write an essay on any topic. Your English level will be estimated based on it.</string>
+
+    <!--Test essay screen-->
+    <string name="essay_test">The essay test</string>
+    <string name="characters">Characters</string>
 
 </resources>

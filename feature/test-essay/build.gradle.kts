@@ -1,25 +1,18 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.jetbrains.kotlin.ksp)
 }
 
 android {
-    namespace = "com.evg.estimateai"
+    namespace = "com.evg.test_essay"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.evg.estimateai"
         minSdk = 26
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -38,34 +31,22 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
     implementation(project(":core:resource"))
-    implementation(project(":core:shared-prefs"))
     implementation(project(":core:api"))
-    implementation(project(":feature:registration"))
-    implementation(project(":feature:login"))
-    implementation(project(":feature:password-reset"))
-    implementation(project(":feature:tests-list"))
-    implementation(project(":feature:test-select"))
-    implementation(project(":feature:test-essay"))
 
     // Koin
     implementation(libs.di.koin)
+    implementation(libs.di.koin.compose)
 
-    //Navigation
+    // MVI Orbit
+    implementation(libs.mvi.orbit.core)
+    implementation(libs.mvi.orbit.viewmodel)
+    implementation(libs.mvi.orbit.compose)
+
+    // Navigation
     implementation(libs.androidx.ui.navigation)
 
     implementation(libs.androidx.core.ktx)

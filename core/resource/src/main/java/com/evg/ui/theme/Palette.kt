@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.Color
 
 data class AppPalette(
     val primary: Color,
+    val secondary: Color,
     val background: Color,
 
     val text: Color,
@@ -24,6 +25,7 @@ enum class AppStyle {
 
 val baseDarkPalette = AppPalette(
     primary = Color(0xFFC6B8FF),
+    secondary = Color(0xFF4F378B),
     background = Color(0xFF161622),
 
     text = Color(0xFFFFFFFF),
@@ -39,6 +41,7 @@ val baseDarkPalette = AppPalette(
 
 val baseLightPalette = AppPalette(
     primary = Color(0xFFC6B8FF),
+    secondary = Color(0xFFC6B8FF),
     background = Color(0xFFFFFFFF),  // Светлый фон для светлой темы
 
     text = Color(0xFF000000),  // Тёмный текст на светлом фоне
