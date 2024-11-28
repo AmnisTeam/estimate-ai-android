@@ -44,5 +44,11 @@
     <!--Test essay screen-->
     <string name="essay_test">The essay test</string>
     <string name="characters">Characters</string>
+    <string name="number_characters">Number of characters</string>
+    <string name="not_enough">Not enough</string>
+    <string name="normal">Normal</string>
+    <string name="enough">Enough</string>
+    <string name="maximum">Maximum</string>
+    <string name="maximum_characters_exceeded">The maximum number of characters has been exceeded</string>
 
 </resources>
