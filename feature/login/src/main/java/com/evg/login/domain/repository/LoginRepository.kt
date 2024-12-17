@@ -5,5 +5,5 @@ import com.evg.api.domain.utils.ServerResult
 import com.evg.login.domain.model.User
 
 interface LoginRepository {
-    suspend fun loginUser(user: User): ServerResult<Unit, LoginError>
+    suspend fun loginUser(user: User): ServerResult<String, LoginError>
 }

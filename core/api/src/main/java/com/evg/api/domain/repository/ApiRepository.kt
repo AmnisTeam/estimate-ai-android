@@ -10,6 +10,6 @@ import com.evg.api.type.UserRegistrationDTO
 
 interface ApiRepository {
     suspend fun registrationUser(user: UserRegistrationDTO): ServerResult<Unit, RegistrationError>
-    suspend fun loginUser(user: UserLoginDTO): ServerResult<Unit, LoginError>
+    suspend fun loginUser(user: UserLoginDTO): ServerResult<String, LoginError>
     suspend fun passwordReset(passwordReset: PasswordResetDTO): ServerResult<Unit, PasswordResetError>
 }

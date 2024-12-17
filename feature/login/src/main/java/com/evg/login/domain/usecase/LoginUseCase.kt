@@ -8,7 +8,7 @@ import com.evg.login.domain.repository.LoginRepository
 class LoginUseCase(
     private val loginRepository: LoginRepository
 ) {
-    suspend fun invoke(user: User): ServerResult<Unit, LoginError> {
+    suspend fun invoke(user: User): ServerResult<String, LoginError> {
         return loginRepository.loginUser(user = user)
     }
 }

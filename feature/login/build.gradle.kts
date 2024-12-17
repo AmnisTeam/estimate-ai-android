@@ -37,6 +37,7 @@ android {
 dependencies {
     implementation(project(":core:resource"))
     implementation(project(":core:api"))
+    implementation(project(":core:shared-prefs"))
 
     // Koin
     implementation(libs.di.koin)

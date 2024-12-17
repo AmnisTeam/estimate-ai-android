@@ -17,6 +17,7 @@ class LoginViewModel(
         when (val response = loginUseCases.loginUseCase.invoke(user = user)) {
             is ServerResult.Success -> {
                 postSideEffect(LoginSideEffect.LoginSuccess)
+                loginUseCases.saveUserTokenUseCase.invoke(token = response.data)
             }
             is ServerResult.Error -> {
                 postSideEffect(LoginSideEffect.LoginFail(error = response.error))

@@ -10,7 +10,7 @@ import com.evg.login.domain.repository.LoginRepository
 class LoginRepositoryImpl(
     private val apiRepository: ApiRepository,
 ): LoginRepository {
-    override suspend fun loginUser(user: User): ServerResult<Unit, LoginError> {
+    override suspend fun loginUser(user: User): ServerResult<String, LoginError> {
         return apiRepository.loginUser(user = user.toUserLoginDTO())
     }
 }

@@ -20,7 +20,7 @@ fun LoginRoot(
     val context = LocalContext.current
     val navigation = LocalNavHostController.current
 
-    val registrationSuccess = stringResource(R.string.registration_success)
+    val loginSuccess = stringResource(R.string.login_success)
     val errorRequestTimeout = stringResource(R.string.request_timeout)
     val errorTooManyRequests = stringResource(R.string.too_many_requests)
     val errorServerError = stringResource(R.string.server_error)
@@ -30,9 +30,9 @@ fun LoginRoot(
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
             LoginSideEffect.LoginSuccess -> {
-                Toast.makeText(context, registrationSuccess, Toast.LENGTH_SHORT).show()
-                navigation.navigate("login") {
-                    popUpTo("registration") {
+                Toast.makeText(context, loginSuccess, Toast.LENGTH_SHORT).show()
+                navigation.navigate("tests") {
+                    popUpTo("login") {
                         inclusive = true
                     }
                 }

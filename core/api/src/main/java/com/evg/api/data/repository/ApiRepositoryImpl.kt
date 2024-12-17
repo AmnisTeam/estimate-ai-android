@@ -33,7 +33,7 @@ class ApiRepositoryImpl(
         }
     }
 
-    override suspend fun loginUser(user: UserLoginDTO): ServerResult<Unit, LoginError> {
+    override suspend fun loginUser(user: UserLoginDTO): ServerResult<String, LoginError> {
         return try {
             val loginResponse = apolloClient
                 .mutation(LoginUserMutation(data = user))
@@ -44,7 +44,7 @@ class ApiRepositoryImpl(
             if (loginResponse == null) {
                 return ServerResult.Error(LoginError.UNKNOWN)
             }
-            ServerResult.Success(Unit)
+            ServerResult.Success(loginResponse.token)
         } catch (e: Exception) {
             ServerResult.Error(LoginError.UNKNOWN)
         }
