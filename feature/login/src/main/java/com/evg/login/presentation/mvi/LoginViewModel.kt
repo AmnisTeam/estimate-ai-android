@@ -20,7 +20,7 @@ class LoginViewModel(
                 loginUseCases.saveUserTokenUseCase.invoke(token = response.data)
             }
             is ServerResult.Error -> {
-                postSideEffect(LoginSideEffect.LoginFail(error = response.error))
+                postSideEffect(LoginSideEffect.LoginFail(combinedLoginError = response.error))
             }
         }
         reduce { state.copy(isLoginLoading = false) }

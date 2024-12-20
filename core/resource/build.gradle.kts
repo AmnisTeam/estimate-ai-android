@@ -35,6 +35,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:api"))
 
     //Navigation
     implementation(libs.androidx.ui.navigation)

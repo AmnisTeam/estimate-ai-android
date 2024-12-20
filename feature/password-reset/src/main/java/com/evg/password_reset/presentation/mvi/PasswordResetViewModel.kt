@@ -19,7 +19,7 @@ class PasswordResetViewModel(
                 postSideEffect(PasswordResetSideEffect.PasswordResetSuccess)
             }
             is ServerResult.Error -> {
-                postSideEffect(PasswordResetSideEffect.PasswordResetFail(error = response.error))
+                postSideEffect(PasswordResetSideEffect.PasswordResetFail(combinedPasswordResetError = response.error))
             }
         }
         reduce { state.copy(isEmailResetLoading = false) }

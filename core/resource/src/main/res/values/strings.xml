@@ -22,13 +22,16 @@
     <string name="registration_success">Registration success. Check your email</string>
     <string name="request_timeout">Request Timeout</string>
     <string name="too_many_requests">Too Many Requests</string>
+    <string name="not_found">Not found error</string>
     <string name="server_error">Server Error</string>
-    <string name="serialization_error">Serialization Error</string>
+    <string name="protocol_error">Protocol error</string>
+    <string name="connect_error">Connect error</string>
     <string name="unknown_error">Unknown Error</string>
-    <string name="email_exists">Unknown Error</string>
+    <string name="email_exists">Email exists</string>
 
     <!--Login screen-->
     <string name="log_in">Log in</string>
+    <string name="wrong_email_or_password">Wrong email or password</string>
     <string name="login_success">Login success!</string>
     <string name="login_account_progress">Log in to your account so you don’t lose your preferences and progress</string>
     <string name="i_dont_have_account">I don\'t have account</string>
@@ -37,6 +40,10 @@
     <!--Registration screen-->
     <string name="password_reset">Password reset</string>
     <string name="reset">Reset</string>
+
+    <!--Password reset screen-->
+    <string name="letter_with_instructions_send_to_email">A letter with instructions has been sent to the email</string>
+    <string name="email_does_not_exist">Email does not exist</string>
 
     <!--Test select screen-->
     <string name="select_test_type">Select the test type</string>

@@ -19,7 +19,7 @@ class RegistrationViewModel(
                 postSideEffect(RegistrationSideEffect.RegistrationSuccess)
             }
             is ServerResult.Error -> {
-                postSideEffect(RegistrationSideEffect.RegistrationFail(error = response.error))
+                postSideEffect(RegistrationSideEffect.RegistrationFail(combinedRegistrationError = response.error))
             }
         }
         reduce { state.copy(isRegistrationLoading = false) }

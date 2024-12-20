@@ -1,9 +1,10 @@
 package com.evg.api.domain.utils
 
 enum class LoginError: Error {
-    REQUEST_TIMEOUT,
-    TOO_MANY_REQUESTS,
-    SERVER_ERROR,
-    SERIALIZATION,
-    UNKNOWN,
+    WRONG_EMAIL_OR_PASS,
+}
+
+sealed class CombinedLoginError : Error {
+    data class Network(val networkError: NetworkError) : CombinedLoginError()
+    data class Login(val loginError: LoginError) : CombinedLoginError()
 }
