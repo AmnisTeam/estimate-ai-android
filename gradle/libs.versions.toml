@@ -18,6 +18,7 @@ orbit = "9.0.0"
 navigation = "2.8.4"
 material = "1.12.0"
 uiTooling = "1.7.5"
+paging = "3.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,6 +46,11 @@ di-koin = { group = "io.insert-koin", name = "koin-android", version.ref = "koin
 # di-koin-navigation = { group = "io.insert-koin", name = "koin-androidx-navigation", version.ref = "koin" }
 di-koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 # di-koin-test = { group = "io.insert-koin", name = "koin-androidx-test", version.ref = "koin" }
+
+# Paging
+jetpack-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+jetpack-paging-common = { group = "androidx.paging", name = "paging-common-android", version.ref = "paging" }
+jetpack-paging-compose = { group = "androidx.paging", name = "paging-compose-android", version.ref = "paging" }
 
 # RxKotlin
 # rxkotlin = { group = "io.reactivex.rxjava3", name = "rxkotlin", version.ref = "rxkotlin" }

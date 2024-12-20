@@ -8,7 +8,7 @@ import org.koin.dsl.module
 val apiModule = module {
     single {
         ApolloClient.Builder()
-            .serverUrl("https://example.com/graphql")
+            .serverUrl("http://192.168.1.157:8000/graphql")
             .build()
     }
 

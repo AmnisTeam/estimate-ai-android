@@ -1,23 +1,28 @@
 schema {
   query: Query
   mutation: Mutation
+  subscription: Subscription
 }
 
 type Query {
-  _: Boolean
+  getTests(page: Int!): GetTestsResponse!
 }
 
 type Mutation {
   registerUser(data: UserRegistrationDTO!): UserRegistrationResponse!
   loginUser(data: UserLoginDTO!): UserLoginResponse!
   passwordReset(data: PasswordResetDTO!): PasswordResetResponse!
+  createEssayTest(data: CreateEssayTestDTO!): CreateEssayTestResponse!
+}
+
+type Subscription {
+  onTestProgress(topicId: ID!): OnTestProgressResponse!
 }
 
 input UserRegistrationDTO {
   email: String!
   password: String!
 }
-
 type UserRegistrationResponse {
   code: Int!
 }
@@ -26,7 +31,6 @@ input UserLoginDTO {
   email: String!
   password: String!
 }
-
 type UserLoginResponse {
   token: String!
   code: Int!
@@ -35,7 +39,43 @@ type UserLoginResponse {
 input PasswordResetDTO {
   email: String!
 }
-
 type PasswordResetResponse {
   code: Int!
+}
+
+input CreateEssayTestDTO {
+  essay: String!
+}
+type CreateEssayTestResponse {
+  code: Int!
+  id: Int!
+}
+
+union TestResult = ReadyTest | LoadingTest
+type GetTestsResponse {
+  code: Int!
+  count: Int!
+  pages: Int!
+  next: Int!
+  prev: Int!
+  topics: [TestResult!]!
+}
+type ReadyTest {
+  id: Int!
+  title: String!
+  type: String!
+  status: String!
+  level: String!
+  createdAt: Int!
+}
+
+type OnTestProgressResponse {
+  code: Int!
+  loadingTest: LoadingTest!
+}
+type LoadingTest {
+  id: Int!
+  progress: Int!
+  queue: Int!
+  createdAt: Int!
 }

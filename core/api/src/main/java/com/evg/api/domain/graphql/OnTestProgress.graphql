@@ -1,0 +1,11 @@
+subscription OnTestProgress($topicId: ID!) {
+    onTestProgress(topicId: $topicId) {
+        code
+        loadingTest {
+            id
+            progress
+            queue
+            createdAt
+        }
+    }
+}

@@ -1,6 +1,6 @@
 mutation LoginUser($data: UserLoginDTO!) {
     loginUser(data: $data) {
-        token,
-        code,
+        token
+        code
     }
 }

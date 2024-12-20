@@ -1,0 +1,25 @@
+query GetTests($page: Int!) {
+    getTests(page: $page) {
+        code
+        count
+        pages
+        next
+        prev
+        topics {
+            ... on ReadyTest {
+                id
+                title
+                type
+                status
+                level
+                createdAt
+            }
+            ... on LoadingTest {
+                id
+                progress
+                queue
+                createdAt
+            }
+        }
+    }
+}

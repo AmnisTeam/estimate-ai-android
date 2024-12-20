@@ -1,0 +1,6 @@
+mutation CreateEssayTest($data: CreateEssayTestDTO!) {
+    createEssayTest(data: $data) {
+        code
+        id
+    }
+}

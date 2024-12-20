@@ -49,6 +49,9 @@ dependencies {
     // Koin
     implementation(libs.di.koin)
 
+    // Paging
+    implementation(libs.jetpack.paging.common)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
 
