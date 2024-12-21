@@ -1,5 +1,5 @@
 mutation CreateEssayTest($data: CreateEssayTestDTO!) {
-    createEssayTest(data: $data) {
+    createEssayTestResponse(data: $data) {
         code
         id
     }

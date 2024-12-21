@@ -1,5 +1,5 @@
 mutation LoginUser($data: UserLoginDTO!) {
-    loginUser(data: $data) {
+    loginUserResponse(data: $data) {
         token
         code
     }

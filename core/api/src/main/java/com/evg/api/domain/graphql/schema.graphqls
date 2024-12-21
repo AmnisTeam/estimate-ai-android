@@ -5,18 +5,18 @@ schema {
 }
 
 type Query {
-  getTests(page: Int!): GetTestsResponse!
+  getTestsResponse(page: Int!): GetTestsResponse!
 }
 
 type Mutation {
-  registerUser(data: UserRegistrationDTO!): UserRegistrationResponse!
-  loginUser(data: UserLoginDTO!): UserLoginResponse!
-  passwordReset(data: PasswordResetDTO!): PasswordResetResponse!
-  createEssayTest(data: CreateEssayTestDTO!): CreateEssayTestResponse!
+  registerUserResponse(data: UserRegistrationDTO!): UserRegistrationResponse!
+  loginUserResponse(data: UserLoginDTO!): UserLoginResponse!
+  passwordResetResponse(data: PasswordResetDTO!): PasswordResetResponse!
+  createEssayTestResponse(data: CreateEssayTestDTO!): CreateEssayTestResponse!
 }
 
 type Subscription {
-  onTestProgress(topicId: ID!): OnTestProgressResponse!
+  onTestProgressResponse(topicId: ID!): OnTestProgressResponse!
 }
 
 input UserRegistrationDTO {
@@ -56,8 +56,8 @@ type GetTestsResponse {
   code: Int!
   count: Int!
   pages: Int!
-  next: Int!
-  prev: Int!
+  next: Int
+  prev: Int
   topics: [TestResult!]!
 }
 type ReadyTest {

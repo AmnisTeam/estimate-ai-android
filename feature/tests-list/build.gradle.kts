@@ -50,6 +50,11 @@ dependencies {
     // Navigation
     implementation(libs.androidx.ui.navigation)
 
+    // Paging
+    implementation(libs.jetpack.paging.runtime)
+    implementation(libs.jetpack.paging.common)
+    implementation(libs.jetpack.paging.compose)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

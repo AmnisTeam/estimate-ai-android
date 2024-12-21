@@ -1,5 +1,8 @@
 package com.evg.api.data.repository
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.exception.ApolloHttpException
 import com.apollographql.apollo.exception.ApolloNetworkException
@@ -7,6 +10,8 @@ import com.evg.api.GetTestsQuery
 import com.evg.api.LoginUserMutation
 import com.evg.api.PasswordResetMutation
 import com.evg.api.RegisterUserMutation
+import com.evg.api.domain.mapper.toTestResponses
+import com.evg.api.domain.model.GetTestsResponse
 import com.evg.api.domain.repository.ApiRepository
 import com.evg.api.domain.utils.CombinedLoginError
 import com.evg.api.domain.utils.CombinedPasswordResetError
@@ -24,6 +29,7 @@ import java.net.ConnectException
 import java.net.SocketTimeoutException
 
 class ApiRepositoryImpl(
+    private val context: Context,
     private val apolloClient: ApolloClient,
 ): ApiRepository {
     private suspend fun <T> safeApiCall(apiCall: suspend () -> T): ServerResult<T, NetworkError> {
@@ -57,7 +63,7 @@ class ApiRepositoryImpl(
                 .mutation(RegisterUserMutation(data = user))
                 .execute()
                 .dataOrThrow()
-                .registerUser
+                .registerUserResponse
         }
 
         return when (response) {
@@ -79,7 +85,7 @@ class ApiRepositoryImpl(
                 .mutation(LoginUserMutation(data = user))
                 .execute()
                 .dataOrThrow()
-                .loginUser
+                .loginUserResponse
         }
 
         return when (response) {
@@ -101,7 +107,7 @@ class ApiRepositoryImpl(
                 .mutation(PasswordResetMutation(data = passwordReset))
                 .execute()
                 .dataOrThrow()
-                .passwordReset
+                .passwordResetResponse
         }
 
         return when (response) {
@@ -117,14 +123,26 @@ class ApiRepositoryImpl(
         }
     }
 
-    override suspend fun getAllTestsByPage(page: Int): ServerResult<GetTestsQuery.GetTests, NetworkError> {
+    override suspend fun getAllTestsByPage(page: Int): ServerResult<GetTestsResponse, NetworkError> {
         val response = safeApiCall {
             apolloClient
                 .query(GetTestsQuery(page = page))
                 .execute()
                 .dataOrThrow()
-                .getTests
+                .getTestsResponse
+                .toTestResponses()
         }
         return response
+    }
+
+    override fun isInternetAvailable(): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork ?: return false
+        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return when {
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            else -> false
+        }
     }
 }

@@ -1,5 +1,5 @@
 subscription OnTestProgress($topicId: ID!) {
-    onTestProgress(topicId: $topicId) {
+    onTestProgressResponse(topicId: $topicId) {
         code
         loadingTest {
             id

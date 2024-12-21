@@ -1,5 +1,5 @@
 query GetTests($page: Int!) {
-    getTests(page: $page) {
+    getTestsResponse(page: $page) {
         code
         count
         pages

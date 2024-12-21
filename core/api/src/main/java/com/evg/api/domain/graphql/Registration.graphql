@@ -1,5 +1,5 @@
 mutation RegisterUser($data: UserRegistrationDTO!) {
-    registerUser(data: $data) {
+    registerUserResponse(data: $data) {
         code
     }
 }
