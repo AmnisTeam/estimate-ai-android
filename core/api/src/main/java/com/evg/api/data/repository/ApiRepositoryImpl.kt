@@ -145,12 +145,12 @@ class ApiRepositoryImpl(
         return response
     }
 
-    override suspend fun onTestProgress(listIds: List<Int>): ServerResult<Flow<OnTestProgressResponse>, NetworkError> {
+    override suspend fun onTestProgress(): ServerResult<Flow<OnTestProgressResponse>, NetworkError> {
         var isNoData = false //TODO
 
         val response = safeApiCall {
             apolloClient
-                .subscription(OnTestProgressSubscription(listIds = listIds))
+                .subscription(OnTestProgressSubscription())
                 .toFlow()
                 .map {
                     it.dataOrThrow()

@@ -39,9 +39,9 @@ class TestsListRepositoryImpl(
         }*/
     }
 
-    override suspend fun connectTestProgress(listIds: List<Int>): ServerResult<Flow<List<TestType>>, NetworkError> {
+    override suspend fun connectTestProgress(): ServerResult<Flow<List<TestType>>, NetworkError> {
         //return apiRepository.onTestProgress(listIds = listIds)
-        return when (val result = apiRepository.onTestProgress(listIds = listIds)) {
+        return when (val result = apiRepository.onTestProgress()) {
             is ServerResult.Success -> {
                 ServerResult.Success(
                     result.data.map { response ->

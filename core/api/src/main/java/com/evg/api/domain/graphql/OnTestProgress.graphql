@@ -1,5 +1,5 @@
-subscription OnTestProgress($listIds: [Int!]!) {
-    onTestProgressResponse(listIds: $listIds) {
+subscription OnTestProgress {
+    onTestProgressResponse {
         code
         tests {
             ... on ReadyTest {

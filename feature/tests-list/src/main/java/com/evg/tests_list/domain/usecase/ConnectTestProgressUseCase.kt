@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 class ConnectTestProgressUseCase(
     private val testsListRepository: TestsListRepository,
 ) {
-    suspend fun invoke(listIds: List<Int>): ServerResult<Flow<List<TestType>>, NetworkError> {
-        return testsListRepository.connectTestProgress(listIds = listIds)
+    suspend fun invoke(): ServerResult<Flow<List<TestType>>, NetworkError> {
+        return testsListRepository.connectTestProgress()
     }
 }

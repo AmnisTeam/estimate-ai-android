@@ -23,6 +23,7 @@ class TestsListViewModel(
 
     init {
         updateTests()
+        sendLoadingIDsToServer()
     }
 
     fun getAllTests() = intent {
@@ -43,26 +44,14 @@ class TestsListViewModel(
             testsListUseCases.getAllTestsUseCaseUseCase.invoke()
                 .cachedIn(viewModelScope)
                 .collect { tests: PagingData<ServerResult<TestType, NetworkError>> ->
-                    val loadingTestsIDs = mutableListOf<Int>()
-                    tests.map { serverResult ->
-                        val tt: TestType? = when (serverResult) {
-                            is ServerResult.Success -> serverResult.data
-                            is ServerResult.Error -> null
-                        }
-                        if (tt is TestType.OnLoadingTestType) {
-                            loadingTestsIDs.add(tt.id)
-                        }
-                    }
-                    sendLoadingIDsToServer(listIds = loadingTestsIDs)
-
                     state.tests.value = tests
                 }
         }
     }
 
-    private fun sendLoadingIDsToServer(listIds: List<Int>) = intent {
+    private fun sendLoadingIDsToServer() = intent {
         viewModelScope.launch {
-           val result = testsListUseCases.connectTestProgressUseCase.invoke(listIds = listIds)
+           val result = testsListUseCases.connectTestProgressUseCase.invoke()
            when (result) {
                is ServerResult.Success -> {
                    result.data.collect { tests ->

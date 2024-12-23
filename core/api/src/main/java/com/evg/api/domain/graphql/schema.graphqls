@@ -16,7 +16,7 @@ type Mutation {
 }
 
 type Subscription {
-  onTestProgressResponse(listIds: [Int!]!): OnTestProgressResponse!
+  onTestProgressResponse: OnTestProgressResponse!
 }
 
 input UserRegistrationDTO {
