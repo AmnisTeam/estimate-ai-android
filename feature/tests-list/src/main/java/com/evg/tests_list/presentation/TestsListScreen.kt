@@ -78,9 +78,9 @@ fun TestsListScreen(
                                             loadingTest = TestState.LoadingTest(
                                                 loadingTest = LoadingTest(
                                                     icon = TestIcons.ESSAY,
-                                                    title = "Title name example",
+                                                    title = (item.data as TestType.OnLoadingTestType).id.toString(),
                                                     description = "Write an essay on any topic. Your English level will be estimated based on it.",
-                                                    progress = 50,
+                                                    progress = (item.data as TestType.OnLoadingTestType).progress,
                                                 ),
                                             ),
                                             onClick = {},
@@ -91,19 +91,20 @@ fun TestsListScreen(
                                             finishedTest = TestState.FinishedTest(
                                                 finishedTest = FinishedTest(
                                                     icon = TestIcons.ESSAY,
-                                                    title = "Title name example",
+                                                    title = (item.data as TestType.OnReadyTestType).id.toString(),
                                                     description = "Write an essay on any topic. Your English level will be estimated based on it.",
-                                                    level = "A2",
+                                                    level = (item.data as TestType.OnReadyTestType).level,
                                                     levelColor = TestLevelColors.A2,
                                                 ),
                                             ),
                                             onClick = {},
                                         )
                                     }
+                                    is TestType.OnErrorTestType -> TODO()
                                 }
                             }
                             is ServerResult.Error -> {
-                                Toast.makeText(context, "ServerResult Error", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, item.error.name, Toast.LENGTH_SHORT).show()
                             }
                             null -> {
                                 Toast.makeText(context, "null", Toast.LENGTH_SHORT).show()

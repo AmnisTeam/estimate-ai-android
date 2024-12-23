@@ -4,12 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.filter
 import androidx.paging.flatMap
 import androidx.paging.map
 import com.evg.api.domain.utils.NetworkError
 import com.evg.api.domain.utils.ServerResult
 import com.evg.tests_list.domain.model.TestType
 import com.evg.tests_list.domain.usecase.TestsListUseCases
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
@@ -40,18 +42,105 @@ class TestsListViewModel(
         viewModelScope.launch {
             testsListUseCases.getAllTestsUseCaseUseCase.invoke()
                 .cachedIn(viewModelScope)
-                .collect { tests ->
-                    /*val successTests: PagingData<TestType> = tests.map { result ->
-                        when (result) {
-                            is ServerResult.Success -> result.data
-                            is ServerResult.Error -> {
-                                result.data
-                            }
+                .collect { tests: PagingData<ServerResult<TestType, NetworkError>> ->
+                    val loadingTestsIDs = mutableListOf<Int>()
+                    tests.map { serverResult ->
+                        val tt: TestType? = when (serverResult) {
+                            is ServerResult.Success -> serverResult.data
+                            is ServerResult.Error -> null
                         }
-                    }*/
+                        if (tt is TestType.OnLoadingTestType) {
+                            loadingTestsIDs.add(tt.id)
+                        }
+                    }
+                    sendLoadingIDsToServer(listIds = loadingTestsIDs)
 
                     state.tests.value = tests
                 }
         }
     }
+
+    private fun sendLoadingIDsToServer(listIds: List<Int>) = intent {
+        viewModelScope.launch {
+           val result = testsListUseCases.connectTestProgressUseCase.invoke(listIds = listIds)
+           when (result) {
+               is ServerResult.Success -> {
+                   result.data.collect { tests ->
+                       val testsById = tests.associateBy {
+                           when (it) {
+                               is TestType.OnReadyTestType -> it.id
+                               is TestType.OnLoadingTestType -> it.id
+                               is TestType.OnErrorTestType -> it.id
+                           }
+                       }
+
+                       state.tests.value = state.tests.value.map { test ->
+                           when (test) {
+                               is ServerResult.Success -> {
+                                   val currentTestId = when (val data = test.data) {
+                                       is TestType.OnReadyTestType -> data.id
+                                       is TestType.OnLoadingTestType -> data.id
+                                       is TestType.OnErrorTestType -> data.id
+                                   }
+
+                                   val updatedTest = testsById[currentTestId]
+
+                                   if (updatedTest != null) {
+                                       ServerResult.Success(updatedTest)
+                                   } else {
+                                       test
+                                   }
+                               }
+                               is ServerResult.Error -> {
+                                   ServerResult.Error(test.error)
+                               }
+                           }
+                       }
+                   }
+               }
+               is ServerResult.Error -> {
+                   val qwewqe = 34 //TODO
+               }
+           }
+        }
+    }
+
+    /*private fun sendLoadingIDsToServer(ids: List<Int>) = intent {
+        viewModelScope.launch {
+            testsListUseCases.sendLoadingIDsToServerUseCase.invoke()
+                .cachedIn(viewModelScope)
+                .collect { tests: ServerResult<List<TestType>, NetworkError> ->
+                    when (tests) {
+                        is ServerResult.Success -> {
+                            val loadingTests = tests.data.filterIsInstance<TestType.OnReadyTestType>()
+                            val readyTests = tests.data.filterIsInstance<TestType.OnReadyTestType>()
+
+                            state.tests.value = state.tests.value.map { test ->
+                                when (test) {
+                                    is ServerResult.Success -> {
+                                        when (test.data) {
+                                            is TestType.OnLoadingTestType -> {
+                                                val updatedTest = loadingTests.find { it.id == (test.data as TestType.OnLoadingTestType).id }
+                                                ServerResult.Success(updatedTest ?: test.data)
+                                            }
+                                            is TestType.OnReadyTestType -> {
+                                                val updatedTest = readyTests.find { it.id == (test.data as TestType.OnReadyTestType).id }
+                                                ServerResult.Success(updatedTest ?: test.data)
+                                            }
+                                        }
+                                    }
+                                    is ServerResult.Error -> {
+                                        ServerResult.Error(test.error)
+                                    }
+                                }
+                            }
+                        }
+                        is ServerResult.Error -> {
+
+                        }
+                    }
+
+                }
+        }
+    }*/
 }

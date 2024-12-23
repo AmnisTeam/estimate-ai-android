@@ -15,4 +15,7 @@ sealed class TestResponse {
         val queue: Int,
         val createdAt: Int,
     ) : TestResponse()
+    data class OnErrorTestResponse(
+        val id: Int,
+    ) : TestResponse()
 }

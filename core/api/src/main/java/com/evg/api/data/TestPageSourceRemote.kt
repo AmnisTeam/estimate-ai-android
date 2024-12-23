@@ -27,7 +27,7 @@ class TestPageSourceRemote(
         return when (response) {
             is ServerResult.Success -> {
                 LoadResult.Page(
-                    data = response.data.topics.map { ServerResult.Success(it) },
+                    data = response.data.tests.map { ServerResult.Success(it) },
                     prevKey = response.data.prev,
                     nextKey = response.data.next
                 )

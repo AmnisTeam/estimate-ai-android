@@ -2,6 +2,7 @@ package com.evg.tests_list.di
 
 import com.evg.tests_list.data.repository.TestsListRepositoryImpl
 import com.evg.tests_list.domain.repository.TestsListRepository
+import com.evg.tests_list.domain.usecase.ConnectTestProgressUseCase
 import com.evg.tests_list.domain.usecase.GetAllTestsUseCase
 import com.evg.tests_list.domain.usecase.GetAllTestsUseCaseUseCase
 import com.evg.tests_list.domain.usecase.TestsListUseCases
@@ -20,9 +21,11 @@ val testsListModule = module {
     factory {
         TestsListUseCases(
             getAllTestsUseCase = get(),
-            getAllTestsUseCaseUseCase = get()
+            getAllTestsUseCaseUseCase = get(),
+            connectTestProgressUseCase = get(),
         )
     }
     factory { GetAllTestsUseCase(testsListRepository = get()) }
     factory { GetAllTestsUseCaseUseCase(testsListRepository = get()) }
+    factory { ConnectTestProgressUseCase(testsListRepository = get()) }
 }

@@ -5,7 +5,7 @@ query GetTests($page: Int!) {
         pages
         next
         prev
-        topics {
+        tests {
             ... on ReadyTest {
                 id
                 title
@@ -19,6 +19,9 @@ query GetTests($page: Int!) {
                 progress
                 queue
                 createdAt
+            }
+            ... on ErrorTest {
+                id
             }
         }
     }

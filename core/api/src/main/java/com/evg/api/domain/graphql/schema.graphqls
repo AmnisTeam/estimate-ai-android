@@ -16,7 +16,7 @@ type Mutation {
 }
 
 type Subscription {
-  onTestProgressResponse(topicId: ID!): OnTestProgressResponse!
+  onTestProgressResponse(listIds: [Int!]!): OnTestProgressResponse!
 }
 
 input UserRegistrationDTO {
@@ -51,14 +51,19 @@ type CreateEssayTestResponse {
   id: Int!
 }
 
-union TestResult = ReadyTest | LoadingTest
+union TestResult = ReadyTest | LoadingTest | ErrorTest
 type GetTestsResponse {
   code: Int!
   count: Int!
   pages: Int!
   next: Int
   prev: Int
-  topics: [TestResult!]!
+  tests: [TestResult!]!
+}
+
+type OnTestProgressResponse {
+  code: Int!
+  tests: [TestResult!]!
 }
 type ReadyTest {
   id: Int!
@@ -68,14 +73,15 @@ type ReadyTest {
   level: String!
   createdAt: Int!
 }
-
-type OnTestProgressResponse {
-  code: Int!
-  loadingTest: LoadingTest!
-}
 type LoadingTest {
   id: Int!
+  type: String!
   progress: Int!
   queue: Int!
+  createdAt: Int!
+}
+type ErrorTest {
+  id: Int!
+  type: String!
   createdAt: Int!
 }

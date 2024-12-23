@@ -8,4 +8,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface TestsListRepository {
     suspend fun getAllTestsByPage(): Flow<PagingData<ServerResult<TestType, NetworkError>>>
+    suspend fun connectTestProgress(listIds: List<Int>): ServerResult<Flow<List<TestType>>, NetworkError>
 }

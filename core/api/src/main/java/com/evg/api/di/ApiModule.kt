@@ -10,6 +10,7 @@ val apiModule = module {
     single {
         ApolloClient.Builder()
             .serverUrl("http://192.168.1.157:8000/graphql")
+            .webSocketServerUrl("ws://192.168.1.157:8000/graphql")
             .build()
     }
 

@@ -6,5 +6,5 @@ data class GetTestsResponse(
     val pages: Int,
     val next: Int?,
     val prev: Int?,
-    val topics: List<TestResponse>,
+    val tests: List<TestResponse>,
 )

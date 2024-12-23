@@ -1,11 +1,24 @@
-subscription OnTestProgress($topicId: ID!) {
-    onTestProgressResponse(topicId: $topicId) {
+subscription OnTestProgress($listIds: [Int!]!) {
+    onTestProgressResponse(listIds: $listIds) {
         code
-        loadingTest {
-            id
-            progress
-            queue
-            createdAt
+        tests {
+            ... on ReadyTest {
+                id
+                title
+                type
+                status
+                level
+                createdAt
+            }
+            ... on LoadingTest {
+                id
+                progress
+                queue
+                createdAt
+            }
+            ... on ErrorTest {
+                id
+            }
         }
     }
 }

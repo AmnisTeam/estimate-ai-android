@@ -15,4 +15,7 @@ sealed class TestType {
         val queue: Int,
         val createdAt: Int,
     ) : TestType()
+    data class OnErrorTestType(
+        val id: Int,
+    ) : TestType()
 }

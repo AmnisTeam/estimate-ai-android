@@ -23,5 +23,10 @@ fun TestResponse.toTestType(): TestType {
                 createdAt = this.createdAt
             )
         }
+        is TestResponse.OnErrorTestResponse -> {
+            TestType.OnErrorTestType(
+                id = this.id,
+            )
+        }
     }
 }
