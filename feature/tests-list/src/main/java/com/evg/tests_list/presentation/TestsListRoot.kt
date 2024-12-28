@@ -16,5 +16,6 @@ fun TestsListRoot(
     TestsListScreen(
         navigation = navigation,
         state = viewModel.collectAsState().value,
+        getAllTests = viewModel::getAllTests,
     )
 }

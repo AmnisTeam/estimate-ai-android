@@ -146,29 +146,20 @@ class ApiRepositoryImpl(
     }
 
     override suspend fun onTestProgress(): ServerResult<Flow<OnTestProgressResponse>, NetworkError> {
-        var isNoData = false //TODO
-
-        val response = safeApiCall {
-            apolloClient
-                .subscription(OnTestProgressSubscription())
-                .toFlow()
-                .map {
-                    it.dataOrThrow()
-                        .onTestProgressResponse
-                        .toOnTestProgressResponse()
-                }
-                .catch { exception ->
-                    if (exception is NoDataException) {
-                        isNoData = true
-                    } else {
-                        throw exception
+        return try {
+            val response = safeApiCall {
+                apolloClient
+                    .subscription(OnTestProgressSubscription())
+                    .toFlow()
+                    .map {
+                        it.dataOrThrow()
+                            .onTestProgressResponse
+                            .toOnTestProgressResponse()
                     }
-                }
-        }
-        return if (isNoData) {
-            ServerResult.Error(NetworkError.UNKNOWN)
-        } else {
+            }
             response
+        } catch (e: NoDataException) {
+            ServerResult.Error(NetworkError.UNKNOWN)
         }
     }
 

@@ -1,5 +1,6 @@
 package com.evg.tests_list.presentation
 
+import android.content.Context
 import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -23,7 +24,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.evg.api.domain.utils.NetworkError
 import com.evg.api.domain.utils.ServerResult
 import com.evg.model.TestIcons
 import com.evg.model.TestLevelColors
@@ -47,6 +50,7 @@ import com.evg.ui.theme.lightAddButtonColor
 fun TestsListScreen(
     navigation: NavHostController,
     state: TestsListState,
+    getAllTests: () -> Unit,
 ) {
     val context = LocalContext.current
     val tests = state.tests.collectAsLazyPagingItems()
@@ -59,94 +63,10 @@ fun TestsListScreen(
                 vertical = VerticalPadding,
             ),
     ) {
-        when (tests.loadState.refresh) {
-            is LoadState.Loading -> {
-
-            }
-            is LoadState.NotLoading -> {
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    items(
-                        count = tests.itemCount,
-                    ) { index ->
-                        when (val item = tests[index]) {
-                            is ServerResult.Success -> {
-                                when (item.data) {
-                                    is TestType.OnLoadingTestType -> {
-                                        LoadingTestTile(
-                                            loadingTest = TestState.LoadingTest(
-                                                loadingTest = LoadingTest(
-                                                    icon = TestIcons.ESSAY,
-                                                    title = (item.data as TestType.OnLoadingTestType).id.toString(),
-                                                    description = "Write an essay on any topic. Your English level will be estimated based on it.",
-                                                    progress = (item.data as TestType.OnLoadingTestType).progress,
-                                                ),
-                                            ),
-                                            onClick = {},
-                                        )
-                                    }
-                                    is TestType.OnReadyTestType -> {
-                                        FinishedTestTile(
-                                            finishedTest = TestState.FinishedTest(
-                                                finishedTest = FinishedTest(
-                                                    icon = TestIcons.ESSAY,
-                                                    title = (item.data as TestType.OnReadyTestType).id.toString(),
-                                                    description = "Write an essay on any topic. Your English level will be estimated based on it.",
-                                                    level = (item.data as TestType.OnReadyTestType).level,
-                                                    levelColor = TestLevelColors.A2,
-                                                ),
-                                            ),
-                                            onClick = {},
-                                        )
-                                    }
-                                    is TestType.OnErrorTestType -> TODO()
-                                }
-                            }
-                            is ServerResult.Error -> {
-                                Toast.makeText(context, item.error.name, Toast.LENGTH_SHORT).show()
-                            }
-                            null -> {
-                                Toast.makeText(context, "null", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                }
-            }
-            is LoadState.Error -> {
-                Toast.makeText(context, "LoadState Error", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        /*LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            items(25) {
-                FinishedTestTile(
-                    finishedTest = TestState.FinishedTest(
-                        finishedTest = FinishedTest(
-                            icon = TestIcons.ESSAY,
-                            title = "Title name example",
-                            description = "Write an essay on any topic. Your English level will be estimated based on it.",
-                            level = "A2",
-                            levelColor = TestLevelColors.A2,
-                        ),
-                    ),
-                    onClick = {},
-                )
-                *//*LoadingTestTile(
-                    loadingTest = TestState.LoadingTest(
-                        loadingTest = LoadingTest(
-                            icon = TestIcons.ESSAY,
-                            title = "Title name example",
-                            description = "Write an essay on any topic. Your English level will be estimated based on it.",
-                            progress = 59,
-                        ),
-                    ),
-                    onClick = {},
-                )*//*
-            }
-        }*/
+        TestsLazyColumn(
+            tests = tests,
+            getAllTests = getAllTests,
+        )
     }
 
     Box(
@@ -178,6 +98,7 @@ fun TestsListScreenPreview(darkTheme: Boolean = true) {
                 state = TestsListState(
                     isTestsLoading = false,
                 ),
+                getAllTests = {},
             )
         }
     }
