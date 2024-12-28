@@ -9,6 +9,8 @@ import com.evg.api.domain.utils.NetworkError
 import com.evg.api.domain.utils.ServerResult
 import com.evg.tests_list.domain.model.TestType
 import com.evg.tests_list.domain.usecase.TestsListUseCases
+import com.evg.tests_list.presentation.mapper.toTestState
+import com.evg.tests_list.presentation.model.TestState
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
@@ -29,7 +31,14 @@ class TestsListViewModel(
             testsListUseCases.getAllTestsUseCaseUseCase.invoke()
                 .cachedIn(viewModelScope)
                 .collect { tests: PagingData<ServerResult<TestType, NetworkError>> ->
-                    state.tests.value = tests
+                    val mappedTests: PagingData<ServerResult<TestState, NetworkError>> = tests.map { result ->
+                        when (result) {
+                            is ServerResult.Success -> ServerResult.Success(result.data.toTestState())
+                            is ServerResult.Error -> ServerResult.Error(result.error)
+                        }
+                    }
+
+                    state.tests.value = mappedTests
                     reduce { state.copy(isTestsLoading = false) }
                 }
         }
@@ -37,15 +46,14 @@ class TestsListViewModel(
 
     private fun sendLoadingIDsToServer() = intent {
         viewModelScope.launch {
-           val result = testsListUseCases.connectTestProgressUseCase.invoke()
-           when (result) {
+           when (val result = testsListUseCases.connectTestProgressUseCase.invoke()) {
                is ServerResult.Success -> {
                    result.data.collect { tests ->
-                       val testsById = tests.associateBy {
+                       val testsById = tests.map { it.toTestState() } .associateBy {
                            when (it) {
-                               is TestType.OnReadyTestType -> it.id
-                               is TestType.OnLoadingTestType -> it.id
-                               is TestType.OnErrorTestType -> it.id
+                               is TestState.ErrorTest -> it.id
+                               is TestState.FinishedTest -> it.id
+                               is TestState.LoadingTest -> it.id
                            }
                        }
 
@@ -53,9 +61,9 @@ class TestsListViewModel(
                            when (test) {
                                is ServerResult.Success -> {
                                    val currentTestId = when (val data = test.data) {
-                                       is TestType.OnReadyTestType -> data.id
-                                       is TestType.OnLoadingTestType -> data.id
-                                       is TestType.OnErrorTestType -> data.id
+                                       is TestState.ErrorTest -> data.id
+                                       is TestState.FinishedTest -> data.id
+                                       is TestState.LoadingTest -> data.id
                                    }
 
                                    val updatedTest = testsById[currentTestId]

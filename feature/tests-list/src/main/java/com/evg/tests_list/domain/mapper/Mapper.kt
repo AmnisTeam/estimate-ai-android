@@ -10,17 +10,16 @@ fun TestResponse.toTestType(): TestType {
                 id = this.id,
                 title = this.title,
                 type = this.type,
-                status = this.status,
+                description = this.description,
                 level = this.level,
-                createdAt = this.createdAt
             )
         }
         is TestResponse.OnLoadingTestResponse -> {
             TestType.OnLoadingTestType(
                 id = this.id,
-                progress = this.progress,
+                type = this.type,
                 queue = this.queue,
-                createdAt = this.createdAt
+                progress = this.progress,
             )
         }
         is TestResponse.OnErrorTestResponse -> {

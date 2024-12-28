@@ -55,6 +55,7 @@ fun TestTypeTile(
         ) {
             val icon = when (testType.icon) {
                 TestIcons.ESSAY -> painterResource(id = R.drawable.essay)
+                TestIcons.UNKNOWN -> painterResource(id = R.drawable.eye_on) //TODO
             }
             Icon(
                 modifier = Modifier

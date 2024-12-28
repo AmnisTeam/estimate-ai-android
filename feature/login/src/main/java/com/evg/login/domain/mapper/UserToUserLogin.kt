@@ -1,10 +1,10 @@
 package com.evg.login.domain.mapper
 
-import com.evg.api.type.UserLoginDTO
+import com.evg.api.type.UserDTO
 import com.evg.login.domain.model.User
 
-fun User.toUserLoginDTO(): UserLoginDTO {
-    return UserLoginDTO(
+fun User.toUserDTO(): UserDTO {
+    return UserDTO(
         email = this.email,
         password = this.password,
     )

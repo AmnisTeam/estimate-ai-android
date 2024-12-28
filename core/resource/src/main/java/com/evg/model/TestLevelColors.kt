@@ -10,4 +10,5 @@ enum class TestLevelColors(val color: Color) {
     B2(com.evg.ui.theme.B2),
     C1(com.evg.ui.theme.C1),
     C2(com.evg.ui.theme.C2),
+    UNKNOWN(Color.Gray), //TODO
 }

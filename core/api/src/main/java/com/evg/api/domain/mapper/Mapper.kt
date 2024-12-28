@@ -19,15 +19,14 @@ fun GetTestsQuery.GetTestsResponse.toTestResponses(): GetTestsResponse {
                     id = topic.onReadyTest.id,
                     title = topic.onReadyTest.title,
                     type = topic.onReadyTest.type,
-                    status = topic.onReadyTest.status,
+                    description = topic.onReadyTest.description,
                     level = topic.onReadyTest.level,
-                    createdAt = topic.onReadyTest.createdAt
                 )
                 topic.onLoadingTest != null -> TestResponse.OnLoadingTestResponse(
                     id = topic.onLoadingTest.id,
-                    progress = topic.onLoadingTest.progress,
+                    type = topic.onLoadingTest.type,
                     queue = topic.onLoadingTest.queue,
-                    createdAt = topic.onLoadingTest.createdAt
+                    progress = topic.onLoadingTest.progress,
                 )
                 topic.onErrorTest != null -> TestResponse.OnErrorTestResponse(
                     id = topic.onErrorTest.id,
@@ -47,15 +46,14 @@ fun OnTestProgressSubscription.OnTestProgressResponse.toOnTestProgressResponse()
                     id = topic.onReadyTest.id,
                     title = topic.onReadyTest.title,
                     type = topic.onReadyTest.type,
-                    status = topic.onReadyTest.status,
+                    description = topic.onReadyTest.description,
                     level = topic.onReadyTest.level,
-                    createdAt = topic.onReadyTest.createdAt
                 )
                 topic.onLoadingTest != null -> TestResponse.OnLoadingTestResponse(
                     id = topic.onLoadingTest.id,
-                    progress = topic.onLoadingTest.progress,
+                    type = topic.onLoadingTest.type,
                     queue = topic.onLoadingTest.queue,
-                    createdAt = topic.onLoadingTest.createdAt
+                    progress = topic.onLoadingTest.progress,
                 )
                 topic.onErrorTest != null -> TestResponse.OnErrorTestResponse(
                     id = topic.onErrorTest.id,

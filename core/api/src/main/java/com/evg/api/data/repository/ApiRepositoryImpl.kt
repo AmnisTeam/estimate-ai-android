@@ -3,7 +3,6 @@ package com.evg.api.data.repository
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.exception.ApolloHttpException
 import com.apollographql.apollo.exception.ApolloNetworkException
@@ -27,8 +26,7 @@ import com.evg.api.domain.utils.PasswordResetError
 import com.evg.api.domain.utils.RegistrationError
 import com.evg.api.domain.utils.ServerResult
 import com.evg.api.type.PasswordResetDTO
-import com.evg.api.type.UserLoginDTO
-import com.evg.api.type.UserRegistrationDTO
+import com.evg.api.type.UserDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -67,7 +65,7 @@ class ApiRepositoryImpl(
         }
     }
 
-    override suspend fun registrationUser(user: UserRegistrationDTO): ServerResult<Unit, CombinedRegistrationError> { //RegisterUserMutation.RegisterUser
+    override suspend fun registrationUser(user: UserDTO): ServerResult<Unit, CombinedRegistrationError> { //RegisterUserMutation.RegisterUser
         val response = safeApiCall {
             apolloClient
                 .mutation(RegisterUserMutation(data = user))
@@ -89,7 +87,7 @@ class ApiRepositoryImpl(
         }
     }
 
-    override suspend fun loginUser(user: UserLoginDTO): ServerResult<String, CombinedLoginError> {
+    override suspend fun loginUser(user: UserDTO): ServerResult<String, CombinedLoginError> {
         val response = safeApiCall {
             apolloClient
                 .mutation(LoginUserMutation(data = user))
@@ -146,21 +144,23 @@ class ApiRepositoryImpl(
     }
 
     override suspend fun onTestProgress(): ServerResult<Flow<OnTestProgressResponse>, NetworkError> {
-        return try {
-            val response = safeApiCall {
-                apolloClient
-                    .subscription(OnTestProgressSubscription())
-                    .toFlow()
-                    .map {
-                        it.dataOrThrow()
-                            .onTestProgressResponse
-                            .toOnTestProgressResponse()
+        val response = safeApiCall {
+            apolloClient
+                .subscription(OnTestProgressSubscription())
+                .toFlow()
+                .map {
+                    it.dataOrThrow()
+                        .onTestProgressResponse
+                        .toOnTestProgressResponse()
+                }.catch { exception ->
+                    if (exception is NoDataException) {
+                        ServerResult.Error<Flow<OnTestProgressResponse>, NetworkError>(NetworkError.UNKNOWN)
+                    } else {
+                        throw exception //TODO test does it throw exceptions from safeApiCall
                     }
-            }
-            response
-        } catch (e: NoDataException) {
-            ServerResult.Error(NetworkError.UNKNOWN)
+                }
         }
+        return response
     }
 
     override fun isInternetAvailable(): Boolean {

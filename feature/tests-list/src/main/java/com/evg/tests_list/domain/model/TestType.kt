@@ -5,15 +5,14 @@ sealed class TestType {
         val id: Int,
         val title: String,
         val type: String,
-        val status: String,
+        val description: String,
         val level: String,
-        val createdAt: Int,
     ) : TestType()
     data class OnLoadingTestType(
         val id: Int,
-        val progress: Int,
+        val type: String,
         val queue: Int,
-        val createdAt: Int,
+        val progress: Int,
     ) : TestType()
     data class OnErrorTestType(
         val id: Int,

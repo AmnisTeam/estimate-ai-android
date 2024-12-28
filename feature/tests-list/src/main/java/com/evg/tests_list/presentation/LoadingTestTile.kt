@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.evg.model.TestIcons
 import com.evg.resource.R
-import com.evg.tests_list.domain.model.LoadingTest
 import com.evg.tests_list.presentation.model.TestState
 import com.evg.ui.extensions.clickableRipple
 import com.evg.ui.theme.AppTheme
@@ -56,8 +55,9 @@ fun LoadingTestTile(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            val icon = when(loadingTest.loadingTest.icon) {
+            val icon = when(loadingTest.icon) {
                 TestIcons.ESSAY -> painterResource(id = R.drawable.essay)
+                TestIcons.UNKNOWN -> painterResource(id = R.drawable.eye_on) //TODO
             }
             Icon(
                 modifier = Modifier
@@ -76,14 +76,14 @@ fun LoadingTestTile(
                 Text(
                     modifier = Modifier
                         .weight(1f),
-                    text = loadingTest.loadingTest.title,
+                    text = "Test #${loadingTest.id}",
                     style = AppTheme.typography.body,
                     color = AppTheme.colors.text,
                 )
                 Text(
                     modifier = Modifier
                         .weight(1f),
-                    text = loadingTest.loadingTest.description,
+                    text = "Number in queue: ${loadingTest.queue}",
                     style = AppTheme.typography.small,
                     color = AppTheme.colors.textField,
                     overflow = TextOverflow.Ellipsis,
@@ -98,7 +98,7 @@ fun LoadingTestTile(
                 )
                 Text(
                     modifier = Modifier,
-                    text = "${loadingTest.loadingTest.progress}%",
+                    text = "${loadingTest.progress}%",
                     color = AppTheme.colors.text,
                     fontSize = 11.sp,
                 )
@@ -114,12 +114,10 @@ fun LoadingTestTilePreview(darkTheme: Boolean = true) {
         Surface(color = AppTheme.colors.background) {
             LoadingTestTile(
                 loadingTest = TestState.LoadingTest(
-                    loadingTest = LoadingTest(
-                        icon = TestIcons.ESSAY,
-                        title = "Title name example",
-                        description = "Write an essay on any topic. Your English level will be estimated based on it.",
-                        progress = 59,
-                    ),
+                    id = 1,
+                    icon = TestIcons.ESSAY,
+                    queue = 1,
+                    progress = 59,
                 ),
                 onClick = {},
             )

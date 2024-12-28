@@ -1,4 +1,4 @@
-mutation LoginUser($data: UserLoginDTO!) {
+mutation LoginUser($data: UserDTO!) {
     loginUserResponse(data: $data) {
         token
         code

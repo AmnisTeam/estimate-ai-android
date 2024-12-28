@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -27,7 +25,6 @@ import androidx.compose.ui.unit.sp
 import com.evg.model.TestIcons
 import com.evg.model.TestLevelColors
 import com.evg.resource.R
-import com.evg.tests_list.domain.model.FinishedTest
 import com.evg.tests_list.presentation.model.TestState
 import com.evg.ui.extensions.clickableRipple
 import com.evg.ui.theme.AppTheme
@@ -56,8 +53,9 @@ fun FinishedTestTile(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            val icon = when(finishedTest.finishedTest.icon) {
+            val icon = when(finishedTest.icon) {
                 TestIcons.ESSAY -> painterResource(id = R.drawable.essay)
+                TestIcons.UNKNOWN -> painterResource(id = R.drawable.eye_on) //TODO
             }
             Icon(
                 modifier = Modifier
@@ -76,14 +74,14 @@ fun FinishedTestTile(
                 Text(
                     modifier = Modifier
                         .weight(1f),
-                    text = finishedTest.finishedTest.title,
+                    text = finishedTest.title,
                     style = AppTheme.typography.body,
                     color = AppTheme.colors.text,
                 )
                 Text(
                     modifier = Modifier
                         .weight(1f),
-                    text = finishedTest.finishedTest.description,
+                    text = finishedTest.description,
                     style = AppTheme.typography.small,
                     color = AppTheme.colors.textField,
                     overflow = TextOverflow.Ellipsis,
@@ -91,10 +89,10 @@ fun FinishedTestTile(
             }
 
             Text(
-                text = finishedTest.finishedTest.level,
+                text = finishedTest.levelColor.name,
                 fontSize = 25.sp,
                 fontWeight = FontWeight.Bold,
-                color = finishedTest.finishedTest.levelColor.color,
+                color = finishedTest.levelColor.color,
             )
         }
     }
@@ -107,13 +105,11 @@ fun FinishedTestTilePreview(darkTheme: Boolean = true) {
         Surface(color = AppTheme.colors.background) {
             FinishedTestTile(
                 finishedTest = TestState.FinishedTest(
-                    finishedTest = FinishedTest(
-                        icon = TestIcons.ESSAY,
-                        title = "Title name example",
-                        description = "Write an essay on any topic. Your English level will be estimated based on it.",
-                        level = "A2",
-                        levelColor = TestLevelColors.A2,
-                    ),
+                    id = 1,
+                    icon = TestIcons.ESSAY,
+                    title = "Title name example",
+                    description = "Write an essay on any topic. Your English level will be estimated based on it.",
+                    levelColor = TestLevelColors.A2,
                 ),
                 onClick = {},
             )

@@ -9,8 +9,8 @@ type Query {
 }
 
 type Mutation {
-  registerUserResponse(data: UserRegistrationDTO!): UserRegistrationResponse!
-  loginUserResponse(data: UserLoginDTO!): UserLoginResponse!
+  registerUserResponse(data: UserDTO!): UserRegistrationResponse!
+  loginUserResponse(data: UserDTO!): UserLoginResponse!
   passwordResetResponse(data: PasswordResetDTO!): PasswordResetResponse!
   createEssayTestResponse(data: CreateEssayTestDTO!): CreateEssayTestResponse!
 }
@@ -19,17 +19,12 @@ type Subscription {
   onTestProgressResponse: OnTestProgressResponse!
 }
 
-input UserRegistrationDTO {
+input UserDTO {
   email: String!
   password: String!
 }
 type UserRegistrationResponse {
   code: Int!
-}
-
-input UserLoginDTO {
-  email: String!
-  password: String!
 }
 type UserLoginResponse {
   token: String!
@@ -69,16 +64,14 @@ type ReadyTest {
   id: Int!
   title: String!
   type: String!
-  status: String!
+  description: String!
   level: String!
-  createdAt: Int!
 }
 type LoadingTest {
   id: Int!
   type: String!
-  progress: Int!
   queue: Int!
-  createdAt: Int!
+  progress: Int!
 }
 type ErrorTest {
   id: Int!

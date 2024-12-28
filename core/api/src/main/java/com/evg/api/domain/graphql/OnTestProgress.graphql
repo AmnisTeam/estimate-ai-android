@@ -6,15 +6,14 @@ subscription OnTestProgress {
                 id
                 title
                 type
-                status
+                description
                 level
-                createdAt
             }
             ... on LoadingTest {
                 id
-                progress
+                type
                 queue
-                createdAt
+                progress
             }
             ... on ErrorTest {
                 id
