@@ -58,7 +58,7 @@ class ApiRepositoryImpl(
         } catch (e: ProtocolException) {
             ServerResult.Error(NetworkError.PROTOCOL_EXCEPTION)
         } catch (e: NoDataException) {
-            ServerResult.Error(NetworkError.UNKNOWN) //TODO NoDataException?
+            ServerResult.Error(NetworkError.SERVER_ERROR) //TODO NoDataException?
         } catch (e: Exception) {
             println(e)
             ServerResult.Error(NetworkError.UNKNOWN)
@@ -154,7 +154,7 @@ class ApiRepositoryImpl(
                         .toOnTestProgressResponse()
                 }.catch { exception ->
                     if (exception is NoDataException) {
-                        ServerResult.Error<Flow<OnTestProgressResponse>, NetworkError>(NetworkError.UNKNOWN)
+                        ServerResult.Error<Flow<OnTestProgressResponse>, NetworkError>(NetworkError.SERVER_ERROR)
                     } else {
                         throw exception //TODO test does it throw exceptions from safeApiCall
                     }

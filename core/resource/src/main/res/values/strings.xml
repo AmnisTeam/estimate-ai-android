@@ -28,6 +28,8 @@
     <string name="connect_error">Connect error</string>
     <string name="unknown_error">Unknown Error</string>
     <string name="email_exists">Email exists</string>
+    <string name="test_not_found">Test not found</string>
+    <string name="tests_loading_error">Test not found</string>
 
     <!--Login screen-->
     <string name="log_in">Log in</string>
@@ -44,6 +46,10 @@
     <!--Password reset screen-->
     <string name="letter_with_instructions_send_to_email">A letter with instructions has been sent to the email</string>
     <string name="email_does_not_exist">Email does not exist</string>
+
+    <!--Tests list screen-->
+    <string name="list_tests_is_empty">The list of tests is empty</string>
+    <string name="swipe_to_update">Swipe to update</string>
 
     <!--Test select screen-->
     <string name="select_test_type">Select the test type</string>

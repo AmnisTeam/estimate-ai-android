@@ -11,6 +11,7 @@ import com.evg.tests_list.domain.model.TestType
 import com.evg.tests_list.domain.usecase.TestsListUseCases
 import com.evg.tests_list.presentation.mapper.toTestState
 import com.evg.tests_list.presentation.model.TestState
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
@@ -20,14 +21,16 @@ class TestsListViewModel(
 ): ContainerHost<TestsListState, TestsListSideEffect>, ViewModel() {
     override val container = container<TestsListState, TestsListSideEffect>(TestsListState())
 
+    private var connectTestProgressJob: Job? = null
+
     init {
         getAllTests()
-        sendLoadingIDsToServer()
+        connectTestProgress()
     }
 
     fun getAllTests() = intent {
+        reduce { state.copy(isTestsLoading = true) }
         viewModelScope.launch {
-            reduce { state.copy(isTestsLoading = true) }
             testsListUseCases.getAllTestsUseCaseUseCase.invoke()
                 .cachedIn(viewModelScope)
                 .collect { tests: PagingData<ServerResult<TestType, NetworkError>> ->
@@ -44,8 +47,10 @@ class TestsListViewModel(
         }
     }
 
-    private fun sendLoadingIDsToServer() = intent {
-        viewModelScope.launch {
+    private fun connectTestProgress() = intent {
+        if (connectTestProgressJob != null) return@intent
+
+        connectTestProgressJob = viewModelScope.launch {
            when (val result = testsListUseCases.connectTestProgressUseCase.invoke()) {
                is ServerResult.Success -> {
                    result.data.collect { tests ->
@@ -82,48 +87,9 @@ class TestsListViewModel(
                    }
                }
                is ServerResult.Error -> {
-                   val qwewqe = 34 //TODO
+                   postSideEffect(TestsListSideEffect.ConnectTestProgressFail(error = result.error))
                }
            }
         }
     }
-
-    /*private fun sendLoadingIDsToServer(ids: List<Int>) = intent {
-        viewModelScope.launch {
-            testsListUseCases.sendLoadingIDsToServerUseCase.invoke()
-                .cachedIn(viewModelScope)
-                .collect { tests: ServerResult<List<TestType>, NetworkError> ->
-                    when (tests) {
-                        is ServerResult.Success -> {
-                            val loadingTests = tests.data.filterIsInstance<TestType.OnReadyTestType>()
-                            val readyTests = tests.data.filterIsInstance<TestType.OnReadyTestType>()
-
-                            state.tests.value = state.tests.value.map { test ->
-                                when (test) {
-                                    is ServerResult.Success -> {
-                                        when (test.data) {
-                                            is TestType.OnLoadingTestType -> {
-                                                val updatedTest = loadingTests.find { it.id == (test.data as TestType.OnLoadingTestType).id }
-                                                ServerResult.Success(updatedTest ?: test.data)
-                                            }
-                                            is TestType.OnReadyTestType -> {
-                                                val updatedTest = readyTests.find { it.id == (test.data as TestType.OnReadyTestType).id }
-                                                ServerResult.Success(updatedTest ?: test.data)
-                                            }
-                                        }
-                                    }
-                                    is ServerResult.Error -> {
-                                        ServerResult.Error(test.error)
-                                    }
-                                }
-                            }
-                        }
-                        is ServerResult.Error -> {
-
-                        }
-                    }
-
-                }
-        }
-    }*/
 }

@@ -6,6 +6,7 @@ data class AppPalette(
     val primary: Color,
     val secondary: Color,
     val background: Color,
+    val shimmer: Color,
 
     val text: Color,
 
@@ -27,6 +28,7 @@ val baseDarkPalette = AppPalette(
     primary = Color(0xFFC6B8FF),
     secondary = Color(0xFF4F378B),
     background = Color(0xFF161622),
+    shimmer = Color.LightGray,
 
     text = Color(0xFFFFFFFF),
 
@@ -42,14 +44,15 @@ val baseDarkPalette = AppPalette(
 val baseLightPalette = AppPalette(
     primary = Color(0xFFC6B8FF),
     secondary = Color(0xFFC6B8FF),
-    background = Color(0xFFFFFFFF),  // Светлый фон для светлой темы
+    background = Color(0xFFFFFFFF),
+    shimmer = Color.Gray,
 
-    text = Color(0xFF000000),  // Тёмный текст на светлом фоне
+    text = Color(0xFF000000),
 
     // TextField
     textField = Color(0xFF6C6D8D),
     textFieldName = Color(0xFFAAAAAA),
-    textFieldBackground = Color(0xFFF1F1F1),  // Светлый фон для текстовых полей
+    textFieldBackground = Color(0xFFF1F1F1),
 
     // BottomBar
     bottomBarSelected = Color(0xFF342F52),

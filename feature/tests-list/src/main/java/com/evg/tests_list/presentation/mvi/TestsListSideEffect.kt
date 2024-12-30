@@ -1,8 +1,8 @@
 package com.evg.tests_list.presentation.mvi
 
-import com.evg.api.domain.utils.RegistrationError
+import com.evg.api.domain.utils.NetworkError
 
 sealed class TestsListSideEffect {
-    data object TestsListSuccess : TestsListSideEffect()
-    data class TestsListFail(val error: RegistrationError) : TestsListSideEffect()
+    //data class GetAllTestsFail(val error: NetworkError) : TestsListSideEffect()
+    data class ConnectTestProgressFail(val error: NetworkError) : TestsListSideEffect()
 }
