@@ -11,7 +11,7 @@ fun TestType.toTestState(): TestState {
             id = this.id,
             icon = this.type.toTestIcons(),
             title = this.title,
-            description = this.type,
+            description = this.description,
             levelColor = this.level.toTestLevelColors(),
         )
         is TestType.OnLoadingTestType -> TestState.LoadingTest(

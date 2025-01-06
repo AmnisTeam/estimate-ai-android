@@ -43,7 +43,6 @@ input CreateEssayTestDTO {
 }
 type CreateEssayTestResponse {
   code: Int!
-  id: Int!
 }
 
 union TestResult = ReadyTest | LoadingTest | ErrorTest

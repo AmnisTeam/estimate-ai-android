@@ -1,6 +1,8 @@
 package com.evg.test_essay.presentation.mvi
 
 import androidx.lifecycle.ViewModel
+import com.evg.api.domain.utils.ServerResult
+import com.evg.test_essay.domain.model.CreateEssayTest
 import com.evg.test_essay.domain.usecase.TestEssayUseCases
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
@@ -10,16 +12,16 @@ class TestEssayViewModel(
 ): ContainerHost<TestEssayState, TestEssaySideEffect>, ViewModel() {
     override val container = container<TestEssayState, TestEssaySideEffect>(TestEssayState())
 
-    fun sendTest() = intent {
+    fun sendTest(data: CreateEssayTest) = intent {
         reduce { state.copy(isTestSendingLoading = true) }
-        /*when (val response = testsListUseCases.registrationUseCase.invoke()) {
+        when (val response = testEssayUseCases.sendTestToServerUseCase.invoke(data = data)) {
             is ServerResult.Success -> {
-                postSideEffect(TestsListSideEffect.TestsListSuccess)
+                postSideEffect(TestEssaySideEffect.TestEssaySuccess)
             }
             is ServerResult.Error -> {
-                postSideEffect(TestsListSideEffect.TestsListFail(error = response.error))
+                postSideEffect(TestEssaySideEffect.TestEssayFail(error = response.error))
             }
-        }*/
+        }
         reduce { state.copy(isTestSendingLoading = false) }
     }
 }

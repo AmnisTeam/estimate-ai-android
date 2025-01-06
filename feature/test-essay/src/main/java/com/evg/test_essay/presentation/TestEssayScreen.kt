@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.evg.resource.R
+import com.evg.test_essay.domain.model.CreateEssayTest
 import com.evg.test_essay.presentation.model.CharactersNumberState
 import com.evg.test_essay.presentation.mvi.TestEssayState
 import com.evg.ui.custom.Header
@@ -47,6 +48,7 @@ import com.evg.ui.theme.VerticalPadding
 fun TestEssayScreen(
     navigation: NavHostController,
     state: TestEssayState,
+    sendTest: (CreateEssayTest) -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -101,6 +103,8 @@ fun TestEssayScreen(
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
                     errorIndicatorColor = Color.Transparent,
+                    disabledContainerColor = AppTheme.colors.textFieldBackground,
+                    disabledIndicatorColor = Color.Transparent,
                 ),
                 enabled = !state.isTestSendingLoading,
                 shape = (RoundedCornerShape(BorderRadius)),
@@ -135,11 +139,16 @@ fun TestEssayScreen(
                     backgroundColor = AppTheme.colors.secondary,
                     icon = painterResource(id = R.drawable.send),
                     iconColor = AppTheme.colors.text,
+                    isLoading = state.isTestSendingLoading,
                     onClick = {
                         if (charactersState == CharactersNumberState.MAXIMUM) {
                             Toast.makeText(context, maximumCharactersExceeded, Toast.LENGTH_SHORT).show()
                         } else {
-                            navigation.navigate("tests")
+                            sendTest(
+                                CreateEssayTest(
+                                    essay = essayText.text,
+                                )
+                            )
                         }
                     },
                 )
@@ -158,6 +167,7 @@ fun TestsListScreenPreview(darkTheme: Boolean = true) {
                 state = TestEssayState(
                     isTestSendingLoading = false,
                 ),
+                sendTest = {},
             )
         }
     }

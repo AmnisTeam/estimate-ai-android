@@ -50,6 +50,7 @@
     <!--Tests list screen-->
     <string name="list_tests_is_empty">The list of tests is empty</string>
     <string name="swipe_to_update">Swipe to update</string>
+    <string name="reply_sent">Your reply has been sent</string>
 
     <!--Test select screen-->
     <string name="select_test_type">Select the test type</string>

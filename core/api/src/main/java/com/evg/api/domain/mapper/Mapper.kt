@@ -1,7 +1,9 @@
 package com.evg.api.domain.mapper
 
+import com.evg.api.CreateEssayTestMutation
 import com.evg.api.GetTestsQuery
 import com.evg.api.OnTestProgressSubscription
+import com.evg.api.domain.model.CreateEssayTestResponse
 import com.evg.api.domain.model.GetTestsResponse
 import com.evg.api.domain.model.OnTestProgressResponse
 import com.evg.api.domain.model.TestResponse
@@ -61,5 +63,11 @@ fun OnTestProgressSubscription.OnTestProgressResponse.toOnTestProgressResponse()
                 else -> null
             }
         }
+    )
+}
+
+fun CreateEssayTestMutation.CreateEssayTestResponse.toCreateEssayTestResponse(): CreateEssayTestResponse {
+    return CreateEssayTestResponse(
+        code = code,
     )
 }

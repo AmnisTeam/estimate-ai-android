@@ -7,13 +7,16 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.exception.ApolloHttpException
 import com.apollographql.apollo.exception.ApolloNetworkException
 import com.apollographql.apollo.exception.NoDataException
+import com.evg.api.CreateEssayTestMutation
 import com.evg.api.GetTestsQuery
 import com.evg.api.LoginUserMutation
 import com.evg.api.OnTestProgressSubscription
 import com.evg.api.PasswordResetMutation
 import com.evg.api.RegisterUserMutation
+import com.evg.api.domain.mapper.toCreateEssayTestResponse
 import com.evg.api.domain.mapper.toOnTestProgressResponse
 import com.evg.api.domain.mapper.toTestResponses
+import com.evg.api.domain.model.CreateEssayTestResponse
 import com.evg.api.domain.model.GetTestsResponse
 import com.evg.api.domain.model.OnTestProgressResponse
 import com.evg.api.domain.repository.ApiRepository
@@ -25,6 +28,7 @@ import com.evg.api.domain.utils.NetworkError
 import com.evg.api.domain.utils.PasswordResetError
 import com.evg.api.domain.utils.RegistrationError
 import com.evg.api.domain.utils.ServerResult
+import com.evg.api.type.CreateEssayTestDTO
 import com.evg.api.type.PasswordResetDTO
 import com.evg.api.type.UserDTO
 import kotlinx.coroutines.flow.Flow
@@ -64,6 +68,20 @@ class ApiRepositoryImpl(
             ServerResult.Error(NetworkError.UNKNOWN)
         }
     }
+
+
+    override suspend fun getAllTestsByPage(page: Int): ServerResult<GetTestsResponse, NetworkError> {
+        val response = safeApiCall {
+            apolloClient
+                .query(GetTestsQuery(page = page))
+                .execute()
+                .dataOrThrow()
+                .getTestsResponse
+                .toTestResponses()
+        }
+        return response
+    }
+
 
     override suspend fun registrationUser(user: UserDTO): ServerResult<Unit, CombinedRegistrationError> { //RegisterUserMutation.RegisterUser
         val response = safeApiCall {
@@ -131,17 +149,22 @@ class ApiRepositoryImpl(
         }
     }
 
-    override suspend fun getAllTestsByPage(page: Int): ServerResult<GetTestsResponse, NetworkError> {
+    override suspend fun createEssayTest(data: CreateEssayTestDTO): ServerResult<Unit, NetworkError> {
         val response = safeApiCall {
             apolloClient
-                .query(GetTestsQuery(page = page))
+                .mutation(CreateEssayTestMutation(data = data))
                 .execute()
                 .dataOrThrow()
-                .getTestsResponse
-                .toTestResponses()
+                .createEssayTestResponse
+                .toCreateEssayTestResponse()
         }
-        return response
+
+        return when (response) {
+            is ServerResult.Error -> ServerResult.Error(response.error)
+            is ServerResult.Success -> ServerResult.Success(Unit)
+        }
     }
+
 
     override suspend fun onTestProgress(): ServerResult<Flow<OnTestProgressResponse>, NetworkError> {
         val response = safeApiCall {

@@ -9,7 +9,7 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val testEssayModule = module {
-    single<TestEssayRepository> { TestEssayRepositoryImpl(/*apiRepository = get()*/) }
+    single<TestEssayRepository> { TestEssayRepositoryImpl(apiRepository = get()) }
     viewModel { TestEssayViewModel(testEssayUseCases = get()) }
     factory { TestEssayUseCases(sendTestToServerUseCase = get()) }
     factory { SendTestToServerUseCase(testEssayRepository = get()) }
