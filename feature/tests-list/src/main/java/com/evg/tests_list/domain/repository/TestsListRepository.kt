@@ -7,6 +7,9 @@ import com.evg.tests_list.domain.model.TestType
 import kotlinx.coroutines.flow.Flow
 
 interface TestsListRepository {
-    suspend fun getAllTestsByPage(): Flow<PagingData<ServerResult<TestType, NetworkError>>>
+    suspend fun getAllTestsByPageFromServer(): Flow<PagingData<ServerResult<TestType, NetworkError>>>
+    suspend fun getAllTestsFromDatabase(): Flow<PagingData<TestType>>
     suspend fun connectTestProgress(): ServerResult<Flow<List<TestType>>, NetworkError>
+
+    fun isInternetAvailable(): Boolean
 }

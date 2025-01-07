@@ -9,6 +9,8 @@ import com.evg.api.domain.model.OnTestProgressResponse
 import com.evg.api.domain.repository.ApiRepository
 import com.evg.api.domain.utils.NetworkError
 import com.evg.api.domain.utils.ServerResult
+import com.evg.database.data.TestPageSourceLocal
+import com.evg.database.domain.repository.DatabaseRepository
 import com.evg.tests_list.domain.mapper.toTestType
 import com.evg.tests_list.domain.model.TestType
 import com.evg.tests_list.domain.repository.TestsListRepository
@@ -18,11 +20,13 @@ import kotlinx.coroutines.flow.map
 class TestsListRepositoryImpl(
     private val apiRepository: ApiRepository,
     private val testPageSourceRemote: TestPageSourceRemote,
+    private val testPageSourceLocal: TestPageSourceLocal,
 ): TestsListRepository {
-    override suspend fun getAllTestsByPage(): Flow<PagingData<ServerResult<TestType, NetworkError>>> {
+    override suspend fun getAllTestsByPageFromServer(): Flow<PagingData<ServerResult<TestType, NetworkError>>> {
         return Pager(
             PagingConfig(
                 pageSize = 10,
+                initialLoadSize = 20,
             )
         ) { testPageSourceRemote }
             .flow
@@ -34,13 +38,30 @@ class TestsListRepositoryImpl(
                     }
                 }
             }
-        /*return if (apiRepository.isInternetAvailable()) {
+    }
 
-        }*/
+    override suspend fun getAllTestsFromDatabase(): Flow<PagingData<TestType>> /*Flow<List<TestType>>*/ {
+        return Pager(
+            PagingConfig(
+                pageSize = 10,
+                initialLoadSize = 20,
+            )
+        ) { testPageSourceLocal }
+            .flow
+            .map { pagingData ->
+                pagingData.map { serverResult ->
+                    serverResult.toTestType()
+                }
+            }
+        /*return databaseRepository.getAllTests()
+            .map { list ->
+                list.map { test ->
+                    test.toTestType()
+                }
+            }*/
     }
 
     override suspend fun connectTestProgress(): ServerResult<Flow<List<TestType>>, NetworkError> {
-        //return apiRepository.onTestProgress(listIds = listIds)
         return when (val result = apiRepository.onTestProgress()) {
             is ServerResult.Success -> {
                 ServerResult.Success(
@@ -54,4 +75,6 @@ class TestsListRepositoryImpl(
             is ServerResult.Error -> ServerResult.Error(result.error)
         }
     }
+
+    override fun isInternetAvailable() = apiRepository.isInternetAvailable()
 }

@@ -42,6 +42,7 @@ apollo {
 }
 
 dependencies {
+    implementation(project(":core:database"))
 
     // GraphQL
     implementation(libs.appolo.graphql)

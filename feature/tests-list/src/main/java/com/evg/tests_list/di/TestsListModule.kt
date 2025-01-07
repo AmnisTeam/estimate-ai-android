@@ -14,6 +14,7 @@ val testsListModule = module {
         TestsListRepositoryImpl(
             apiRepository = get(),
             testPageSourceRemote = get(),
+            testPageSourceLocal = get(),
         )
     }
     viewModel { TestsListViewModel(testsListUseCases = get()) }

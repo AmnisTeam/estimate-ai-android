@@ -26,7 +26,8 @@ val apiModule = module {
 
     single<ApiRepository> { ApiRepositoryImpl(
         context = get(),
-        apolloClient = get()
+        apolloClient = get(),
+        databaseRepository = get(),
     ) }
     factory { TestPageSourceRemote(apiRepository = get()) }
 }

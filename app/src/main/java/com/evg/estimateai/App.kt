@@ -2,6 +2,7 @@ package com.evg.estimateai
 
 import android.app.Application
 import com.evg.api.di.apiModule
+import com.evg.database.di.databaseModule
 import com.evg.login.di.loginModule
 import com.evg.password_reset.di.passwordResetModule
 import com.evg.registration.di.registrationModule
@@ -19,7 +20,7 @@ class App: Application() {
         startKoin {
             androidLogger(Level.DEBUG) //TODO
             androidContext(this@App)
-            modules(sharedPrefsModule, apiModule, registrationModule, loginModule, passwordResetModule, testsListModule, testEssayModule)
+            modules(sharedPrefsModule, apiModule, registrationModule, databaseModule, loginModule, passwordResetModule, testsListModule, testEssayModule)
         }
     }
 }

@@ -1,7 +1,7 @@
 [versions]
 agp = "8.5.2"
-kotlin = "2.0.0"
-ksp = "2.0.0-1.0.21"
+kotlin = "2.0.21"
+ksp = "2.0.21-1.0.27"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -13,7 +13,7 @@ appcompat = "1.7.0"
 graphql = "4.1.0"
 koin = "4.0.0"
 rxkotlin = "3.0.1"
-realm = "1.11.0"
+realm = "3.0.0"
 orbit = "9.0.0"
 navigation = "2.8.5"
 material = "1.12.0"
@@ -64,7 +64,7 @@ shimmer-compose = { group = "com.valentinilk.shimmer", name = "compose-shimmer",
 # rxkotlin = { group = "io.reactivex.rxjava3", name = "rxkotlin", version.ref = "rxkotlin" }
 
 # Realm
-# realm = { group = "io.realm.kotlin", name = "library-base", version.ref = "realm" }
+realm = { group = "io.realm.kotlin", name = "library-base", version.ref = "realm" }
 
 # MVI Orbit
 mvi-orbit-core = { group = "org.orbit-mvi", name = "orbit-core", version.ref = "orbit" }
@@ -83,4 +83,4 @@ jetbrains-kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-serializable = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 appolo-graphql-plugin = { id = "com.apollographql.apollo", version.ref = "graphql" }
-# realm-plugin = { id = "io.realm.kotlin", version.ref = "realm" }
+realm-plugin = { id = "io.realm.kotlin", version.ref = "realm" }

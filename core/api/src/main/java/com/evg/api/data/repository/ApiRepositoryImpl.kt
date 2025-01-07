@@ -16,6 +16,7 @@ import com.evg.api.RegisterUserMutation
 import com.evg.api.domain.mapper.toCreateEssayTestResponse
 import com.evg.api.domain.mapper.toOnTestProgressResponse
 import com.evg.api.domain.mapper.toTestResponses
+import com.evg.api.domain.mapper.toTestTypeDBO
 import com.evg.api.domain.model.CreateEssayTestResponse
 import com.evg.api.domain.model.GetTestsResponse
 import com.evg.api.domain.model.OnTestProgressResponse
@@ -31,6 +32,7 @@ import com.evg.api.domain.utils.ServerResult
 import com.evg.api.type.CreateEssayTestDTO
 import com.evg.api.type.PasswordResetDTO
 import com.evg.api.type.UserDTO
+import com.evg.database.domain.repository.DatabaseRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -41,6 +43,7 @@ import java.net.SocketTimeoutException
 class ApiRepositoryImpl(
     private val context: Context,
     private val apolloClient: ApolloClient,
+    private val databaseRepository: DatabaseRepository,
 ): ApiRepository {
     private suspend fun <T> safeApiCall(apiCall: suspend () -> T): ServerResult<T, NetworkError> {
         return try {
@@ -79,6 +82,11 @@ class ApiRepositoryImpl(
                 .getTestsResponse
                 .toTestResponses()
         }
+
+        if (response is ServerResult.Success) {
+            databaseRepository.addTests(tests = response.data.tests.map { it.toTestTypeDBO() })
+        }
+
         return response
     }
 
@@ -171,10 +179,14 @@ class ApiRepositoryImpl(
             apolloClient
                 .subscription(OnTestProgressSubscription())
                 .toFlow()
-                .map {
-                    it.dataOrThrow()
+                .map { response ->
+                    val data = response.dataOrThrow()
                         .onTestProgressResponse
                         .toOnTestProgressResponse()
+
+                    databaseRepository.updateTests(tests = data.tests.map { it.toTestTypeDBO() })
+
+                    data
                 }.catch { exception ->
                     if (exception is NoDataException) {
                         ServerResult.Error<Flow<OnTestProgressResponse>, NetworkError>(NetworkError.SERVER_ERROR)

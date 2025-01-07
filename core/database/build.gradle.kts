@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.serializable)
     alias(libs.plugins.jetbrains.kotlin.ksp)
-    // alias(libs.plugins.realm.plugin)
+    alias(libs.plugins.realm.plugin)
 }
 
 android {
@@ -38,7 +38,13 @@ android {
 dependencies {
 
     // Realm
-    // implementation(libs.realm)
+    api(libs.realm)
+
+    // Koin
+    implementation(libs.di.koin)
+
+    // Paging
+    implementation(libs.jetpack.paging.common)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

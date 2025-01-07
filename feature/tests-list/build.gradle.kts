@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
-//    alias(libs.plugins.jetbrains.kotlin.ksp)
+    alias(libs.plugins.jetbrains.kotlin.ksp)
 }
 
 android {
@@ -37,6 +37,7 @@ android {
 dependencies {
     implementation(project(":core:resource"))
     implementation(project(":core:api"))
+    implementation(project(":core:database"))
 
     // Koin
     implementation(libs.di.koin)

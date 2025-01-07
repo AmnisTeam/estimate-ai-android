@@ -55,6 +55,7 @@ dependencies {
     implementation(project(":core:resource"))
     implementation(project(":core:shared-prefs"))
     implementation(project(":core:api"))
+    implementation(project(":core:database"))
     implementation(project(":feature:registration"))
     implementation(project(":feature:login"))
     implementation(project(":feature:password-reset"))
