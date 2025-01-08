@@ -1,5 +1,6 @@
 package com.evg.api.domain.repository
 
+import com.evg.api.domain.model.GetTestDataResponse
 import com.evg.api.domain.model.GetTestsResponse
 import com.evg.api.domain.model.OnTestProgressResponse
 import com.evg.api.domain.utils.CombinedLoginError
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ApiRepository {
     suspend fun getAllTestsByPage(page: Int): ServerResult<GetTestsResponse, NetworkError>
+    suspend fun getTestDataResponse(id: Int): ServerResult<GetTestDataResponse, NetworkError>
 
     suspend fun registrationUser(user: UserDTO): ServerResult<Unit, CombinedRegistrationError>
     suspend fun loginUser(user: UserDTO): ServerResult<String, CombinedLoginError>

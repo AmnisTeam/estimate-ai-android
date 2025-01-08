@@ -2,7 +2,6 @@ package com.evg.test_essay.presentation
 
 import android.content.res.Configuration
 import android.widget.Toast
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,11 +16,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -32,7 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.evg.resource.R
-import com.evg.test_essay.domain.model.CreateEssayTest
+import com.evg.test_essay.domain.model.EssayTestData
 import com.evg.test_essay.presentation.model.CharactersNumberState
 import com.evg.test_essay.presentation.mvi.TestEssayState
 import com.evg.ui.custom.Header
@@ -41,20 +42,29 @@ import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.BorderRadius
 import com.evg.ui.theme.ButtonPadding
 import com.evg.ui.theme.EstimateAITheme
-import com.evg.ui.theme.HorizontalPadding
 import com.evg.ui.theme.VerticalPadding
 
 @Composable
 fun TestEssayScreen(
     navigation: NavHostController,
     state: TestEssayState,
-    sendTest: (CreateEssayTest) -> Unit,
+    sendTest: (EssayTestData) -> Unit,
+    isEditable: Boolean,
 ) {
     val context = LocalContext.current
-
+    val textData: EssayTestData? = state.testData.collectAsState().value
     var essayText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue("qweqwe"))
     }
+
+    LaunchedEffect(textData) {
+        if (!isEditable && textData != null) {
+            essayText = TextFieldValue(textData.essay)
+        }
+        println(textData)
+    }
+
+
     val charactersCount = essayText.text.length
     val charactersState = when {
         charactersCount <= 100 -> CharactersNumberState.NOT_ENOUGH
@@ -106,7 +116,7 @@ fun TestEssayScreen(
                     disabledContainerColor = AppTheme.colors.textFieldBackground,
                     disabledIndicatorColor = Color.Transparent,
                 ),
-                enabled = !state.isTestSendingLoading,
+                enabled = !state.isTestSending && isEditable,
                 shape = (RoundedCornerShape(BorderRadius)),
                 textStyle = AppTheme.typography.body.copy(
                     color = AppTheme.colors.text,
@@ -134,24 +144,26 @@ fun TestEssayScreen(
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                RoundedButton(
-                    modifier = Modifier,
-                    backgroundColor = AppTheme.colors.secondary,
-                    icon = painterResource(id = R.drawable.send),
-                    iconColor = AppTheme.colors.text,
-                    isLoading = state.isTestSendingLoading,
-                    onClick = {
-                        if (charactersState == CharactersNumberState.MAXIMUM) {
-                            Toast.makeText(context, maximumCharactersExceeded, Toast.LENGTH_SHORT).show()
-                        } else {
-                            sendTest(
-                                CreateEssayTest(
-                                    essay = essayText.text,
+                if (isEditable) {
+                    RoundedButton(
+                        modifier = Modifier,
+                        backgroundColor = AppTheme.colors.secondary,
+                        icon = painterResource(id = R.drawable.send),
+                        iconColor = AppTheme.colors.text,
+                        isLoading = state.isTestSending,
+                        onClick = {
+                            if (charactersState == CharactersNumberState.MAXIMUM) {
+                                Toast.makeText(context, maximumCharactersExceeded, Toast.LENGTH_SHORT).show()
+                            } else {
+                                sendTest(
+                                    EssayTestData(
+                                        essay = essayText.text,
+                                    )
                                 )
-                            )
-                        }
-                    },
-                )
+                            }
+                        },
+                    )
+                }
             }
         }
     }
@@ -165,9 +177,10 @@ fun TestsListScreenPreview(darkTheme: Boolean = true) {
             TestEssayScreen(
                 navigation = NavHostController(LocalContext.current),
                 state = TestEssayState(
-                    isTestSendingLoading = false,
+                    isTestSending = false,
                 ),
                 sendTest = {},
+                isEditable = true,
             )
         }
     }

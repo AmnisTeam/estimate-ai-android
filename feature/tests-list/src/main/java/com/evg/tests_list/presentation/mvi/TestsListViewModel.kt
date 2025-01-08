@@ -51,7 +51,9 @@ class TestsListViewModel(
                         }
                 }
                 is TestSource.Local -> {
-                    testSource.data
+                    testSource
+                        .data
+                        .cachedIn(viewModelScope)
                         .collect { tests: PagingData<TestType> ->
                             val mappedTests: PagingData<ServerResult<TestState, NetworkError>> = tests.map { result ->
                                 ServerResult.Success(result.toTestState())

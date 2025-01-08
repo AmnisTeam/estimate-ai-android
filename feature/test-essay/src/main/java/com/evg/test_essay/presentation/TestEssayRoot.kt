@@ -15,7 +15,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun TestEssayRoot(
-    viewModel: TestEssayViewModel = koinViewModel()
+    viewModel: TestEssayViewModel,
 ) {
     val context = LocalContext.current
     val navigation = LocalNavHostController.current
@@ -31,6 +31,9 @@ fun TestEssayRoot(
                 Toast.makeText(context, replySent, Toast.LENGTH_SHORT).show()
                 navigation.navigate("tests")
             }
+            is TestEssaySideEffect.TestDataFail -> {
+                Toast.makeText(context, sideEffect.error.toErrorMessage(context), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -38,5 +41,6 @@ fun TestEssayRoot(
         navigation = navigation,
         state = viewModel.collectAsState().value,
         sendTest = viewModel::sendTest,
+        isEditable = viewModel.isEditable,
     )
 }

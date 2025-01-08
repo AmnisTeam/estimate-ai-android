@@ -1,0 +1,11 @@
+query GetTestDataResponse($id: Int!) {
+    getTestDataResponse(id: $id) {
+        code
+        testData {
+            ... on EssayTest {
+                id
+                essay
+            }
+        }
+    }
+}

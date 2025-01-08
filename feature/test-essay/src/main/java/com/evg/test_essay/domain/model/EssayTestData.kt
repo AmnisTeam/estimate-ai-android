@@ -1,5 +1,5 @@
 package com.evg.test_essay.domain.model
 
-data class CreateEssayTest(
+data class EssayTestData(
     val essay: String,
 )

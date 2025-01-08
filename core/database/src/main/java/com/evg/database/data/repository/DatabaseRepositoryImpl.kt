@@ -1,5 +1,6 @@
 package com.evg.database.data.repository
 
+import com.evg.database.domain.model.TestDataDBO
 import com.evg.database.domain.model.TestTypeDBO
 import com.evg.database.domain.repository.DatabaseRepository
 import io.realm.kotlin.Realm
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.map
 class DatabaseRepositoryImpl(
     private val realm: Realm
 ): DatabaseRepository {
-    override suspend fun getAllTests(): List<TestTypeDBO> {
+    override fun getAllTests(): List<TestTypeDBO> {
         return realm
             .query<TestTypeDBO>() //TODO "TRUEPREDICATE SORT(id ASC) LIMIT($offset, $pageSize)"
             .find()
@@ -45,5 +46,18 @@ class DatabaseRepositoryImpl(
                 delete(testToDelete)
             }
         }
+    }
+
+    override suspend fun addTestData(data: TestDataDBO) {
+        realm.write {
+            copyToRealm(data, updatePolicy = UpdatePolicy.ALL)
+        }
+    }
+
+    override fun getTestData(id: Int): TestDataDBO? {
+        return realm
+            .query<TestDataDBO>("id == $0", id)
+            .first()
+            .find()
     }
 }

@@ -6,6 +6,7 @@ schema {
 
 type Query {
   getTestsResponse(page: Int!): GetTestsResponse!
+  getTestDataResponse(id: Int!): GetTestDataResponse!
 }
 
 type Mutation {
@@ -76,4 +77,14 @@ type ErrorTest {
   id: Int!
   type: String!
   createdAt: Int!
+}
+
+union TestData = EssayTest
+type GetTestDataResponse {
+  code: Int!
+  testData: TestData!
+}
+type EssayTest {
+  id: Int!
+  essay: String!
 }

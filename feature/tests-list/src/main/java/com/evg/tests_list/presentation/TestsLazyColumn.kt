@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
@@ -48,6 +49,7 @@ import kotlinx.coroutines.flow.flowOf
 
 @Composable
 fun TestsLazyColumn(
+    navigation: NavHostController,
     tests: LazyPagingItems<ServerResult<TestState, NetworkError>>,
     getAllTests: () -> Unit,
     isTestsLoading: Boolean,
@@ -85,7 +87,7 @@ fun TestsLazyColumn(
                 }
             }
 
-            is LoadState.NotLoading -> {
+            is LoadState.NotLoading -> { //TODO test 0 tests on server
                 swipeEnabled = true
 
                 if (tests.itemCount <= 1 && !isTestsLoading) {
@@ -140,7 +142,14 @@ fun TestsLazyColumn(
                                         FinishedTestTile(
                                             finishedTest = data,
                                             onClick = {
-
+                                                when (data.icon) {
+                                                    TestIcons.ESSAY -> {
+                                                        navigation.navigate("test-essay/${data.id}")
+                                                    }
+                                                    TestIcons.UNKNOWN -> {
+                                                        //TODO
+                                                    }
+                                                }
                                             },
                                         )
                                     }
@@ -176,6 +185,7 @@ fun TestsLazyColumnPreview(darkTheme: Boolean = true) {
     EstimateAITheme(darkTheme = darkTheme) {
         Surface(color = AppTheme.colors.background) {
             TestsLazyColumn(
+                navigation = NavHostController(LocalContext.current),
                 tests = flowOf(
                     PagingData.from(
                         listOf<ServerResult<TestState, NetworkError>>(

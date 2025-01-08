@@ -65,6 +65,7 @@ dependencies {
 
     // Koin
     implementation(libs.di.koin)
+    implementation(libs.di.koin.compose)
 
     //Navigation
     implementation(libs.androidx.ui.navigation)

@@ -44,6 +44,7 @@ fun TestsListScreen(
             ),
     ) {
         TestsLazyColumn(
+            navigation = navigation,
             tests = tests,
             getAllTests = getAllTests,
             isTestsLoading = state.isTestsLoading,

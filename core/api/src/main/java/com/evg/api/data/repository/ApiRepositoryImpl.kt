@@ -8,16 +8,20 @@ import com.apollographql.apollo.exception.ApolloHttpException
 import com.apollographql.apollo.exception.ApolloNetworkException
 import com.apollographql.apollo.exception.NoDataException
 import com.evg.api.CreateEssayTestMutation
+import com.evg.api.GetTestDataResponseQuery
 import com.evg.api.GetTestsQuery
 import com.evg.api.LoginUserMutation
 import com.evg.api.OnTestProgressSubscription
 import com.evg.api.PasswordResetMutation
 import com.evg.api.RegisterUserMutation
 import com.evg.api.domain.mapper.toCreateEssayTestResponse
+import com.evg.api.domain.mapper.toGetTestDataResponse
 import com.evg.api.domain.mapper.toOnTestProgressResponse
+import com.evg.api.domain.mapper.toTestDataDBO
 import com.evg.api.domain.mapper.toTestResponses
 import com.evg.api.domain.mapper.toTestTypeDBO
 import com.evg.api.domain.model.CreateEssayTestResponse
+import com.evg.api.domain.model.GetTestDataResponse
 import com.evg.api.domain.model.GetTestsResponse
 import com.evg.api.domain.model.OnTestProgressResponse
 import com.evg.api.domain.repository.ApiRepository
@@ -90,8 +94,25 @@ class ApiRepositoryImpl(
         return response
     }
 
+    override suspend fun getTestDataResponse(id: Int): ServerResult<GetTestDataResponse, NetworkError> {
+        val response = safeApiCall {
+            apolloClient
+                .query(GetTestDataResponseQuery(id = id))
+                .execute()
+                .dataOrThrow()
+                .getTestDataResponse
+                .toGetTestDataResponse()
+        }
 
-    override suspend fun registrationUser(user: UserDTO): ServerResult<Unit, CombinedRegistrationError> { //RegisterUserMutation.RegisterUser
+        if (response is ServerResult.Success) {
+            databaseRepository.addTestData(data = response.data.toTestDataDBO())
+        }
+
+        return response
+    }
+
+
+    override suspend fun registrationUser(user: UserDTO): ServerResult<Unit, CombinedRegistrationError> {
         val response = safeApiCall {
             apolloClient
                 .mutation(RegisterUserMutation(data = user))

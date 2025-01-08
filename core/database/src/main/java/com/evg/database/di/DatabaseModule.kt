@@ -3,8 +3,10 @@ package com.evg.database.di
 import com.evg.database.data.TestPageSourceLocal
 import com.evg.database.data.repository.DatabaseRepositoryImpl
 import com.evg.database.domain.model.ErrorTestTypeDBO
+import com.evg.database.domain.model.EssayTestDBO
 import com.evg.database.domain.model.LoadingTestTypeDBO
 import com.evg.database.domain.model.ReadyTestTypeDBO
+import com.evg.database.domain.model.TestDataDBO
 import com.evg.database.domain.model.TestTypeDBO
 import com.evg.database.domain.repository.DatabaseRepository
 import io.realm.kotlin.Realm
@@ -17,7 +19,9 @@ val databaseModule = module {
             TestTypeDBO::class,
             ReadyTestTypeDBO::class,
             LoadingTestTypeDBO::class,
-            ErrorTestTypeDBO::class
+            ErrorTestTypeDBO::class,
+            TestDataDBO::class,
+            EssayTestDBO::class,
         )).build()
         Realm.open(config)
     }

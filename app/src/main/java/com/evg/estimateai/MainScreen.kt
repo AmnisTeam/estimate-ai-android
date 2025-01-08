@@ -6,9 +6,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.calculateEndPadding
-import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -17,19 +14,23 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.evg.registration.presentation.RegistrationRoot
+import androidx.navigation.navArgument
 import com.evg.LocalNavHostController
 import com.evg.login.presentation.LoginRoot
 import com.evg.password_reset.presentation.PasswordResetRoot
+import com.evg.registration.presentation.RegistrationRoot
 import com.evg.test_essay.presentation.TestEssayRoot
 import com.evg.test_select.presentation.TestSelectRoot
 import com.evg.tests_list.presentation.TestsListRoot
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun MainScreen() {
@@ -72,7 +73,22 @@ fun MainScreen() {
 
                 composable( "tests-list") { TestsListRoot() }
                 composable( "test-select") { TestSelectRoot() }
-                composable( "test-essay") { TestEssayRoot() }
+                composable(
+                    route = "test-essay/{id}",
+                    arguments = listOf(
+                        navArgument("id") {
+                            type = NavType.StringType
+                            nullable = true
+                            defaultValue = null
+                        }
+                    )
+                ) { entry ->
+                    val id = entry.arguments?.getString("id")?.toIntOrNull()
+
+                    TestEssayRoot(
+                        viewModel = koinViewModel(parameters = { parametersOf(id) })
+                    )
+                }
 
 
                 // С BottomBar
