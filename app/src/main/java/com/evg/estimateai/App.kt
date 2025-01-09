@@ -1,6 +1,11 @@
 package com.evg.estimateai
 
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
+import androidx.core.app.ActivityCompat
 import com.evg.api.di.apiModule
 import com.evg.database.di.databaseModule
 import com.evg.login.di.loginModule
@@ -21,6 +26,16 @@ class App: Application() {
             androidLogger(Level.DEBUG) //TODO
             androidContext(this@App)
             modules(sharedPrefsModule, apiModule, registrationModule, databaseModule, loginModule, passwordResetModule, testsListModule, testEssayModule)
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                "updating_status_tests",
+                "Updating the status of tests",
+                NotificationManager.IMPORTANCE_MIN,
+            )
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
         }
     }
 }

@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 val apiModule = module {
     single {
         val okHttpClient = OkHttpClient.Builder()
-            .connectTimeout(2, TimeUnit.SECONDS) //TODO
+            .connectTimeout(2, TimeUnit.SECONDS)
             .readTimeout(2, TimeUnit.SECONDS)
             .writeTimeout(2, TimeUnit.SECONDS)
             .build()
@@ -29,5 +29,5 @@ val apiModule = module {
         apolloClient = get(),
         databaseRepository = get(),
     ) }
-    factory { TestPageSourceRemote(apiRepository = get()) }
+    single { TestPageSourceRemote(apiRepository = get()) }
 }

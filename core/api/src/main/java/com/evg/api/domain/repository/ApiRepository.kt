@@ -12,6 +12,7 @@ import com.evg.api.type.CreateEssayTestDTO
 import com.evg.api.type.PasswordResetDTO
 import com.evg.api.type.UserDTO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharedFlow
 
 interface ApiRepository {
     suspend fun getAllTestsByPage(page: Int): ServerResult<GetTestsResponse, NetworkError>
@@ -22,7 +23,7 @@ interface ApiRepository {
     suspend fun passwordReset(passwordReset: PasswordResetDTO): ServerResult<Unit, CombinedPasswordResetError>
     suspend fun createEssayTest(data: CreateEssayTestDTO): ServerResult<Unit, NetworkError>
 
-    suspend fun onTestProgress(): ServerResult<Flow<OnTestProgressResponse>, NetworkError>
+    suspend fun onTestProgress(): ServerResult<SharedFlow<OnTestProgressResponse>, NetworkError>
 
     fun isInternetAvailable(): Boolean
 }

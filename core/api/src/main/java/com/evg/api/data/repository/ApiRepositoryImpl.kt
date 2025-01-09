@@ -37,9 +37,18 @@ import com.evg.api.type.CreateEssayTestDTO
 import com.evg.api.type.PasswordResetDTO
 import com.evg.api.type.UserDTO
 import com.evg.database.domain.repository.DatabaseRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.retry
+import kotlinx.coroutines.flow.retryWhen
+import kotlinx.coroutines.flow.shareIn
 import okio.ProtocolException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
@@ -194,29 +203,43 @@ class ApiRepositoryImpl(
         }
     }
 
+    private val testProgressFlow: SharedFlow<OnTestProgressResponse> by lazy {
+        apolloClient
+            .subscription(OnTestProgressSubscription())
+            .toFlow()
+            .retry {
+                delay(2000)
+                true
+            }
+            .map { response ->
+                val data = response.dataOrThrow()
+                    .onTestProgressResponse
+                    .toOnTestProgressResponse()
 
-    override suspend fun onTestProgress(): ServerResult<Flow<OnTestProgressResponse>, NetworkError> {
-        val response = safeApiCall {
-            apolloClient
-                .subscription(OnTestProgressSubscription())
-                .toFlow()
-                .map { response ->
-                    val data = response.dataOrThrow()
-                        .onTestProgressResponse
-                        .toOnTestProgressResponse()
+                databaseRepository.updateTests(tests = data.tests.map { it.toTestTypeDBO() })
 
-                    databaseRepository.updateTests(tests = data.tests.map { it.toTestTypeDBO() })
-
-                    data
-                }.catch { exception ->
-                    if (exception is NoDataException) {
-                        ServerResult.Error<Flow<OnTestProgressResponse>, NetworkError>(NetworkError.SERVER_ERROR)
-                    } else {
-                        throw exception //TODO test does it throw exceptions from safeApiCall
-                    }
+                data
+            }
+            .catch { exception ->
+                if (exception is NoDataException) {
+                    ServerResult.Error<SharedFlow<OnTestProgressResponse>, NetworkError>(NetworkError.SERVER_ERROR)
+                } else {
+                    throw exception
                 }
+            }
+            .shareIn(
+                scope = CoroutineScope(Dispatchers.IO),
+                started = SharingStarted.WhileSubscribed(5000),
+                replay = 1,
+            )
+    }
+
+    override suspend fun onTestProgress(): ServerResult<SharedFlow<OnTestProgressResponse>, NetworkError> {
+        return try {
+            ServerResult.Success(testProgressFlow)
+        } catch (e: Exception) {
+            ServerResult.Error(NetworkError.SERVER_ERROR)
         }
-        return response
     }
 
     override fun isInternetAvailable(): Boolean {
