@@ -222,7 +222,7 @@ class ApiRepositoryImpl(
             }
             .catch { exception ->
                 if (exception is NoDataException) {
-                    ServerResult.Error<SharedFlow<OnTestProgressResponse>, NetworkError>(NetworkError.SERVER_ERROR)
+                    ServerResult.Error<SharedFlow<OnTestProgressResponse>, NetworkError>(NetworkError.SERVER_ERROR) //TODO error is not returned
                 } else {
                     throw exception
                 }
@@ -235,11 +235,7 @@ class ApiRepositoryImpl(
     }
 
     override suspend fun onTestProgress(): ServerResult<SharedFlow<OnTestProgressResponse>, NetworkError> {
-        return try {
-            ServerResult.Success(testProgressFlow)
-        } catch (e: Exception) {
-            ServerResult.Error(NetworkError.SERVER_ERROR)
-        }
+        return ServerResult.Success(testProgressFlow)
     }
 
     override fun isInternetAvailable(): Boolean {

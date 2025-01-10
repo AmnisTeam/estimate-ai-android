@@ -47,7 +47,7 @@ class TestsListViewModel(
             .build()
         testProgressWorker.enqueueUniqueWork(
             "TestProgressWorker",
-            ExistingWorkPolicy.KEEP,
+            ExistingWorkPolicy.REPLACE,
             workRequest,
         )
     }
@@ -129,6 +129,7 @@ class TestsListViewModel(
                    }
                }
                is ServerResult.Error -> {
+                   val eet = 342
                    // postSideEffect(TestsListSideEffect.ConnectTestProgressFail(error = result.error)) //TODO
                }
            }

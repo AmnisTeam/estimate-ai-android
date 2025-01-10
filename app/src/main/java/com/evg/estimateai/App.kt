@@ -29,13 +29,24 @@ class App: Application() {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                "updating_status_tests",
-                "Updating the status of tests",
+            val loadingChannel = NotificationChannel(
+                "loading_status_tests",
+                "Loading the status of tests",
+                NotificationManager.IMPORTANCE_LOW,
+            )
+            val readyChannel = NotificationChannel(
+                "ready_status_tests",
+                "Ready the status of tests",
                 NotificationManager.IMPORTANCE_MIN,
             )
+            val errorChannel = NotificationChannel(
+                "error_status_tests",
+                "Error the status of tests",
+                NotificationManager.IMPORTANCE_MIN,
+            )
+
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
+            notificationManager.createNotificationChannels(listOf(loadingChannel, readyChannel, errorChannel))
         }
     }
 }

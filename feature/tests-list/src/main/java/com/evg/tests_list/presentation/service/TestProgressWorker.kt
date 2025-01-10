@@ -10,35 +10,46 @@ import com.evg.tests_list.domain.usecase.ConnectTestProgressUseCase
 import kotlinx.coroutines.Job
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.util.Objects
 
 class TestProgressWorker(
-    private val context: Context,
-    private val params: WorkerParameters,
+    context: Context,
+    params: WorkerParameters,
 ): CoroutineWorker(context, params), KoinComponent {
     private val connectTestProgressUseCase: ConnectTestProgressUseCase by inject()
+    private var isServiceStarted = false
 
     override suspend fun doWork(): Result {
+        val intent = Intent(applicationContext, TestStatusService::class.java)
         when (val result = connectTestProgressUseCase.invoke()) {
             is ServerResult.Success -> {
                 result.data.collect { tests: List<TestType> ->
-                    if (tests.isNotEmpty()) {
-                        val intent = Intent(applicationContext, TestStatusService::class.java).apply {
+                    if (!isServiceStarted && tests.isNotEmpty()) {
+                        intent.apply {
                             action = TestStatusService.Actions.START.toString()
                         }
+                        intent.putParcelableArrayListExtra("tests", ArrayList(tests))
+                        applicationContext.startForegroundService(intent)
+                        isServiceStarted = true
+                    } else if (isServiceStarted && tests.isNotEmpty()) {
+                        intent.apply {
+                            action = TestStatusService.Actions.UPDATE.toString()
+                        }
+                        intent.putParcelableArrayListExtra("tests", ArrayList(tests))
                         applicationContext.startForegroundService(intent)
                     } else {
-                        val intent = Intent(applicationContext, TestStatusService::class.java).apply {
+                        intent.apply {
                             action = TestStatusService.Actions.STOP.toString()
                         }
                         applicationContext.stopService(intent)
+                        isServiceStarted = false
                     }
                 }
+                return Result.success()
             }
             is ServerResult.Error -> {
                 return Result.failure()
             }
         }
-
-        return Result.success()
     }
 }
