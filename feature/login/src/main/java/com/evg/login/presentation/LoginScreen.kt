@@ -92,7 +92,7 @@ fun LoginScreen(
             )
             .verticalScroll(rememberScrollState()),
     ) {
-        Text(modifier = Modifier.clickableRipple { navigation.navigate("tests") }, text = "Go To Main", color = AppTheme.colors.text)
+        Text(modifier = Modifier.clickableRipple { navigation.navigate("tests-list") }, text = "Go To Main", color = AppTheme.colors.text)
 
         Column(
             modifier = Modifier
@@ -157,7 +157,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(5.dp))
                     .clickableRipple {
-                        navigation.navigate("password_reset") {
+                        navigation.navigate("password-reset") {
                             popUpTo("login") {
                                 inclusive = true
                             }

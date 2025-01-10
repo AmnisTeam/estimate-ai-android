@@ -29,7 +29,7 @@ fun TestEssayRoot(
             }
             is TestEssaySideEffect.TestEssaySuccess -> {
                 Toast.makeText(context, replySent, Toast.LENGTH_SHORT).show()
-                navigation.navigate("tests")
+                navigation.navigate("tests-list")
             }
             is TestEssaySideEffect.TestDataFail -> {
                 Toast.makeText(context, sideEffect.error.toErrorMessage(context), Toast.LENGTH_SHORT).show()

@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import com.evg.LocalNavHostController
 import com.evg.login.presentation.LoginRoot
 import com.evg.password_reset.presentation.PasswordResetRoot
@@ -69,7 +70,7 @@ fun MainScreen() {
                 // Без BottomBar
                 composable("registration") { RegistrationRoot() }
                 composable("login") { LoginRoot() }
-                composable( "password_reset") { PasswordResetRoot() }
+                composable( "password-reset") { PasswordResetRoot() }
 
                 composable( "tests-list") { TestsListRoot() }
                 composable( "test-select") { TestSelectRoot() }
@@ -81,7 +82,8 @@ fun MainScreen() {
                             nullable = true
                             defaultValue = null
                         }
-                    )
+                    ),
+                    deepLinks = listOf(navDeepLink { uriPattern = "app://test-essay/{id}" })
                 ) { entry ->
                     val id = entry.arguments?.getString("id")?.toIntOrNull()
 

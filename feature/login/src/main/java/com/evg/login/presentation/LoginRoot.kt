@@ -28,7 +28,7 @@ fun LoginRoot(
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
             LoginSideEffect.LoginSuccess -> {
-                navigation.navigate("tests") {
+                navigation.navigate("tests-list") {
                     popUpTo("login") {
                         inclusive = true
                     }

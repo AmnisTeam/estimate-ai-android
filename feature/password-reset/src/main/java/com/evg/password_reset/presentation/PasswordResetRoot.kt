@@ -29,7 +29,7 @@ fun PasswordResetRoot(
         when (sideEffect) {
             PasswordResetSideEffect.PasswordResetSuccess -> {
                 navigation.navigate("login") {
-                    popUpTo("password_reset") {
+                    popUpTo("password-reset") {
                         inclusive = true
                     }
                 }

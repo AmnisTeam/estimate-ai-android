@@ -44,7 +44,15 @@ fun Header(
                     .padding(start = 20.dp)
                     .size(30.dp)
                     .clickableRipple {
-                        navigation.popBackStack()
+                        val previousScreen = navigation.previousBackStackEntry?.destination?.route //TODO
+                        val startScreen = navigation.graph.startDestinationRoute
+                        if (previousScreen == startScreen && startScreen != null) {
+                            navigation.navigate("tests-list") {
+                                popUpTo(startScreen) { inclusive = true }
+                            }
+                        } else {
+                            navigation.popBackStack()
+                        }
                     },
                 painter = painterResource(id = R.drawable.arrow_back),
                 contentDescription = null,

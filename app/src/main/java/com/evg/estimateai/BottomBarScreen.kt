@@ -23,7 +23,7 @@ sealed class BottomBarScreen(
         icon = Icons.Default.DateRange
     )
     data object Tests : BottomBarScreen(
-        route = "tests",
+        route = "tests-list",
         title = "Tests",
         icon = Icons.Default.Face
     )

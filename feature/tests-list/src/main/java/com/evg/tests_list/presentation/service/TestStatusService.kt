@@ -2,16 +2,21 @@ package com.evg.tests_list.presentation.service
 
 import android.app.Notification
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+import android.net.Uri
 import android.os.Build
 import android.os.IBinder
 import android.os.Parcelable
 import androidx.core.app.NotificationCompat
+import com.evg.model.TestIcons
 import com.evg.resource.R
 import com.evg.tests_list.domain.model.TestType
+import com.evg.tests_list.presentation.mapper.toTestState
+import com.evg.tests_list.presentation.model.TestState
 
 
 class TestStatusService : Service() {
@@ -32,11 +37,11 @@ class TestStatusService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when(intent?.action) {
             Actions.START.toString() -> {
-                val tests: List<TestType>? = intent.parcelableArrayList("tests")
+                val tests: List<TestState>? = intent.parcelableArrayList<TestType>("tests")?.map { it.toTestState() }
                 tests?.let { start(tests = tests) }
             }
             Actions.UPDATE.toString() -> {
-                val tests: List<TestType>? = intent.parcelableArrayList("tests")
+                val tests: List<TestState>? = intent.parcelableArrayList<TestType>("tests")?.map { it.toTestState() }
                 tests?.let { updateNotification(tests = tests) }
             }
             Actions.STOP.toString() -> {
@@ -46,7 +51,7 @@ class TestStatusService : Service() {
         return super.onStartCommand(intent, flags, startId)
     }
 
-    private fun start(tests: List<TestType>) {
+    private fun start(tests: List<TestState>) {
         val notification = processTests(tests) ?: return
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
@@ -56,20 +61,20 @@ class TestStatusService : Service() {
         }
     }
 
-    private fun updateNotification(tests: List<TestType>) {
+    private fun updateNotification(tests: List<TestState>) {
         val notification = processTests(tests) ?: return
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(LOADING_TEST_ID, notification)
     }
 
-    private fun processTests(tests: List<TestType>): Notification? {
-        val onReadyTests = tests.filterIsInstance<TestType.OnReadyTestType>()
-        val onErrorTests = tests.filterIsInstance<TestType.OnErrorTestType>()
-        val onLoadingTests = tests.filterIsInstance<TestType.OnLoadingTestType>()
+    private fun processTests(tests: List<TestState>): Notification? {
+        val onFinishedTests = tests.filterIsInstance<TestState.FinishedTest>()
+        val onErrorTests = tests.filterIsInstance<TestState.ErrorTest>()
+        val onLoadingTests = tests.filterIsInstance<TestState.LoadingTest>()
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        if (onReadyTests.isNotEmpty()) {
+        if (onFinishedTests.isNotEmpty()) {
             val readyTestGroup = NotificationCompat.Builder(this, "ready_status_tests")
                 .setSmallIcon(R.drawable.discord)
                 .setGroup(READY_GROUP)
@@ -77,16 +82,32 @@ class TestStatusService : Service() {
                 .build()
             notificationManager.notify(-1, readyTestGroup);
 
-            onReadyTests.forEach { test ->
+            onFinishedTests.forEach { test ->
+                val testType = when (test.icon) {
+                    TestIcons.ESSAY -> "test-essay"
+                    TestIcons.UNKNOWN -> null
+                }
+                val intent = Intent(Intent.ACTION_VIEW).apply {
+                    data = Uri.parse("app://${testType}/${test.id}")
+                }
+                val pendingIntent = PendingIntent.getActivity(
+                    this,
+                    test.id,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+
                 val notification = NotificationCompat.Builder(this, "ready_status_tests")
                     .setSmallIcon(R.drawable.discord)
                     .setContentTitle("Test №${test.id} is ready!")
                     .setStyle(
                         NotificationCompat.InboxStyle()
                             .addLine(test.title)
-                            .addLine("Estimated level: ${test.level}")
+                            .addLine("Estimated level: ${test.levelColor.name}")
                     )
                     .setGroup(READY_GROUP)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true)
                     .build()
 
                 notificationManager.notify(test.id, notification)
