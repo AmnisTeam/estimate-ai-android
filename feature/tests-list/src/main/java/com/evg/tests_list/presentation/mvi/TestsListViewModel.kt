@@ -20,6 +20,7 @@ import com.evg.tests_list.presentation.model.TestState
 import com.evg.tests_list.presentation.service.TestProgressWorker
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
@@ -27,10 +28,9 @@ import org.orbitmvi.orbit.viewmodel.container
 class TestsListViewModel(
     private val testsListUseCases: TestsListUseCases,
     private val testProgressWorker: WorkManager,
+    private val connectTestProgressJobFlow: MutableStateFlow<Job?>,
 ): ContainerHost<TestsListState, TestsListSideEffect>, ViewModel() {
     override val container = container<TestsListState, TestsListSideEffect>(TestsListState())
-
-    private var connectTestProgressJob: Job? = null
 
     init {
         getAllTests()
@@ -89,13 +89,19 @@ class TestsListViewModel(
         }
     }
 
-    private fun connectTestProgress() = intent {
-        if (connectTestProgressJob != null) return@intent
 
-        connectTestProgressJob = viewModelScope.launch {
+
+
+    private var countProgress = 0
+    private fun connectTestProgress() = intent {
+        connectTestProgressJobFlow.value?.cancel()
+        //postSideEffect(TestsListSideEffect.StartService)
+
+        val newJob = viewModelScope.launch {
            when (val result = testsListUseCases.connectTestProgressUseCase.invoke()) {
                is ServerResult.Success -> {
                    result.data.collect { tests: List<TestType> ->
+                       println("qwe ${++countProgress}")
                        val testsById = tests.map { it.toTestState() } .associateBy {
                            when (it) {
                                is TestState.ErrorTest -> it.id
@@ -134,5 +140,6 @@ class TestsListViewModel(
                }
            }
         }
+        connectTestProgressJobFlow.value = newJob
     }
 }

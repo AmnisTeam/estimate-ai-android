@@ -8,6 +8,8 @@ import com.evg.tests_list.domain.usecase.GetAllTestsUseCaseUseCase
 import com.evg.tests_list.domain.usecase.TestsListUseCases
 import com.evg.tests_list.presentation.mvi.TestsListViewModel
 import com.evg.tests_list.presentation.service.TestStatusService
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -23,6 +25,7 @@ val testsListModule = module {
         TestsListViewModel(
             testsListUseCases = get(),
             testProgressWorker = get(),
+            connectTestProgressJobFlow = get(),
         )
     }
     single {
@@ -35,4 +38,5 @@ val testsListModule = module {
     single { ConnectTestProgressUseCase(testsListRepository = get()) }
 
     single { WorkManager.getInstance(get()) }
+    single { MutableStateFlow<Job?>(null) }
 }
