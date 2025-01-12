@@ -12,11 +12,18 @@ import android.os.Build
 import android.os.IBinder
 import android.os.Parcelable
 import androidx.core.app.NotificationCompat
+import com.evg.api.domain.utils.ServerResult
 import com.evg.model.TestIcons
 import com.evg.resource.R
 import com.evg.tests_list.domain.model.TestType
+import com.evg.tests_list.domain.usecase.ConnectTestProgressUseCase
 import com.evg.tests_list.presentation.mapper.toTestState
 import com.evg.tests_list.presentation.model.TestState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 
 class TestStatusService : Service() {
@@ -29,29 +36,53 @@ class TestStatusService : Service() {
     enum class Actions {
         START, UPDATE, STOP,
     }
+    private var isStarted = false
+    private var job: Job? = null
+    private val connectTestProgressUseCase: ConnectTestProgressUseCase by inject()
 
     override fun onBind(p0: Intent?): IBinder? {
         return null
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        when(intent?.action) {
-            Actions.START.toString() -> {
-                val tests: List<TestState>? = intent.parcelableArrayList<TestType>("tests")?.map { it.toTestState() }
-                tests?.let { start(tests = tests) }
-            }
-            Actions.UPDATE.toString() -> {
-                val tests: List<TestState>? = intent.parcelableArrayList<TestType>("tests")?.map { it.toTestState() }
-                tests?.let { updateNotification(tests = tests) }
-            }
-            Actions.STOP.toString() -> {
-                stopSelf()
+        when (intent?.action) {
+            Actions.START.toString() -> startSocketConnection()
+            Actions.STOP.toString() -> stopSocketConnection()
+        }
+        return START_STICKY
+    }
+
+    private fun startSocketConnection() {
+        if (job != null) return
+
+        job = CoroutineScope(Dispatchers.IO).launch {
+            when (val result = connectTestProgressUseCase.invoke()) {
+                is ServerResult.Success -> {
+                    result.data.collect { tests ->
+                        if (!isStarted && tests.isNotEmpty()) {
+                            start(tests = tests.map { it.toTestState() })
+                        } else if (tests.isNotEmpty()) {
+                            updateNotification(tests = tests.map { it.toTestState() })
+                        } else {
+                            stopSocketConnection()
+                        }
+                    }
+                }
+                is ServerResult.Error -> {
+                    stopSocketConnection()
+                }
             }
         }
-        return super.onStartCommand(intent, flags, startId)
+    }
+
+    private fun stopSocketConnection() {
+        isStarted = false
+        job?.cancel()
+        stopSelf()
     }
 
     private fun start(tests: List<TestState>) {
+        isStarted = true
         val notification = processTests(tests) ?: return
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
@@ -157,9 +188,5 @@ class TestStatusService : Service() {
 
         return null
     }
-
-    private inline fun <reified T : Parcelable> Intent.parcelableArrayList(key: String): ArrayList<T>? = when {
-        Build.VERSION.SDK_INT >= 33 -> getParcelableArrayListExtra(key, T::class.java)
-        else -> @Suppress("DEPRECATION") getParcelableArrayListExtra(key)
-    }
+    
 }

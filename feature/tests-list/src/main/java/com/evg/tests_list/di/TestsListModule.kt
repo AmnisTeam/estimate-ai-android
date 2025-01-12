@@ -1,13 +1,11 @@
 package com.evg.tests_list.di
 
-import androidx.work.WorkManager
 import com.evg.tests_list.data.repository.TestsListRepositoryImpl
 import com.evg.tests_list.domain.repository.TestsListRepository
 import com.evg.tests_list.domain.usecase.ConnectTestProgressUseCase
 import com.evg.tests_list.domain.usecase.GetAllTestsUseCaseUseCase
 import com.evg.tests_list.domain.usecase.TestsListUseCases
 import com.evg.tests_list.presentation.mvi.TestsListViewModel
-import com.evg.tests_list.presentation.service.TestStatusService
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.module.dsl.viewModel
@@ -24,7 +22,6 @@ val testsListModule = module {
     viewModel {
         TestsListViewModel(
             testsListUseCases = get(),
-            testProgressWorker = get(),
             connectTestProgressJobFlow = get(),
         )
     }
@@ -37,6 +34,5 @@ val testsListModule = module {
     single { GetAllTestsUseCaseUseCase(testsListRepository = get()) }
     single { ConnectTestProgressUseCase(testsListRepository = get()) }
 
-    single { WorkManager.getInstance(get()) }
     single { MutableStateFlow<Job?>(null) }
 }

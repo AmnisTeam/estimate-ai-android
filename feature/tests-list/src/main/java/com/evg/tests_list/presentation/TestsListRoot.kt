@@ -4,6 +4,10 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import com.evg.LocalNavHostController
 import com.evg.api.domain.utils.CombinedLoginError
@@ -27,6 +31,12 @@ fun TestsListRoot(
         when (sideEffect) {
             is TestsListSideEffect.ConnectTestProgressFail -> {
                 Toast.makeText(context, sideEffect.error.toErrorMessage(context), Toast.LENGTH_SHORT).show()
+            }
+            is TestsListSideEffect.StartService -> {
+                val intent = Intent(context, TestStatusService::class.java).apply {
+                    action = TestStatusService.Actions.START.toString()
+                }
+                context.startForegroundService(intent)
             }
         }
     }

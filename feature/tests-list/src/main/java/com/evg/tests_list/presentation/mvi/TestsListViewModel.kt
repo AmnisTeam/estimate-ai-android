@@ -5,11 +5,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
-import androidx.work.Constraints
-import androidx.work.ExistingWorkPolicy
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import com.evg.api.domain.utils.NetworkError
 import com.evg.api.domain.utils.ServerResult
 import com.evg.tests_list.domain.model.TestSource
@@ -17,9 +12,7 @@ import com.evg.tests_list.domain.model.TestType
 import com.evg.tests_list.domain.usecase.TestsListUseCases
 import com.evg.tests_list.presentation.mapper.toTestState
 import com.evg.tests_list.presentation.model.TestState
-import com.evg.tests_list.presentation.service.TestProgressWorker
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
@@ -27,7 +20,6 @@ import org.orbitmvi.orbit.viewmodel.container
 
 class TestsListViewModel(
     private val testsListUseCases: TestsListUseCases,
-    private val testProgressWorker: WorkManager,
     private val connectTestProgressJobFlow: MutableStateFlow<Job?>,
 ): ContainerHost<TestsListState, TestsListSideEffect>, ViewModel() {
     override val container = container<TestsListState, TestsListSideEffect>(TestsListState())
@@ -35,21 +27,7 @@ class TestsListViewModel(
     init {
         getAllTests()
         connectTestProgress()
-        startWorker()
-    }
-
-    private fun startWorker() {
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
-        val workRequest = OneTimeWorkRequestBuilder<TestProgressWorker>()
-            .setConstraints(constraints)
-            .build()
-        testProgressWorker.enqueueUniqueWork(
-            "TestProgressWorker",
-            ExistingWorkPolicy.REPLACE,
-            workRequest,
-        )
+        intent { postSideEffect(TestsListSideEffect.StartService) }
     }
 
     fun getAllTests() = intent {
@@ -90,18 +68,13 @@ class TestsListViewModel(
     }
 
 
-
-
-    private var countProgress = 0
     private fun connectTestProgress() = intent {
         connectTestProgressJobFlow.value?.cancel()
-        //postSideEffect(TestsListSideEffect.StartService)
 
         val newJob = viewModelScope.launch {
            when (val result = testsListUseCases.connectTestProgressUseCase.invoke()) {
                is ServerResult.Success -> {
                    result.data.collect { tests: List<TestType> ->
-                       println("qwe ${++countProgress}")
                        val testsById = tests.map { it.toTestState() } .associateBy {
                            when (it) {
                                is TestState.ErrorTest -> it.id
@@ -135,7 +108,6 @@ class TestsListViewModel(
                    }
                }
                is ServerResult.Error -> {
-                   val eet = 342
                    // postSideEffect(TestsListSideEffect.ConnectTestProgressFail(error = result.error)) //TODO
                }
            }
