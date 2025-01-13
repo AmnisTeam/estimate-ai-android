@@ -6,6 +6,7 @@ import com.apollographql.apollo.network.okHttpClient
 import com.evg.api.data.TestPageSourceRemote
 import com.evg.api.data.repository.ApiRepositoryImpl
 import com.evg.api.domain.repository.ApiRepository
+import com.evg.shared_prefs.domain.repository.SharedPrefsRepository
 import kotlinx.coroutines.delay
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
@@ -19,6 +20,14 @@ val apiModule = module {
             .connectTimeout(timeout, TimeUnit.MILLISECONDS)
             .readTimeout(timeout, TimeUnit.MILLISECONDS)
             .writeTimeout(timeout, TimeUnit.MILLISECONDS)
+            .addInterceptor { chain ->
+                val token = get<SharedPrefsRepository>().getUserToken()
+                val newRequest = chain.request().newBuilder()
+                    .addHeader("Authorization", "Bearer $token")
+                    .build()
+
+                chain.proceed(newRequest)
+            }
             .build()
 
         ApolloClient.Builder()

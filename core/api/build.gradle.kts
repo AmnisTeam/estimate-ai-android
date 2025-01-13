@@ -43,6 +43,7 @@ apollo {
 
 dependencies {
     implementation(project(":core:database"))
+    implementation(project(":core:shared-prefs"))
 
     // GraphQL
     implementation(libs.appolo.graphql)
