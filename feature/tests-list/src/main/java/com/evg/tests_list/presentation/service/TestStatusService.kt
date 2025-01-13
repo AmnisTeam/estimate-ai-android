@@ -56,15 +56,14 @@ class TestStatusService : Service() {
     private fun startSocketConnection() {
         if (job != null) return
         println("startSocketConnection")
+        start(tests = emptyList())
 
         job = CoroutineScope(Dispatchers.IO).launch {
             when (val result = connectTestProgressUseCase.invoke()) {
                 is ServerResult.Success -> {
                     result.data.collect { tests ->
                         println("data collected in service №${++cnt}")
-                        if (!isStarted) {
-                            start(tests = tests.map { it.toTestState() })
-                        } else if (tests.isNotEmpty()) {
+                        if (tests.isNotEmpty()) {
                             updateNotification(tests = tests.map { it.toTestState() })
                         } else {
                             stopSocketConnection()

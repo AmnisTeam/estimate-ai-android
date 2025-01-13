@@ -225,7 +225,15 @@ class ApiRepositoryImpl(
                 testProgressFlow = null
             }
             .catch { e ->
+                println("catch in createTestProgressFlow")
                 println(e)
+                emit(
+                    OnTestProgressResponse(
+                        code = 404,
+                        tests = emptyList(),
+                    )
+                )
+                testProgressFlow = null
             }
             .shareIn(
                 scope = CoroutineScope(Dispatchers.IO),
@@ -238,8 +246,8 @@ class ApiRepositoryImpl(
         if (testProgressFlow == null) {
             testProgressFlow = createTestProgressFlow()
         }
-        // val notNullFlow = testProgressFlow ?: return ServerResult.Success(createTestProgressFlow())
-        return ServerResult.Success(testProgressFlow!!)
+         val notNullFlow = testProgressFlow ?: return ServerResult.Success(createTestProgressFlow())
+        return ServerResult.Success(notNullFlow)
     }
 
     override fun isInternetAvailable(): Boolean {

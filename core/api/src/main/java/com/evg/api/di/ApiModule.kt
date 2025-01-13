@@ -27,7 +27,7 @@ val apiModule = module {
                 println(throwable.cause)
                 println(throwable.message)
                 delay(2000)
-                true
+                attempt < 3
             }
             .webSocketIdleTimeoutMillis(6000)
             .build()
