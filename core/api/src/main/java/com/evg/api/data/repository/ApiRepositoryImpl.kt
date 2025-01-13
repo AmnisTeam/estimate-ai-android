@@ -218,9 +218,6 @@ class ApiRepositoryImpl(
                 databaseRepository.updateTests(tests = data.tests.map { it.toTestTypeDBO() })
                 data
             }
-            .onStart {
-                println("onStart")
-            }
             .onCompletion {
                 println("onCompletion, reopening subscription")
                 localApolloClient.close()
@@ -245,12 +242,11 @@ class ApiRepositoryImpl(
             )
     }
 
-    override suspend fun onTestProgress(): ServerResult<SharedFlow<OnTestProgressResponse>, NetworkError> {
+    override suspend fun onTestProgress(): SharedFlow<OnTestProgressResponse> {
         if (testProgressFlow == null) {
             testProgressFlow = createTestProgressFlow()
         }
-         val notNullFlow = testProgressFlow ?: return ServerResult.Success(createTestProgressFlow())
-        return ServerResult.Success(notNullFlow)
+        return testProgressFlow ?: return createTestProgressFlow()
     }
 
     override fun isInternetAvailable(): Boolean {

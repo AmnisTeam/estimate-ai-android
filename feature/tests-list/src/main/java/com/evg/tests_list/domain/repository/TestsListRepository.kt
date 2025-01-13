@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface TestsListRepository {
     suspend fun getAllTestsByPageFromServer(): Flow<PagingData<ServerResult<TestType, NetworkError>>>
     suspend fun getAllTestsFromDatabase(): Flow<PagingData<TestType>>
-    suspend fun connectTestProgress(): ServerResult<Flow<List<TestType>>, NetworkError>
+    suspend fun connectTestProgress(): Flow<List<TestType>>
 
     fun isInternetAvailable(): Boolean
 }

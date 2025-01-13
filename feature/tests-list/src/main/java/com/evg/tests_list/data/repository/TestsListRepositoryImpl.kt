@@ -5,12 +5,10 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.evg.api.data.TestPageSourceRemote
-import com.evg.api.domain.model.OnTestProgressResponse
 import com.evg.api.domain.repository.ApiRepository
 import com.evg.api.domain.utils.NetworkError
 import com.evg.api.domain.utils.ServerResult
 import com.evg.database.data.TestPageSourceLocal
-import com.evg.database.domain.repository.DatabaseRepository
 import com.evg.tests_list.domain.mapper.toTestType
 import com.evg.tests_list.domain.model.TestType
 import com.evg.tests_list.domain.repository.TestsListRepository
@@ -61,18 +59,12 @@ class TestsListRepositoryImpl(
             }*/
     }
 
-    override suspend fun connectTestProgress(): ServerResult<Flow<List<TestType>>, NetworkError> {
-        return when (val result = apiRepository.onTestProgress()) {
-            is ServerResult.Success -> {
-                ServerResult.Success(
-                    result.data.map { response ->
-                        response.tests.map {
-                            it.toTestType()
-                        }
-                    }
-                )
+    override suspend fun connectTestProgress(): Flow<List<TestType>> {
+        val result = apiRepository.onTestProgress()
+        return result.map { response ->
+            response.tests.map {
+                it.toTestType()
             }
-            is ServerResult.Error -> ServerResult.Error(result.error)
         }
     }
 

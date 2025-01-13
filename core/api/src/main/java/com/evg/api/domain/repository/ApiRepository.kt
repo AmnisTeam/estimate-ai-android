@@ -23,7 +23,7 @@ interface ApiRepository {
     suspend fun passwordReset(passwordReset: PasswordResetDTO): ServerResult<Unit, CombinedPasswordResetError>
     suspend fun createEssayTest(data: CreateEssayTestDTO): ServerResult<Unit, NetworkError>
 
-    suspend fun onTestProgress(): ServerResult<SharedFlow<OnTestProgressResponse>, NetworkError>
+    suspend fun onTestProgress(): SharedFlow<OnTestProgressResponse>
 
     fun isInternetAvailable(): Boolean
 }

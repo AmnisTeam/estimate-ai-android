@@ -59,21 +59,15 @@ class TestStatusService : Service() {
         start(tests = emptyList())
 
         job = CoroutineScope(Dispatchers.IO).launch {
-            when (val result = connectTestProgressUseCase.invoke()) {
-                is ServerResult.Success -> {
-                    result.data.collect { tests ->
-                        println("data collected in service №${++cnt}")
-                        if (tests.isNotEmpty()) {
-                            updateNotification(tests = tests.map { it.toTestState() })
-                        } else {
-                            stopSocketConnection()
-                        }
+            val result = connectTestProgressUseCase.invoke()
+                result.collect { tests ->
+                    println("data collected in service №${++cnt}")
+                    if (tests.isNotEmpty()) {
+                        updateNotification(tests = tests.map { it.toTestState() })
+                    } else {
+                        stopSocketConnection()
                     }
                 }
-                is ServerResult.Error -> {
-                    stopSocketConnection()
-                }
-            }
         }
     }
 

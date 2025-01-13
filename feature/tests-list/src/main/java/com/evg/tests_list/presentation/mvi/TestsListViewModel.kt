@@ -26,8 +26,6 @@ class TestsListViewModel(
 
     init {
         getAllTests()
-        connectTestProgress()
-        intent { postSideEffect(TestsListSideEffect.StartService) }
     }
 
     fun getAllTests() = intent {
@@ -65,6 +63,9 @@ class TestsListViewModel(
                 }
             }
         }
+
+        connectTestProgress()
+        intent { postSideEffect(TestsListSideEffect.StartService) }
     }
 
 
@@ -73,46 +74,40 @@ class TestsListViewModel(
         connectTestProgressJobFlow.value?.cancel()
 
         val newJob = viewModelScope.launch {
-           when (val result = testsListUseCases.connectTestProgressUseCase.invoke()) {
-               is ServerResult.Success -> {
-                   result.data.collect { tests: List<TestType> ->
-                       println("qwe ${++test}")
-                       val testsById = tests.map { it.toTestState() } .associateBy {
-                           when (it) {
-                               is TestState.ErrorTest -> it.id
-                               is TestState.FinishedTest -> it.id
-                               is TestState.LoadingTest -> it.id
+            val result = testsListUseCases.connectTestProgressUseCase.invoke()
+            result.collect { tests: List<TestType> ->
+               println("qwe ${++test}")
+               val testsById = tests.map { it.toTestState() } .associateBy {
+                   when (it) {
+                       is TestState.ErrorTest -> it.id
+                       is TestState.FinishedTest -> it.id
+                       is TestState.LoadingTest -> it.id
+                   }
+               }
+
+               state.tests.value = state.tests.value.map { test ->
+                   when (test) {
+                       is ServerResult.Success -> {
+                           val currentTestId = when (val data = test.data) {
+                               is TestState.ErrorTest -> data.id
+                               is TestState.FinishedTest -> data.id
+                               is TestState.LoadingTest -> data.id
+                           }
+
+                           val updatedTest = testsById[currentTestId]
+
+                           if (updatedTest != null) {
+                               ServerResult.Success(updatedTest)
+                           } else {
+                               test
                            }
                        }
-
-                       state.tests.value = state.tests.value.map { test ->
-                           when (test) {
-                               is ServerResult.Success -> {
-                                   val currentTestId = when (val data = test.data) {
-                                       is TestState.ErrorTest -> data.id
-                                       is TestState.FinishedTest -> data.id
-                                       is TestState.LoadingTest -> data.id
-                                   }
-
-                                   val updatedTest = testsById[currentTestId]
-
-                                   if (updatedTest != null) {
-                                       ServerResult.Success(updatedTest)
-                                   } else {
-                                       test
-                                   }
-                               }
-                               is ServerResult.Error -> {
-                                   ServerResult.Error(test.error)
-                               }
-                           }
+                       is ServerResult.Error -> {
+                           ServerResult.Error(test.error)
                        }
                    }
                }
-               is ServerResult.Error -> {
-                   // postSideEffect(TestsListSideEffect.ConnectTestProgressFail(error = result.error)) //TODO
-               }
-           }
+            }
         }
         connectTestProgressJobFlow.value = newJob
     }

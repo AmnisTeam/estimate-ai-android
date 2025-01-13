@@ -1,6 +1,7 @@
 package com.evg.api.di
 
 import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.annotations.ApolloExperimental
 import com.apollographql.apollo.network.okHttpClient
 import com.evg.api.data.TestPageSourceRemote
 import com.evg.api.data.repository.ApiRepositoryImpl
@@ -12,24 +13,19 @@ import java.util.concurrent.TimeUnit
 
 val apiModule = module {
     factory {
+        val timeout: Long = 2_000
+
         val okHttpClient = OkHttpClient.Builder()
-            .connectTimeout(2, TimeUnit.SECONDS)
-            .readTimeout(2, TimeUnit.SECONDS)
-            .writeTimeout(2, TimeUnit.SECONDS)
+            .connectTimeout(timeout, TimeUnit.MILLISECONDS)
+            .readTimeout(timeout, TimeUnit.MILLISECONDS)
+            .writeTimeout(timeout, TimeUnit.MILLISECONDS)
             .build()
 
         ApolloClient.Builder()
             .serverUrl("http://192.168.1.157:8000/graphql")
             .webSocketServerUrl("ws://192.168.1.157:8000/graphql")
             .okHttpClient(okHttpClient)
-            .webSocketReopenWhen { throwable, attempt ->
-                println("webSocketReopenWhen №${attempt}")
-                println(throwable.cause)
-                println(throwable.message)
-                delay(2000)
-                attempt < 3
-            }
-            .webSocketIdleTimeoutMillis(6000)
+            .webSocketIdleTimeoutMillis(timeout)
             .build()
     }
 
