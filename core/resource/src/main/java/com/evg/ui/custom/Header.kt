@@ -1,5 +1,6 @@
 package com.evg.ui.custom
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,6 +36,10 @@ fun Header(
     Column {
         Spacer(modifier = Modifier.height(VerticalPadding))
 
+        BackHandler {
+            handleBackNavigation(navigation)
+        }
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
@@ -44,15 +49,7 @@ fun Header(
                     .padding(start = 20.dp)
                     .size(30.dp)
                     .clickableRipple {
-                        val previousScreen = navigation.previousBackStackEntry?.destination?.route //TODO
-                        val startScreen = navigation.graph.startDestinationRoute
-                        if (previousScreen == startScreen && startScreen != null) {
-                            navigation.navigate("tests-list") {
-                                popUpTo(startScreen) { inclusive = true }
-                            }
-                        } else {
-                            navigation.popBackStack()
-                        }
+                        handleBackNavigation(navigation)
                     },
                 painter = painterResource(id = R.drawable.arrow_back),
                 contentDescription = null,
@@ -75,6 +72,18 @@ fun Header(
                 .size(0.5.dp)
                 .background(AppTheme.colors.bottomBarSelected)
         )
+    }
+}
+
+private fun handleBackNavigation(navigation: NavHostController) {
+    val previousScreen = navigation.previousBackStackEntry?.destination?.route
+    val startScreen = navigation.graph.startDestinationRoute
+    if (previousScreen == startScreen && startScreen != null) {
+        navigation.navigate("tests-list") {
+            popUpTo(startScreen) { inclusive = true }
+        }
+    } else {
+        navigation.popBackStack()
     }
 }
 
