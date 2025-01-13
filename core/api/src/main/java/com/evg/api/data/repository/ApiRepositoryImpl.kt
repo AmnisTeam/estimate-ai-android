@@ -20,7 +20,6 @@ import com.evg.api.domain.mapper.toOnTestProgressResponse
 import com.evg.api.domain.mapper.toTestDataDBO
 import com.evg.api.domain.mapper.toTestResponses
 import com.evg.api.domain.mapper.toTestTypeDBO
-import com.evg.api.domain.model.CreateEssayTestResponse
 import com.evg.api.domain.model.GetTestDataResponse
 import com.evg.api.domain.model.GetTestsResponse
 import com.evg.api.domain.model.OnTestProgressResponse
@@ -39,15 +38,12 @@ import com.evg.api.type.UserDTO
 import com.evg.database.domain.repository.DatabaseRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.retry
-import kotlinx.coroutines.flow.retryWhen
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.shareIn
 import okio.ProtocolException
 import java.net.ConnectException
@@ -55,9 +51,13 @@ import java.net.SocketTimeoutException
 
 class ApiRepositoryImpl(
     private val context: Context,
-    private val apolloClient: ApolloClient,
+    private val apolloClientProvider: () -> ApolloClient,
     private val databaseRepository: DatabaseRepository,
 ): ApiRepository {
+    private val apolloClient = apolloClientProvider()
+    private var testProgressFlow: SharedFlow<OnTestProgressResponse>? = null
+
+
     private suspend fun <T> safeApiCall(apiCall: suspend () -> T): ServerResult<T, NetworkError> {
         return try {
             ServerResult.Success(apiCall())
@@ -203,39 +203,43 @@ class ApiRepositoryImpl(
         }
     }
 
-    private val testProgressFlow: SharedFlow<OnTestProgressResponse> by lazy {
-        apolloClient
+
+    private fun createTestProgressFlow(): SharedFlow<OnTestProgressResponse> {
+        return apolloClientProvider()
             .subscription(OnTestProgressSubscription())
             .toFlow()
-            .retry {
-                delay(2000)
-                true
-            }
             .map { response ->
+                println("data from server received")
                 val data = response.dataOrThrow()
                     .onTestProgressResponse
                     .toOnTestProgressResponse()
 
                 databaseRepository.updateTests(tests = data.tests.map { it.toTestTypeDBO() })
-
                 data
             }
-            .catch { exception ->
-                if (exception is NoDataException) {
-                    ServerResult.Error<SharedFlow<OnTestProgressResponse>, NetworkError>(NetworkError.SERVER_ERROR) //TODO error is not returned
-                } else {
-                    throw exception
-                }
+            .onStart {
+                println("onStart")
+            }
+            .onCompletion {
+                println("onCompletion, reopening subscription")
+                testProgressFlow = null
+            }
+            .catch { e ->
+                println(e)
             }
             .shareIn(
                 scope = CoroutineScope(Dispatchers.IO),
-                started = SharingStarted.WhileSubscribed(5000),
+                started = SharingStarted.Eagerly,
                 replay = 1,
             )
     }
 
     override suspend fun onTestProgress(): ServerResult<SharedFlow<OnTestProgressResponse>, NetworkError> {
-        return ServerResult.Success(testProgressFlow)
+        if (testProgressFlow == null) {
+            testProgressFlow = createTestProgressFlow()
+        }
+        // val notNullFlow = testProgressFlow ?: return ServerResult.Success(createTestProgressFlow())
+        return ServerResult.Success(testProgressFlow!!)
     }
 
     override fun isInternetAvailable(): Boolean {

@@ -68,6 +68,7 @@ class TestsListViewModel(
     }
 
 
+    var test = 0
     private fun connectTestProgress() = intent {
         connectTestProgressJobFlow.value?.cancel()
 
@@ -75,6 +76,7 @@ class TestsListViewModel(
            when (val result = testsListUseCases.connectTestProgressUseCase.invoke()) {
                is ServerResult.Success -> {
                    result.data.collect { tests: List<TestType> ->
+                       println("qwe ${++test}")
                        val testsById = tests.map { it.toTestState() } .associateBy {
                            when (it) {
                                is TestState.ErrorTest -> it.id

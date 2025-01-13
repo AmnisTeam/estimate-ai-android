@@ -29,12 +29,12 @@ import org.koin.android.ext.android.inject
 class TestStatusService : Service() {
     companion object {
         private const val LOADING_TEST_ID = Int.MAX_VALUE
-        private const val LOADING_GROUP = "com.evg.tests_list.LOADING_GROUP"
+        //private const val LOADING_GROUP = "com.evg.tests_list.LOADING_GROUP"
         private const val READY_GROUP = "com.evg.tests_list.READY_GROUP"
         private const val ERROR_GROUP = "com.evg.tests_list.ERROR_GROUP"
     }
     enum class Actions {
-        START, UPDATE, STOP,
+        START, STOP,
     }
     private var isStarted = false
     private var job: Job? = null
@@ -52,14 +52,17 @@ class TestStatusService : Service() {
         return START_STICKY
     }
 
+    private var cnt = 0
     private fun startSocketConnection() {
         if (job != null) return
+        println("startSocketConnection")
 
         job = CoroutineScope(Dispatchers.IO).launch {
             when (val result = connectTestProgressUseCase.invoke()) {
                 is ServerResult.Success -> {
                     result.data.collect { tests ->
-                        if (!isStarted && tests.isNotEmpty()) {
+                        println("data collected in service №${++cnt}")
+                        if (!isStarted) {
                             start(tests = tests.map { it.toTestState() })
                         } else if (tests.isNotEmpty()) {
                             updateNotification(tests = tests.map { it.toTestState() })
@@ -76,6 +79,7 @@ class TestStatusService : Service() {
     }
 
     private fun stopSocketConnection() {
+        println("stop Socket Connection")
         isStarted = false
         job?.cancel()
         stopSelf()
@@ -83,7 +87,17 @@ class TestStatusService : Service() {
 
     private fun start(tests: List<TestState>) {
         isStarted = true
-        val notification = processTests(tests) ?: return
+
+        val notification = if (tests.isEmpty()) {
+            NotificationCompat.Builder(this, "loading_status_tests")
+                .setSmallIcon(R.drawable.discord)
+                .setOnlyAlertOnce(true)
+                .setContentTitle("Loading tests")
+                .setProgress(100, 0, true)
+                .build()
+        } else {
+            processTests(tests)
+        } ?: return
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             startForeground(LOADING_TEST_ID, notification)
@@ -182,7 +196,6 @@ class TestStatusService : Service() {
                         .addLine(lineText)
                 )
                 .setProgress(100, currentLoadingTest.progress, currentLoadingTest.queue != 0)
-                .setGroup(LOADING_GROUP)
                 .build()
         }
 
