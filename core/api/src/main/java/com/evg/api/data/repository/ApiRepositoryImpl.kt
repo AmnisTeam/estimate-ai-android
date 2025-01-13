@@ -205,7 +205,8 @@ class ApiRepositoryImpl(
 
 
     private fun createTestProgressFlow(): SharedFlow<OnTestProgressResponse> {
-        return apolloClientProvider()
+        val localApolloClient = apolloClientProvider()
+        return localApolloClient
             .subscription(OnTestProgressSubscription())
             .toFlow()
             .map { response ->
@@ -222,6 +223,7 @@ class ApiRepositoryImpl(
             }
             .onCompletion {
                 println("onCompletion, reopening subscription")
+                localApolloClient.close()
                 testProgressFlow = null
             }
             .catch { e ->
@@ -233,6 +235,7 @@ class ApiRepositoryImpl(
                         tests = emptyList(),
                     )
                 )
+                localApolloClient.close()
                 testProgressFlow = null
             }
             .shareIn(
