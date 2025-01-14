@@ -30,8 +30,8 @@ class TestStatusService : Service() {
     companion object {
         private const val LOADING_TEST_ID = Int.MAX_VALUE
         //private const val LOADING_GROUP = "com.evg.tests_list.LOADING_GROUP"
-        private const val READY_GROUP = "com.evg.tests_list.READY_GROUP"
-        private const val ERROR_GROUP = "com.evg.tests_list.ERROR_GROUP"
+        private const val READY_GROUP = "com.evg.tests_list.presentation.service.READY_GROUP"
+        private const val ERROR_GROUP = "com.evg.tests_list.presentation.service.ERROR_GROUP"
     }
     enum class Actions {
         START, STOP,
@@ -84,9 +84,10 @@ class TestStatusService : Service() {
         val notification = if (tests.isEmpty()) {
             NotificationCompat.Builder(this, "loading_status_tests")
                 .setSmallIcon(R.drawable.discord)
-                .setOnlyAlertOnce(true)
-                .setContentTitle("Loading tests")
+                .setContentTitle(getString(R.string.loading_tests))
                 .setProgress(100, 0, true)
+                .setOnlyAlertOnce(true)
+                .setOngoing(true)
                 .build()
         } else {
             processTests(tests)
@@ -137,11 +138,11 @@ class TestStatusService : Service() {
 
                 val notification = NotificationCompat.Builder(this, "ready_status_tests")
                     .setSmallIcon(R.drawable.discord)
-                    .setContentTitle("Test №${test.id} is ready!")
+                    .setContentTitle(getString(R.string.test_id_ready, test.id))
                     .setStyle(
                         NotificationCompat.InboxStyle()
                             .addLine(test.title)
-                            .addLine("Estimated level: ${test.levelColor.name}")
+                            .addLine("${getString(R.string.estimated_level)}: ${test.levelColor.name}")
                     )
                     .setGroup(READY_GROUP)
                     .setContentIntent(pendingIntent)
@@ -163,7 +164,7 @@ class TestStatusService : Service() {
             onErrorTests.forEach { test ->
                 val notification = NotificationCompat.Builder(this, "error_status_tests")
                     .setSmallIcon(R.drawable.discord)
-                    .setContentTitle("Error Test Status")
+                    .setContentTitle(getString(R.string.test_id_failed, test.id))
                     .setStyle(NotificationCompat.BigTextStyle().bigText(test.toString()))
                     .setGroup(ERROR_GROUP)
                     .build()
@@ -175,20 +176,21 @@ class TestStatusService : Service() {
         if (onLoadingTests.isNotEmpty()) {
             val currentLoadingTest = onLoadingTests[0]
             val lineText = if (currentLoadingTest.queue == 0) {
-                "Tests left: ${onLoadingTests.size}"
+                "${getString(R.string.tests_left)}: ${onLoadingTests.size}"
             } else {
-                "Queue: №${currentLoadingTest.queue}"
+                "${getString(R.string.queue)}: №${currentLoadingTest.queue}"
             }
 
             return NotificationCompat.Builder(this, "loading_status_tests")
                 .setSmallIcon(R.drawable.discord)
-                .setOnlyAlertOnce(true)
-                .setContentTitle("Loading test №${currentLoadingTest.id}")
+                .setContentTitle("${getString(R.string.loading_test)} №${currentLoadingTest.id}")
                 .setStyle(
                     NotificationCompat.InboxStyle()
                         .addLine(lineText)
                 )
                 .setProgress(100, currentLoadingTest.progress, currentLoadingTest.queue != 0)
+                .setOnlyAlertOnce(true)
+                .setOngoing(true)
                 .build()
         }
 

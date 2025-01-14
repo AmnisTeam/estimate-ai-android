@@ -55,7 +55,7 @@ fun FinishedTestTile(
         ) {
             val icon = when(finishedTest.icon) {
                 TestIcons.ESSAY -> painterResource(id = R.drawable.essay)
-                TestIcons.UNKNOWN -> painterResource(id = R.drawable.eye_on) //TODO
+                TestIcons.UNKNOWN -> painterResource(id = R.drawable.unknown)
             }
             Icon(
                 modifier = Modifier

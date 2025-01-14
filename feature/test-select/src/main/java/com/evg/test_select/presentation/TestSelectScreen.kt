@@ -52,7 +52,7 @@ fun TestSelectScreen(
                     description = "Write an essay on any topic. Your English level will be estimated based on it",
                 ),
                 onClick = {
-                    navigation.navigate("test-essay/null") //TODO
+                    navigation.navigate("test-essay/")
                 }
             )
         }

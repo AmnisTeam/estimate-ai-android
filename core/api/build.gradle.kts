@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.jetbrains.kotlin.ksp)
+    //alias(libs.plugins.jetbrains.kotlin.ksp)
     alias(libs.plugins.appolo.graphql.plugin)
 }
 

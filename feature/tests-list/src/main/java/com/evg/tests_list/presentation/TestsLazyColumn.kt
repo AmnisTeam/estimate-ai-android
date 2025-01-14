@@ -87,7 +87,7 @@ fun TestsLazyColumn(
                 }
             }
 
-            is LoadState.NotLoading -> { //TODO test 0 tests on server
+            is LoadState.NotLoading -> {
                 swipeEnabled = true
 
                 if (tests.itemCount <= 1 && !isTestsLoading) {
@@ -146,9 +146,7 @@ fun TestsLazyColumn(
                                                     TestIcons.ESSAY -> {
                                                         navigation.navigate("test-essay/${data.id}")
                                                     }
-                                                    TestIcons.UNKNOWN -> {
-                                                        //TODO
-                                                    }
+                                                    TestIcons.UNKNOWN -> { }
                                                 }
                                             },
                                         )
@@ -162,9 +160,7 @@ fun TestsLazyColumn(
                                 Toast.makeText(context, item.error.toErrorMessage(context), Toast.LENGTH_SHORT).show()
                             }
 
-                            null -> {
-                                Toast.makeText(context, stringResource(id = R.string.test_not_found), Toast.LENGTH_SHORT).show() //TODO
-                            }
+                            null -> { }
                         }
                     }
                 }
@@ -173,7 +169,7 @@ fun TestsLazyColumn(
             is LoadState.Error -> {
                 swipeEnabled = true
 
-                Toast.makeText(context, stringResource(id = R.string.tests_loading_error), Toast.LENGTH_SHORT).show() //TODO
+                Toast.makeText(context, stringResource(id = R.string.server_error), Toast.LENGTH_SHORT).show()
             }
         }
     }

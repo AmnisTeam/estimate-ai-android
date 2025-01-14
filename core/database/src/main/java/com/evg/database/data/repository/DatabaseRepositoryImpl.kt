@@ -14,7 +14,7 @@ class DatabaseRepositoryImpl(
 ): DatabaseRepository {
     override fun getAllTests(): List<TestTypeDBO> {
         return realm
-            .query<TestTypeDBO>() //TODO "TRUEPREDICATE SORT(id ASC) LIMIT($offset, $pageSize)"
+            .query<TestTypeDBO>()
             .find()
             .toList()
     }
