@@ -11,6 +11,6 @@ import org.koin.dsl.module
 val registrationModule = module {
     single<RegistrationRepository> { RegistrationRepositoryImpl(apiRepository = get()) }
     viewModel { RegistrationViewModel(registrationUseCases = get()) }
-    factory { RegistrationUseCases(registrationUseCase = get()) }
-    factory { RegistrationUseCase(registrationRepository = get()) }
+    single { RegistrationUseCases(registrationUseCase = get()) }
+    single { RegistrationUseCase(registrationRepository = get()) }
 }

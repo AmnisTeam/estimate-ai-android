@@ -27,5 +27,5 @@ val databaseModule = module {
     }
 
     single<DatabaseRepository> { DatabaseRepositoryImpl(realm = get()) }
-    factory { TestPageSourceLocal(databaseRepository = get()) }
+    single { TestPageSourceLocal(databaseRepository = get()) }
 }

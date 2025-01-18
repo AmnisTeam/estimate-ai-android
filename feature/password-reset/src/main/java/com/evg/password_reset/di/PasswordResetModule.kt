@@ -11,6 +11,6 @@ import org.koin.dsl.module
 val passwordResetModule = module {
     single<PasswordResetRepository> { PasswordResetRepositoryImpl(apiRepository = get()) }
     viewModel { PasswordResetViewModel(passwordResetUseCases = get()) }
-    factory { PasswordResetUseCases(passwordResetUseCase = get()) }
-    factory { PasswordResetUseCase(passwordResetRepository = get()) }
+    single { PasswordResetUseCases(passwordResetUseCase = get()) }
+    single { PasswordResetUseCase(passwordResetRepository = get()) }
 }

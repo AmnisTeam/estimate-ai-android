@@ -125,6 +125,7 @@ fun TestsLazyColumn(
                 ) {
                     items(
                         count = tests.itemCount,
+                        key = { it }
                     ) { index ->
                         when (val item = tests[index]) {
                             is ServerResult.Success -> {

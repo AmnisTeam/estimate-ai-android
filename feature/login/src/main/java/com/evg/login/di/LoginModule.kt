@@ -12,10 +12,10 @@ import org.koin.dsl.module
 val loginModule = module {
     single<LoginRepository> { LoginRepositoryImpl(apiRepository = get()) }
     viewModel { LoginViewModel(loginUseCases = get()) }
-    factory { LoginUseCases(
+    single { LoginUseCases(
         loginUseCase = get(),
         saveUserTokenUseCase = get(),
     ) }
-    factory { LoginUseCase(loginRepository = get()) }
-    factory { SaveUserTokenUseCase(sharedPrefsRepository = get()) }
+    single { LoginUseCase(loginRepository = get()) }
+    single { SaveUserTokenUseCase(sharedPrefsRepository = get()) }
 }

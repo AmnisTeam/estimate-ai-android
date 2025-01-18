@@ -15,12 +15,12 @@ val testEssayModule = module {
         databaseRepository = get(),
     ) }
     viewModel { (testId: Int?) -> TestEssayViewModel(testEssayUseCases = get(), testId = testId) }
-    factory {
+    single {
         TestEssayUseCases(
             sendTestToServerUseCase = get(),
             getEssayTestData = get(),
         )
     }
-    factory { SendTestToServerUseCase(testEssayRepository = get()) }
-    factory { GetEssayTestData(testEssayRepository = get()) }
+    single { SendTestToServerUseCase(testEssayRepository = get()) }
+    single { GetEssayTestData(testEssayRepository = get()) }
 }
