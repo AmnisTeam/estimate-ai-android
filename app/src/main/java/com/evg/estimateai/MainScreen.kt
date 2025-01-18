@@ -25,6 +25,7 @@ import com.evg.LocalNavHostController
 import com.evg.login.presentation.LoginRoot
 import com.evg.password_reset.presentation.PasswordResetRoot
 import com.evg.registration.presentation.RegistrationRoot
+import com.evg.statistics.presentation.StatisticsRoot
 import com.evg.test_essay.presentation.TestEssayRoot
 import com.evg.test_select.presentation.TestSelectRoot
 import com.evg.tests_list.presentation.TestsListRoot
@@ -95,7 +96,7 @@ fun MainScreen() {
 
                 // С BottomBar
                 composable(route = BottomBarScreen.Statistics.route) {
-                    //
+                    StatisticsRoot()
                 }
                 composable(route = BottomBarScreen.Tests.route) {
                     TestsListRoot()
