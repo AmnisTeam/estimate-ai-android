@@ -5,8 +5,8 @@ plugins {
 }
 
 android {
-    namespace = "com.evg.statistics"
-    compileSdk = 34
+    namespace = "com.evg.charts"
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 26
@@ -25,38 +25,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }
 
 dependencies {
-    implementation(project(":core:resource"))
-    implementation(project(":core:api"))
-    implementation(project(":core:database"))
-    implementation(project(":core:charts"))
-
-    // Koin
-    implementation(libs.di.koin)
-    implementation(libs.di.koin.compose)
-
-    // MVI Orbit
-    implementation(libs.mvi.orbit.core)
-    implementation(libs.mvi.orbit.viewmodel)
-    implementation(libs.mvi.orbit.compose)
-
-    // Navigation
-    implementation(libs.androidx.ui.navigation)
-
-    // Swipe Refresh
-    implementation(libs.swiperefresh.compose)
-
-    // Shimmer
-    implementation(libs.shimmer.compose)
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -66,7 +43,4 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     debugImplementation(libs.androidx.ui.tooling)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
 }
