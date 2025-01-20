@@ -110,6 +110,7 @@ fun FinishedTestTilePreview(darkTheme: Boolean = true) {
                     title = "Title name example",
                     description = "Write an essay on any topic. Your English level will be estimated based on it.",
                     levelColor = TestLevelColors.A2,
+                    createdAt = 0,
                 ),
                 onClick = {},
             )

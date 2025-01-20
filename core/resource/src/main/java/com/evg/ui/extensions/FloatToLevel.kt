@@ -2,8 +2,9 @@ package com.evg.ui.extensions
 
 import com.evg.model.TestLevelColors
 
-fun Float.toTestLevel(): TestLevelColors {
-    return when (this) {
+fun Number.toTestLevel(): TestLevelColors {
+    val value = this.toFloat()
+    return when (value) {
         in 0f..16.67f -> TestLevelColors.A1
         in 16.67f..33.33f -> TestLevelColors.A2
         in 33.33f..50f -> TestLevelColors.B1

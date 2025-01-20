@@ -65,13 +65,15 @@ type ReadyTest {
   title: String!
   type: String!
   description: String!
-  level: String!
+  score: Int!
+  createdAt: Int!
 }
 type LoadingTest {
   id: Int!
   type: String!
   queue: Int!
   progress: Int!
+  createdAt: Int!
 }
 type ErrorTest {
   id: Int!

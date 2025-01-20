@@ -25,7 +25,6 @@ data class SimpleXAxisDrawer(
     val labelTextSize: TextUnit = 12.sp,
     val labelTextColor: Color = Color.Black,
     val drawLabelEvery: Int = 1,// draw label text every $drawLabelEvery, like 1, 2, 3 and so on.
-    val axisLabelRotation: Float = 0f,
     val axisLineThickness: Dp = 1.dp,
     val axisLineColor: Color = Color.Black,
     val axisLabelFormatter: AxisLabelFormatter = { value -> "$value" }
@@ -82,11 +81,7 @@ data class SimpleXAxisDrawer(
                     val labelValue = axisLabelFormatter(label)
                     val x = drawableArea.left + labelIncrements * index
                     val y = drawableArea.bottom
-
-                    canvas.nativeCanvas.save()
-                    canvas.nativeCanvas.rotate(axisLabelRotation, x, y)
                     canvas.nativeCanvas.drawText(labelValue, x, y, labelPaint)
-                    canvas.nativeCanvas.restore()
                 }
             }
         }

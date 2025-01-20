@@ -18,7 +18,8 @@ fun TestResponse.toTestTypeDBO(): TestTypeDBO {
                     title = this@toTestTypeDBO.title
                     type = this@toTestTypeDBO.type
                     description = this@toTestTypeDBO.description
-                    level = this@toTestTypeDBO.level
+                    score = this@toTestTypeDBO.score
+                    createdAt = this@toTestTypeDBO.createdAt
                 }
             }
             is TestResponse.OnLoadingTestResponse -> {
@@ -27,11 +28,13 @@ fun TestResponse.toTestTypeDBO(): TestTypeDBO {
                     type = this@toTestTypeDBO.type
                     queue = this@toTestTypeDBO.queue
                     progress = this@toTestTypeDBO.progress
+                    createdAt = this@toTestTypeDBO.createdAt
                 }
             }
             is TestResponse.OnErrorTestResponse -> {
                 errorTestTypeDBO = ErrorTestTypeDBO().apply {
                     id = this@toTestTypeDBO.id
+                    createdAt = this@toTestTypeDBO.createdAt
                 }
             }
         }

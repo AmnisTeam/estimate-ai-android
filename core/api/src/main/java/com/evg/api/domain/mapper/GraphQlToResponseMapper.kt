@@ -24,16 +24,19 @@ fun GetTestsQuery.GetTestsResponse.toTestResponses(): GetTestsResponse {
                     title = topic.onReadyTest.title,
                     type = topic.onReadyTest.type,
                     description = topic.onReadyTest.description,
-                    level = topic.onReadyTest.level,
+                    score = topic.onReadyTest.score,
+                    createdAt = topic.onReadyTest.createdAt,
                 )
                 topic.onLoadingTest != null -> TestResponse.OnLoadingTestResponse(
                     id = topic.onLoadingTest.id,
                     type = topic.onLoadingTest.type,
                     queue = topic.onLoadingTest.queue,
                     progress = topic.onLoadingTest.progress,
+                    createdAt = topic.onLoadingTest.createdAt,
                 )
                 topic.onErrorTest != null -> TestResponse.OnErrorTestResponse(
                     id = topic.onErrorTest.id,
+                    createdAt = topic.onErrorTest.createdAt,
                 )
                 else -> null
             }
@@ -51,16 +54,19 @@ fun OnTestProgressSubscription.OnTestProgressResponse.toOnTestProgressResponse()
                     title = topic.onReadyTest.title,
                     type = topic.onReadyTest.type,
                     description = topic.onReadyTest.description,
-                    level = topic.onReadyTest.level,
+                    score = topic.onReadyTest.score,
+                    createdAt = topic.onReadyTest.createdAt,
                 )
                 topic.onLoadingTest != null -> TestResponse.OnLoadingTestResponse(
                     id = topic.onLoadingTest.id,
                     type = topic.onLoadingTest.type,
                     queue = topic.onLoadingTest.queue,
                     progress = topic.onLoadingTest.progress,
+                    createdAt = topic.onLoadingTest.createdAt,
                 )
                 topic.onErrorTest != null -> TestResponse.OnErrorTestResponse(
                     id = topic.onErrorTest.id,
+                    createdAt = topic.onErrorTest.createdAt,
                 )
                 else -> null
             }

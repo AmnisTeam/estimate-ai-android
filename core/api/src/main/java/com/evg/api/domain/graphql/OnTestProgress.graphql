@@ -7,16 +7,19 @@ subscription OnTestProgress {
                 title
                 type
                 description
-                level
+                score
+                createdAt
             }
             ... on LoadingTest {
                 id
                 type
                 queue
                 progress
+                createdAt
             }
             ... on ErrorTest {
                 id
+                createdAt
             }
         }
     }

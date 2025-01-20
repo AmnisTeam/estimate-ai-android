@@ -15,15 +15,17 @@ open class ReadyTestTypeDBO : EmbeddedRealmObject {
     var title: String = ""
     var type: String = ""
     var description: String = ""
-    var level: String = ""
+    var score: Int = 0
+    var createdAt: Int = 0
 }
 
 open class LoadingTestTypeDBO : EmbeddedRealmObject {
     var type: String = ""
     var queue: Int = 0
     var progress: Int = 0
+    var createdAt: Int = 0
 }
 
 open class ErrorTestTypeDBO : EmbeddedRealmObject {
-
+    var createdAt: Int = 0
 }

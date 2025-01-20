@@ -6,15 +6,18 @@ sealed class TestResponse {
         val title: String,
         val type: String,
         val description: String,
-        val level: String,
+        val score: Int,
+        val createdAt: Int,
     ) : TestResponse()
     data class OnLoadingTestResponse(
         val id: Int,
         val type: String,
         val queue: Int,
         val progress: Int,
+        val createdAt: Int,
     ) : TestResponse()
     data class OnErrorTestResponse(
         val id: Int,
+        val createdAt: Int,
     ) : TestResponse()
 }

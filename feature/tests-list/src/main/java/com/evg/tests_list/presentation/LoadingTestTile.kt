@@ -118,6 +118,7 @@ fun LoadingTestTilePreview(darkTheme: Boolean = true) {
                     icon = TestIcons.ESSAY,
                     queue = 1,
                     progress = 59,
+                    createdAt = 0,
                 ),
                 onClick = {},
             )

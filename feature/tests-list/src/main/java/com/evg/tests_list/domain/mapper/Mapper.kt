@@ -15,7 +15,8 @@ fun TestResponse.toTestType(): TestType {
                 title = this.title,
                 type = this.type,
                 description = this.description,
-                level = this.level,
+                score = this.score,
+                createdAt = this.createdAt,
             )
         }
         is TestResponse.OnLoadingTestResponse -> {
@@ -24,11 +25,13 @@ fun TestResponse.toTestType(): TestType {
                 type = this.type,
                 queue = this.queue,
                 progress = this.progress,
+                createdAt = this.createdAt,
             )
         }
         is TestResponse.OnErrorTestResponse -> {
             TestType.OnErrorTestType(
                 id = this.id,
+                createdAt = this.createdAt,
             )
         }
     }
@@ -43,7 +46,8 @@ fun TestTypeDBO.toTestType(): TestType {
                     title = it.title,
                     type = it.type,
                     description = it.description,
-                    level = it.level
+                    score = it.score,
+                    createdAt = it.createdAt,
                 )
             } ?: throw IllegalArgumentException("ReadyTestTypeDBO is null")
         }
@@ -53,14 +57,16 @@ fun TestTypeDBO.toTestType(): TestType {
                     id = this.id,
                     type = it.type,
                     queue = it.queue,
-                    progress = it.progress
+                    progress = it.progress,
+                    createdAt = it.createdAt,
                 )
             } ?: throw IllegalArgumentException("LoadingTestTypeDBO is null")
         }
         errorTestTypeDBO != null -> {
             errorTestTypeDBO?.let {
                 TestType.OnErrorTestType(
-                    id = this.id
+                    id = this.id,
+                    createdAt = it.createdAt,
                 )
             } ?: throw IllegalArgumentException("ErrorTestTypeDBO is null")
         }
