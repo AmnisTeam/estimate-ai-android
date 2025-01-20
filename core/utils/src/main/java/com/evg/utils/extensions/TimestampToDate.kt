@@ -1,4 +1,4 @@
-package com.evg.ui.extensions
+package com.evg.utils.extensions
 
 import java.text.SimpleDateFormat
 import java.util.Date

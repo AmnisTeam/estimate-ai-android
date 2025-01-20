@@ -1,10 +1,9 @@
 package com.evg.tests_list.presentation.mapper
 
-import com.evg.model.TestIcons
-import com.evg.model.TestLevelColors
+import com.evg.utils.model.TestIcons
 import com.evg.tests_list.domain.model.TestType
 import com.evg.tests_list.presentation.model.TestState
-import com.evg.ui.extensions.toTestLevel
+import com.evg.utils.extensions.toTestLevel
 
 fun TestType.toTestState(): TestState {
     return when (this) {

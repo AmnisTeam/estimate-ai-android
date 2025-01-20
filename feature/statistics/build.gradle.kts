@@ -35,6 +35,7 @@ android {
 
 dependencies {
     implementation(project(":core:resource"))
+    implementation(project(":core:utils"))
     implementation(project(":core:api"))
     implementation(project(":core:database"))
     implementation(project(":core:charts"))

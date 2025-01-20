@@ -1,4 +1,4 @@
-package com.evg.model
+package com.evg.utils.model
 
 import androidx.compose.ui.graphics.Color
 

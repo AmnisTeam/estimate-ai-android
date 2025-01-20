@@ -1,6 +1,6 @@
 package com.evg.statistics.presentation.model
 
-import com.evg.model.TestLevelColors
+import com.evg.utils.model.TestLevelColors
 
 data class Statistic(
     val level: Int,

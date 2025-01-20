@@ -11,7 +11,7 @@ import com.evg.charts.pie.PieChart
 import com.evg.charts.pie.PieChartData
 import com.evg.charts.pie.render.SimpleSliceDrawer
 import com.evg.charts.simpleChartAnimation
-import com.evg.model.TestLevelColors
+import com.evg.utils.model.TestLevelColors
 import com.evg.statistics.presentation.model.Statistic
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme

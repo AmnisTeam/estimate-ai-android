@@ -15,7 +15,7 @@ import com.evg.api.domain.utils.LoginError
 import com.evg.tests_list.presentation.mvi.TestsListSideEffect
 import com.evg.tests_list.presentation.mvi.TestsListViewModel
 import com.evg.tests_list.presentation.service.TestStatusService
-import com.evg.ui.mapper.toErrorMessage
+import com.evg.utils.mapper.toErrorMessage
 import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect

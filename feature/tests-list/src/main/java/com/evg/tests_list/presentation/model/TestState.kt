@@ -1,7 +1,7 @@
 package com.evg.tests_list.presentation.model
 
-import com.evg.model.TestIcons
-import com.evg.model.TestLevelColors
+import com.evg.utils.model.TestIcons
+import com.evg.utils.model.TestLevelColors
 
 sealed class TestState {
     data class FinishedTest(

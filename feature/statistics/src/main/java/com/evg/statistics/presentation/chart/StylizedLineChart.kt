@@ -10,7 +10,6 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.evg.charts.line.CustomLineChart
-import com.evg.charts.line.LineChart
 import com.evg.charts.line.LineChartData
 import com.evg.charts.line.render.line.GradientLineDrawer
 import com.evg.charts.line.render.line.VerticalLineDrawer
@@ -22,15 +21,12 @@ import me.bytebeats.views.charts.line.LineChartData
 import me.bytebeats.views.charts.line.render.point.FilledCircularPointDrawer
 import me.bytebeats.views.charts.line.render.yaxis.SimpleYAxisDrawer
 import com.evg.statistics.presentation.chart.GradientLineDrawer*/
-import com.evg.model.TestLevelColors
+import com.evg.utils.model.TestLevelColors
 import com.evg.statistics.presentation.model.Statistic
-import com.evg.ui.extensions.toDateString
-import com.evg.ui.extensions.toTestLevel
+import com.evg.utils.extensions.toDateString
+import com.evg.utils.extensions.toTestLevel
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 @Composable
 fun StylizedLineChart(
@@ -96,16 +92,16 @@ fun StylizedLineChartPreview(darkTheme: Boolean = true) {
             }
 
             val points = listOf(
-                Statistic(level=1, levelColor=TestLevelColors.A1, timestamp=1737237000),
-                Statistic(level=98, levelColor=TestLevelColors.C2, timestamp=1737238000),
-                Statistic(level=21, levelColor=TestLevelColors.A2, timestamp=1737239000),
-                Statistic(level=67, levelColor=TestLevelColors.C1, timestamp=1737240000),
-                Statistic(level=55, levelColor=TestLevelColors.B2, timestamp=1737241000),
-                Statistic(level=1,  levelColor=TestLevelColors.A1, timestamp=1737242000),
-                Statistic(level=55, levelColor=TestLevelColors.B2, timestamp=1737243000),
-                Statistic(level=45, levelColor=TestLevelColors.B1, timestamp=1737244000),
-                Statistic(level=37, levelColor=TestLevelColors.B1, timestamp=1737245000),
-                Statistic(level=5,  levelColor=TestLevelColors.A1, timestamp=1737246000),
+                Statistic(level=1, levelColor= TestLevelColors.A1, timestamp=1737237000),
+                Statistic(level=98, levelColor= TestLevelColors.C2, timestamp=1737238000),
+                Statistic(level=21, levelColor= TestLevelColors.A2, timestamp=1737239000),
+                Statistic(level=67, levelColor= TestLevelColors.C1, timestamp=1737240000),
+                Statistic(level=55, levelColor= TestLevelColors.B2, timestamp=1737241000),
+                Statistic(level=1,  levelColor= TestLevelColors.A1, timestamp=1737242000),
+                Statistic(level=55, levelColor= TestLevelColors.B2, timestamp=1737243000),
+                Statistic(level=45, levelColor= TestLevelColors.B1, timestamp=1737244000),
+                Statistic(level=37, levelColor= TestLevelColors.B1, timestamp=1737245000),
+                Statistic(level=5,  levelColor= TestLevelColors.A1, timestamp=1737246000),
             )
 
             StylizedLineChart(

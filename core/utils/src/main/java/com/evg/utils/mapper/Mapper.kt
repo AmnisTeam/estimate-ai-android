@@ -1,4 +1,4 @@
-package com.evg.ui.mapper
+package com.evg.utils.mapper
 
 import android.content.Context
 import com.evg.api.domain.utils.NetworkError

@@ -25,7 +25,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.evg.model.TestIcons
+import com.evg.utils.model.TestIcons
 import com.evg.resource.R
 import com.evg.tests_list.presentation.model.TestState
 import com.evg.ui.extensions.clickableRipple

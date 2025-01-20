@@ -10,7 +10,7 @@ import com.evg.api.domain.utils.PasswordResetError
 import com.evg.password_reset.presentation.mvi.PasswordResetSideEffect
 import com.evg.password_reset.presentation.mvi.PasswordResetViewModel
 import com.evg.resource.R
-import com.evg.ui.mapper.toErrorMessage
+import com.evg.utils.mapper.toErrorMessage
 import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect

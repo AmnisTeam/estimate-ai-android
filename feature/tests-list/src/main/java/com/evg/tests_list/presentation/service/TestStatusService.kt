@@ -13,7 +13,7 @@ import android.os.IBinder
 import android.os.Parcelable
 import androidx.core.app.NotificationCompat
 import com.evg.api.domain.utils.ServerResult
-import com.evg.model.TestIcons
+import com.evg.utils.model.TestIcons
 import com.evg.resource.R
 import com.evg.tests_list.domain.model.TestType
 import com.evg.tests_list.domain.usecase.ConnectTestProgressUseCase

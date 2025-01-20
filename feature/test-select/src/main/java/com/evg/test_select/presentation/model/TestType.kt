@@ -1,6 +1,6 @@
 package com.evg.test_select.presentation.model
 
-import com.evg.model.TestIcons
+import com.evg.utils.model.TestIcons
 
 data class TestType(
     val icon: TestIcons,

@@ -16,13 +16,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.evg.model.TestLevelColors
+import com.evg.utils.model.TestLevelColors
 import com.evg.resource.R
 import com.evg.statistics.presentation.chart.StylizedLineChart
 import com.evg.statistics.presentation.model.DateTile
 import com.evg.statistics.presentation.model.Statistic
 import com.evg.statistics.presentation.mvi.StatisticsState
-import com.evg.ui.extensions.toTestLevel
+import com.evg.utils.extensions.toTestLevel
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
 import com.evg.ui.theme.HorizontalPaddingTile

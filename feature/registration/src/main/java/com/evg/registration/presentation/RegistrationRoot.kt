@@ -10,7 +10,7 @@ import com.evg.LocalNavHostController
 import com.evg.api.domain.utils.CombinedRegistrationError
 import com.evg.api.domain.utils.RegistrationError
 import com.evg.resource.R
-import com.evg.ui.mapper.toErrorMessage
+import com.evg.utils.mapper.toErrorMessage
 import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
