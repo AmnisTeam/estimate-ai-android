@@ -2,10 +2,12 @@ package com.evg.api.domain.mapper
 
 import com.evg.api.CreateEssayTestMutation
 import com.evg.api.GetTestDataResponseQuery
+import com.evg.api.GetTestStatisticsQuery
 import com.evg.api.GetTestsQuery
 import com.evg.api.OnTestProgressSubscription
 import com.evg.api.domain.model.CreateEssayTestResponse
 import com.evg.api.domain.model.GetTestDataResponse
+import com.evg.api.domain.model.GetTestStatisticsResponse
 import com.evg.api.domain.model.GetTestsResponse
 import com.evg.api.domain.model.OnTestProgressResponse
 import com.evg.api.domain.model.TestResponse
@@ -91,4 +93,20 @@ fun GetTestDataResponseQuery.GetTestDataResponse.toGetTestDataResponse(): GetTes
         }
         else -> throw IllegalArgumentException("Response does not contain TestData")
     }
+}
+
+fun GetTestStatisticsQuery.GetTestStatisticsResponse.toGetTestStatisticsResponse(): GetTestStatisticsResponse {
+    return GetTestStatisticsResponse(
+        code = this.code,
+        testStatistics = this.testStatistics.map {
+            TestResponse.OnReadyTestResponse(
+                id = it.id,
+                title = it.title,
+                type = it.type,
+                description = it.description,
+                score = it.score,
+                createdAt = it.createdAt,
+            )
+        }
+    )
 }

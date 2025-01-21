@@ -12,6 +12,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +30,7 @@ import com.evg.ui.theme.EstimateAITheme
 import androidx.compose.ui.unit.dp
 import com.evg.resource.R
 import com.evg.statistics.presentation.model.DateTile
+import com.evg.statistics.presentation.mvi.StatisticsViewModel
 import com.evg.ui.extensions.clickableRipple
 import com.evg.ui.extensions.lighten
 import com.evg.ui.theme.BorderRadius
@@ -37,10 +39,9 @@ import com.evg.ui.theme.BorderRadius
 @Composable
 fun DateSelection(
     dates: List<DateTile>,
-    defaultSelect: DateTile.Dates? = DateTile.Dates.WEEK,
-    onDateRangeSelected: (Pair<Long?, Long?>) -> Unit,
+    onDateRangeSelected: (Pair<Long, Long>) -> Unit,
 ) {
-    var selected: DateTile.Dates? by rememberSaveable { mutableStateOf(defaultSelect) }
+    var selected: DateTile.Dates? by rememberSaveable { mutableStateOf(StatisticsViewModel.defaultSelect) }
     var showDateRangePicker by remember { mutableStateOf(false) }
 
     Row(
@@ -62,25 +63,8 @@ fun DateSelection(
                         .clip(RoundedCornerShape(BorderRadius))
                         .clickableRipple {
                             selected = dateTile.date
-                            val currentMillis = System.currentTimeMillis()
-                            val oneDayMillis = 24 * 60 * 60 * 1000L
-
-                            when (dateTile.date) {
-                                DateTile.Dates.WEEK -> {
-                                    val startDate = currentMillis - 7 * oneDayMillis
-                                    onDateRangeSelected(startDate to currentMillis)
-                                }
-
-                                DateTile.Dates.MONTH -> {
-                                    val startDate = currentMillis - 30 * oneDayMillis
-                                    onDateRangeSelected(startDate to currentMillis)
-                                }
-
-                                DateTile.Dates.YEAR -> {
-                                    val startDate = currentMillis - 365 * oneDayMillis
-                                    onDateRangeSelected(startDate to currentMillis)
-                                }
-                            }
+                            val range = dateTile.date.toTimeRange()
+                            onDateRangeSelected(range.first to range.second)
                         }
                         .then(
                             if (selected == dateTile.date) {
@@ -118,11 +102,10 @@ fun DateSelection(
     if (showDateRangePicker) {
         DateRangePickerModal(
             onDateRangeSelected = { dateRange ->
+                val range = Pair(dateRange.first ?: return@DateRangePickerModal, dateRange.second?: return@DateRangePickerModal)
                 showDateRangePicker = false
-                onDateRangeSelected(dateRange)
-                if (dateRange.first != null && dateRange.second != null) {
-                    selected = null
-                }
+                onDateRangeSelected(range)
+                selected = null
             },
             onDismiss = { showDateRangePicker = false }
         )

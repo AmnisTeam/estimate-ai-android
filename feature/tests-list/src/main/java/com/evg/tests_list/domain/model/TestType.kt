@@ -12,7 +12,7 @@ sealed class TestType : Parcelable {
         val type: String,
         val description: String,
         val score: Int,
-        val createdAt: Int,
+        val createdAt: Long,
     ) : TestType()
     @Parcelize
     data class OnLoadingTestType(
@@ -20,11 +20,11 @@ sealed class TestType : Parcelable {
         val type: String,
         val queue: Int,
         val progress: Int,
-        val createdAt: Int,
+        val createdAt: Long,
     ) : TestType()
     @Parcelize
     data class OnErrorTestType(
         val id: Int,
-        val createdAt: Int,
+        val createdAt: Long,
     ) : TestType()
 }

@@ -9,7 +9,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -19,26 +24,31 @@ import androidx.navigation.NavHostController
 import com.evg.utils.model.TestLevelColors
 import com.evg.resource.R
 import com.evg.statistics.presentation.chart.StylizedLineChart
+import com.evg.statistics.presentation.chart.StylizedPieChart
 import com.evg.statistics.presentation.model.DateTile
-import com.evg.statistics.presentation.model.Statistic
+import com.evg.statistics.presentation.model.StatisticsUI
+import com.evg.statistics.presentation.model.TestStatisticsUI
 import com.evg.statistics.presentation.mvi.StatisticsState
 import com.evg.utils.extensions.toTestLevel
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
 import com.evg.ui.theme.HorizontalPaddingTile
 import com.evg.ui.theme.VerticalPadding
+import com.evg.utils.model.TestIcons
+import com.evg.utils.model.TestScore
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.text.SimpleDateFormat
+import java.time.DayOfWeek
 import java.util.Date
 import java.util.Locale
 
 @Composable
 fun StatisticsScreen(
-    navigation: NavHostController,
     state: StatisticsState,
-    getAllStatistics: () -> Unit,
+    getStatisticsInRange: (Pair<Long, Long>) -> Unit,
 ) {
     val context = LocalContext.current
+    val isStatisticsLoading = state.isStatisticsLoading
     val tests = state.statistics.collectAsState().value
 
 
@@ -66,51 +76,24 @@ fun StatisticsScreen(
                     date = DateTile.Dates.YEAR,
                 ),
             ),
-            onDateRangeSelected = {
-                val first = it.first ?: return@DateSelection
-                val second = it.second ?: return@DateSelection
-                val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-                val startDateString = dateFormat.format(Date(first))
-                val endDateString = dateFormat.format(Date(second))
-
-                Toast.makeText(context, "$startDateString to $endDateString", Toast.LENGTH_SHORT).show()
-            }
+            onDateRangeSelected = getStatisticsInRange,
         )
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        val points = listOf(
-            Statistic(level = 5, levelColor = TestLevelColors.A1, timestamp = 1737237000),
-            Statistic(level = 9, levelColor = TestLevelColors.A1, timestamp = 1737237000 + 1000),
-            Statistic(level = 30, levelColor = TestLevelColors.B1, timestamp = 1737237000 + 2000),
-            Statistic(level = 40, levelColor = TestLevelColors.B2, timestamp = 1737237000 + 3000),
-            Statistic(level = 50, levelColor = TestLevelColors.C1, timestamp = 1737237000 + 4000),
-            Statistic(level = 60, levelColor = TestLevelColors.C2, timestamp = 1737237000 + 5000),
-            Statistic(level = 80, levelColor = TestLevelColors.A1, timestamp = 1737237000 + 7000),
-            Statistic(level = 90, levelColor = TestLevelColors.B1, timestamp = 1737237000 + 8000),
-            Statistic(level = 100, levelColor = TestLevelColors.C2, timestamp = 1737237000 + 9000),
-        )
 
-        val pointsRand = List(10) { index ->
-            val randomValue = (0..100).random()
-            val stats = Statistic(
-                level = randomValue,
-                levelColor = randomValue.toFloat().toTestLevel(),
-                timestamp = 1737237000 + index * 1000L,
+
+        if (tests.testStatisticsUI.size >= 2) {
+            StylizedPieChart(
+                points = tests.testStatisticsUI,
             )
-            println(stats)
-            stats
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            StylizedLineChart(
+                points = tests.testStatisticsUI,
+            )
         }
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        /*StylizedPieChart(
-            points = points,
-        )*/
-
-        StylizedLineChart(
-            points = pointsRand,
-        )
 
     }
 }
@@ -121,12 +104,17 @@ fun StatisticsScreenPreview(darkTheme: Boolean = true) {
     EstimateAITheme(darkTheme = darkTheme) {
         Surface(color = AppTheme.colors.background) {
             StatisticsScreen(
-                navigation = NavHostController(LocalContext.current),
                 state = StatisticsState(
                     isStatisticsLoading = false,
-                    statistics = MutableStateFlow(listOf()),
+                    statistics = MutableStateFlow(
+                        StatisticsUI(
+                            frequentLevel = TestScore(5),
+                            frequentDayOfWeek = DayOfWeek.MONDAY,
+                            testStatisticsUI = emptyList()
+                        )
+                    ),
                 ),
-                getAllStatistics = {},
+                getStatisticsInRange = { _ -> },
             )
         }
     }

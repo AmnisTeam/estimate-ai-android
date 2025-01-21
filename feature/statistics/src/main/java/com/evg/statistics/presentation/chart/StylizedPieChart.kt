@@ -12,26 +12,30 @@ import com.evg.charts.pie.PieChartData
 import com.evg.charts.pie.render.SimpleSliceDrawer
 import com.evg.charts.simpleChartAnimation
 import com.evg.utils.model.TestLevelColors
-import com.evg.statistics.presentation.model.Statistic
+import com.evg.statistics.presentation.model.TestStatisticsUI
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
+import com.evg.utils.model.TestIcons
+import com.evg.utils.model.TestScore
 
 @Composable
 fun StylizedPieChart(
-    points: List<Statistic>,
+    points: List<TestStatisticsUI>,
 ) {
+    val total = points.size.toFloat()
+
+    val groupedSlices = points
+        .groupBy { it.testScore.level }
+        .map { (level, tests) ->
+            val percentage = (tests.size / total) * 100
+            PieChartData.Slice(percentage, level.color)
+        }
+
     PieChart(
         modifier = Modifier
             .size(200.dp),
         pieChartData = PieChartData(
-            slices = listOf(
-                PieChartData.Slice(20F, TestLevelColors.A1.color),
-                PieChartData.Slice(20F, TestLevelColors.A2.color),
-                PieChartData.Slice(20F, TestLevelColors.B1.color),
-                PieChartData.Slice(20F, TestLevelColors.B2.color),
-                PieChartData.Slice(10F, TestLevelColors.C1.color),
-                PieChartData.Slice(10F, TestLevelColors.C2.color),
-            )
+            slices = groupedSlices
         ),
         animation = simpleChartAnimation(),
         sliceDrawer = SimpleSliceDrawer(),
@@ -43,18 +47,20 @@ fun StylizedPieChart(
 fun StylizedPieChartPreview(darkTheme: Boolean = true) {
     EstimateAITheme(darkTheme = darkTheme) {
         Surface(color = AppTheme.colors.background) {
+            val points = listOf(
+                TestStatisticsUI(testScore = TestScore(5), type = TestIcons.ESSAY, createdAt = 1737237000),
+                TestStatisticsUI(testScore = TestScore(9), type = TestIcons.ESSAY, createdAt = 1737237000 + 1000),
+                TestStatisticsUI(testScore = TestScore(30), type = TestIcons.ESSAY, createdAt = 1737237000 + 2000),
+                TestStatisticsUI(testScore = TestScore(40), type = TestIcons.ESSAY, createdAt = 1737237000 + 3000),
+                TestStatisticsUI(testScore = TestScore(50), type = TestIcons.ESSAY, createdAt = 1737237000 + 4000),
+                TestStatisticsUI(testScore = TestScore(60), type = TestIcons.ESSAY, createdAt = 1737237000 + 5000),
+                TestStatisticsUI(testScore = TestScore(80), type = TestIcons.ESSAY, createdAt = 1737237000 + 7000),
+                TestStatisticsUI(testScore = TestScore(90), type = TestIcons.ESSAY, createdAt = 1737237000 + 8000),
+                TestStatisticsUI(testScore = TestScore(100), type = TestIcons.ESSAY, createdAt = 1737237000 + 9000),
+            )
+
             StylizedPieChart(
-                points = listOf(
-                    Statistic(level = 5, levelColor = TestLevelColors.A1, timestamp = 1737237000),
-                    Statistic(level = 9, levelColor = TestLevelColors.A1, timestamp = 1737237000 + 1000),
-                    Statistic(level = 30, levelColor = TestLevelColors.B1, timestamp = 1737237000 + 2000),
-                    Statistic(level = 40, levelColor = TestLevelColors.B2, timestamp = 1737237000 + 3000),
-                    Statistic(level = 50, levelColor = TestLevelColors.C1, timestamp = 1737237000 + 4000),
-                    Statistic(level = 60, levelColor = TestLevelColors.C2, timestamp = 1737237000 + 5000),
-                    Statistic(level = 80, levelColor = TestLevelColors.A1, timestamp = 1737237000 + 7000),
-                    Statistic(level = 90, levelColor = TestLevelColors.B1, timestamp = 1737237000 + 8000),
-                    Statistic(level = 100, levelColor = TestLevelColors.C2, timestamp = 1737237000 + 9000),
-                )
+                points = points
             )
         }
     }

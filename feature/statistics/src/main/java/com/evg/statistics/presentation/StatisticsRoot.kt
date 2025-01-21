@@ -16,7 +16,6 @@ fun StatisticsRoot(
     viewModel: StatisticsViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
-    val navigation = LocalNavHostController.current
 
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
@@ -27,8 +26,7 @@ fun StatisticsRoot(
     }
 
     StatisticsScreen(
-        navigation = navigation,
         state = viewModel.collectAsState().value,
-        getAllStatistics = viewModel::getAllStatistics,
+        getStatisticsInRange = viewModel::getStatisticsInRange,
     )
 }

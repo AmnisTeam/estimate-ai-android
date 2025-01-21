@@ -6,8 +6,6 @@ import com.evg.database.domain.repository.DatabaseRepository
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 class DatabaseRepositoryImpl(
     private val realm: Realm
@@ -16,6 +14,14 @@ class DatabaseRepositoryImpl(
         return realm
             .query<TestTypeDBO>()
             .find()
+            .toList()
+    }
+
+    override fun getTestStatistics(): List<TestTypeDBO> {
+        return realm
+            .query<TestTypeDBO>()
+            .find()
+            .filter { it.readyTestTypeDBO != null }
             .toList()
     }
 

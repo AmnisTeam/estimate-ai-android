@@ -38,6 +38,7 @@ apollo {
     service("service") {
         packageName.set("com.evg.api")
         srcDir(file("src/main/java/com/evg/api/domain/graphql"))
+        mapScalarToKotlinLong("Long")
     }
 }
 

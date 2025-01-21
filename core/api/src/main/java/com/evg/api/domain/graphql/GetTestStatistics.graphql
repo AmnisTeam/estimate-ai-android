@@ -1,0 +1,13 @@
+query GetTestStatistics {
+    getTestStatisticsResponse {
+        code
+        testStatistics {
+            id
+            title
+            type
+            description
+            score
+            createdAt
+        }
+    }
+}

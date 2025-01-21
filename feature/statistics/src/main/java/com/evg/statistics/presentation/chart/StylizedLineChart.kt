@@ -22,22 +22,24 @@ import me.bytebeats.views.charts.line.render.point.FilledCircularPointDrawer
 import me.bytebeats.views.charts.line.render.yaxis.SimpleYAxisDrawer
 import com.evg.statistics.presentation.chart.GradientLineDrawer*/
 import com.evg.utils.model.TestLevelColors
-import com.evg.statistics.presentation.model.Statistic
+import com.evg.statistics.presentation.model.TestStatisticsUI
 import com.evg.utils.extensions.toDateString
 import com.evg.utils.extensions.toTestLevel
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
+import com.evg.utils.model.TestIcons
+import com.evg.utils.model.TestScore
 
 @Composable
 fun StylizedLineChart(
-    points: List<Statistic>,
+    points: List<TestStatisticsUI>,
 ) {
     CustomLineChart(
         modifier = Modifier
             .height(300.dp),
         lineChartData = LineChartData(
             points = points.map {
-                LineChartData.Point(it.level.toFloat(), it.timestamp.toDateString())
+                LineChartData.Point(it.testScore.score.toFloat(), it.createdAt.toDateString())
             },
             padBy = 0F,
             startAtZero = true,
@@ -47,7 +49,7 @@ fun StylizedLineChart(
         ),
         lineDrawer = GradientLineDrawer(
             colors = points.map {
-                it.levelColor.color
+                it.testScore.level.color
             },
             cornerRadius = 40f,
             strokeCap = StrokeCap.Round,
@@ -84,24 +86,19 @@ fun StylizedLineChartPreview(darkTheme: Boolean = true) {
         Surface(color = AppTheme.colors.background) {
             val pointsRand = List(10) { index ->
                 val randomValue = (0..100).random()
-                Statistic(
-                    level = randomValue,
-                    levelColor = randomValue.toFloat().toTestLevel(),
-                    timestamp = 1737237000 + index * 1000L,
-                )
+                TestStatisticsUI(testScore = TestScore(randomValue), type = TestIcons.ESSAY, createdAt = 1737237000 + index * 1000L)
             }
 
             val points = listOf(
-                Statistic(level=1, levelColor= TestLevelColors.A1, timestamp=1737237000),
-                Statistic(level=98, levelColor= TestLevelColors.C2, timestamp=1737238000),
-                Statistic(level=21, levelColor= TestLevelColors.A2, timestamp=1737239000),
-                Statistic(level=67, levelColor= TestLevelColors.C1, timestamp=1737240000),
-                Statistic(level=55, levelColor= TestLevelColors.B2, timestamp=1737241000),
-                Statistic(level=1,  levelColor= TestLevelColors.A1, timestamp=1737242000),
-                Statistic(level=55, levelColor= TestLevelColors.B2, timestamp=1737243000),
-                Statistic(level=45, levelColor= TestLevelColors.B1, timestamp=1737244000),
-                Statistic(level=37, levelColor= TestLevelColors.B1, timestamp=1737245000),
-                Statistic(level=5,  levelColor= TestLevelColors.A1, timestamp=1737246000),
+                TestStatisticsUI(testScore = TestScore(5), type = TestIcons.ESSAY, createdAt = 1737237000),
+                TestStatisticsUI(testScore = TestScore(9), type = TestIcons.ESSAY, createdAt = 1737237000 + 1000),
+                TestStatisticsUI(testScore = TestScore(30), type = TestIcons.ESSAY, createdAt = 1737237000 + 2000),
+                TestStatisticsUI(testScore = TestScore(40), type = TestIcons.ESSAY, createdAt = 1737237000 + 3000),
+                TestStatisticsUI(testScore = TestScore(50), type = TestIcons.ESSAY, createdAt = 1737237000 + 4000),
+                TestStatisticsUI(testScore = TestScore(60), type = TestIcons.ESSAY, createdAt = 1737237000 + 5000),
+                TestStatisticsUI(testScore = TestScore(80), type = TestIcons.ESSAY, createdAt = 1737237000 + 7000),
+                TestStatisticsUI(testScore = TestScore(90), type = TestIcons.ESSAY, createdAt = 1737237000 + 8000),
+                TestStatisticsUI(testScore = TestScore(100), type = TestIcons.ESSAY, createdAt = 1737237000 + 9000),
             )
 
             StylizedLineChart(

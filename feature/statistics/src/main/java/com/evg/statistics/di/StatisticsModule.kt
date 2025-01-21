@@ -11,7 +11,8 @@ import org.koin.dsl.module
 val statisticsModule = module {
     single<StatisticsRepository> {
         StatisticsRepositoryImpl(
-            //apiRepository = get(),
+            apiRepository = get(),
+            databaseRepository = get(),
         )
     }
     viewModel {
@@ -21,7 +22,7 @@ val statisticsModule = module {
     }
     single {
         StatisticsUseCases(
-            getAllStatisticsUseCase = get(),
+            getTestStatisticsUseCase = get(),
         )
     }
     single { GetAllStatisticsUseCase(statisticsRepository = get()) }

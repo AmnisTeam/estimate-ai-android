@@ -9,6 +9,7 @@ import com.apollographql.apollo.exception.ApolloNetworkException
 import com.apollographql.apollo.exception.NoDataException
 import com.evg.api.CreateEssayTestMutation
 import com.evg.api.GetTestDataResponseQuery
+import com.evg.api.GetTestStatisticsQuery
 import com.evg.api.GetTestsQuery
 import com.evg.api.LoginUserMutation
 import com.evg.api.OnTestProgressSubscription
@@ -16,11 +17,13 @@ import com.evg.api.PasswordResetMutation
 import com.evg.api.RegisterUserMutation
 import com.evg.api.domain.mapper.toCreateEssayTestResponse
 import com.evg.api.domain.mapper.toGetTestDataResponse
+import com.evg.api.domain.mapper.toGetTestStatisticsResponse
 import com.evg.api.domain.mapper.toOnTestProgressResponse
 import com.evg.api.domain.mapper.toTestDataDBO
 import com.evg.api.domain.mapper.toTestResponses
 import com.evg.api.domain.mapper.toTestTypeDBO
 import com.evg.api.domain.model.GetTestDataResponse
+import com.evg.api.domain.model.GetTestStatisticsResponse
 import com.evg.api.domain.model.GetTestsResponse
 import com.evg.api.domain.model.OnTestProgressResponse
 import com.evg.api.domain.repository.ApiRepository
@@ -115,6 +118,23 @@ class ApiRepositoryImpl(
 
         if (response is ServerResult.Success) {
             databaseRepository.addTestData(data = response.data.toTestDataDBO())
+        }
+
+        return response
+    }
+
+    override suspend fun getTestStatisticsResponse(): ServerResult<GetTestStatisticsResponse, NetworkError> {
+        val response = safeApiCall {
+            apolloClient
+                .query(GetTestStatisticsQuery())
+                .execute()
+                .dataOrThrow()
+                .getTestStatisticsResponse
+                .toGetTestStatisticsResponse()
+        }
+
+        if (response is ServerResult.Success) {
+            databaseRepository.addTests(tests = response.data.testStatistics.map { it.toTestTypeDBO() })
         }
 
         return response

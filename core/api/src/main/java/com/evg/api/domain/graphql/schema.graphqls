@@ -1,3 +1,5 @@
+scalar Long
+
 schema {
   query: Query
   mutation: Mutation
@@ -7,6 +9,7 @@ schema {
 type Query {
   getTestsResponse(page: Int!): GetTestsResponse!
   getTestDataResponse(id: Int!): GetTestDataResponse!
+  getTestStatisticsResponse: GetTestStatisticsResponse!
 }
 
 type Mutation {
@@ -66,19 +69,19 @@ type ReadyTest {
   type: String!
   description: String!
   score: Int!
-  createdAt: Int!
+  createdAt: Long!
 }
 type LoadingTest {
   id: Int!
   type: String!
   queue: Int!
   progress: Int!
-  createdAt: Int!
+  createdAt: Long!
 }
 type ErrorTest {
   id: Int!
   type: String!
-  createdAt: Int!
+  createdAt: Long!
 }
 
 union TestData = EssayTest
@@ -89,4 +92,9 @@ type GetTestDataResponse {
 type EssayTest {
   id: Int!
   essay: String!
+}
+
+type GetTestStatisticsResponse {
+  code: Int!
+  testStatistics: [ReadyTest!]!
 }

@@ -1,9 +1,9 @@
 package com.evg.tests_list.presentation.mapper
 
-import com.evg.utils.model.TestIcons
 import com.evg.tests_list.domain.model.TestType
 import com.evg.tests_list.presentation.model.TestState
 import com.evg.utils.extensions.toTestLevel
+import com.evg.utils.mapper.toTestIcons
 
 fun TestType.toTestState(): TestState {
     return when (this) {
@@ -26,12 +26,5 @@ fun TestType.toTestState(): TestState {
             id = this.id,
             createdAt = this.createdAt,
         )
-    }
-}
-
-fun String.toTestIcons(): TestIcons {
-    return when (this) {
-        "essay" -> TestIcons.ESSAY
-        else -> TestIcons.UNKNOWN
     }
 }

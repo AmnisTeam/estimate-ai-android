@@ -10,17 +10,17 @@ sealed class TestState {
         val icon: TestIcons,
         val description: String,
         val levelColor: TestLevelColors,
-        val createdAt: Int,
+        val createdAt: Long,
     ) : TestState()
     data class LoadingTest(
         val id: Int,
         val icon: TestIcons,
         val queue: Int,
         val progress: Int,
-        val createdAt: Int,
+        val createdAt: Long,
     ) : TestState()
     data class ErrorTest(
         val id: Int,
-        val createdAt: Int,
+        val createdAt: Long,
     ) : TestState()
 }

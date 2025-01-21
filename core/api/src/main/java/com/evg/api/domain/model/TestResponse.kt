@@ -7,17 +7,17 @@ sealed class TestResponse {
         val type: String,
         val description: String,
         val score: Int,
-        val createdAt: Int,
+        val createdAt: Long,
     ) : TestResponse()
     data class OnLoadingTestResponse(
         val id: Int,
         val type: String,
         val queue: Int,
         val progress: Int,
-        val createdAt: Int,
+        val createdAt: Long,
     ) : TestResponse()
     data class OnErrorTestResponse(
         val id: Int,
-        val createdAt: Int,
+        val createdAt: Long,
     ) : TestResponse()
 }
