@@ -4,14 +4,17 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-01-19T18:43:23.944710900Z">
+        <DropdownSelection timestamp="2025-01-22T20:24:52.965990100Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Evgen\.android\avd\Pixel_8_Pro_API_34.avd" />
+              <DeviceId pluginId="Default" identifier="serial=192.168.1.178:5555;connection=e78c6c1f" />
             </handle>
           </Target>
         </DropdownSelection>
         <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="StylizedLineChartPreview">
+        <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
   </component>

@@ -6,7 +6,7 @@ import com.evg.api.domain.utils.ServerResult
 import com.evg.statistics.domain.model.TestStatistics
 import com.evg.statistics.domain.usecase.StatisticsUseCases
 import com.evg.statistics.presentation.mapper.toStatisticsUI
-import com.evg.statistics.presentation.model.DateTile
+import com.evg.statistics.presentation.model.DateRange
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
@@ -18,22 +18,24 @@ class StatisticsViewModel(
     override val container = container<StatisticsState, StatisticsSideEffect>(StatisticsState())
 
     companion object {
-         val defaultSelect = DateTile.Dates.WEEK
+         val defaultSelect = DateRange.Month
     }
 
     private val statisticsFull: MutableStateFlow<List<TestStatistics>> = MutableStateFlow(emptyList())
 
     init {
-        getAllStatistics()
+        getAllStatistics(dateRange = defaultSelect)
     }
 
-    private fun getAllStatistics() = intent {
+    fun getAllStatistics(
+        dateRange: (DateRange),
+    ) = intent {
         reduce { state.copy(isStatisticsLoading = true) }
         viewModelScope.launch {
             when (val response = statisticsUseCases.getTestStatisticsUseCase.invoke()) {
                 is ServerResult.Success -> {
                     statisticsFull.value = response.data
-                    getStatisticsInRange(defaultSelect.toTimeRange())
+                    getStatisticsInRange(dateRange)
                 }
                 is ServerResult.Error -> {
                     postSideEffect(StatisticsSideEffect.StatisticsFail(error = response.error))
@@ -44,9 +46,10 @@ class StatisticsViewModel(
         }
     }
 
-    fun getStatisticsInRange(time: Pair<Long, Long>) = intent {
+    fun getStatisticsInRange(dateRange: DateRange) = intent {
+        val timeRange = dateRange.toTimeRange()
         val filteredStatistics = statisticsFull.value
-            .filter { it.createdAt in time.first..time.second }
+            .filter { it.createdAt in timeRange.first..timeRange.second }
             .toStatisticsUI()
         container.stateFlow.value.statistics.value = filteredStatistics
     }

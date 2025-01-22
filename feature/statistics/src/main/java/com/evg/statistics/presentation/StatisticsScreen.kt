@@ -1,15 +1,15 @@
 package com.evg.statistics.presentation
 
 import android.content.res.Configuration
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,34 +20,39 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import com.evg.utils.model.TestLevelColors
 import com.evg.resource.R
 import com.evg.statistics.presentation.chart.StylizedLineChart
 import com.evg.statistics.presentation.chart.StylizedPieChart
+import com.evg.statistics.presentation.mapper.reduceSize
+import com.evg.statistics.presentation.model.DateRange
 import com.evg.statistics.presentation.model.DateTile
 import com.evg.statistics.presentation.model.StatisticsUI
-import com.evg.statistics.presentation.model.TestStatisticsUI
+import com.evg.statistics.presentation.model.dateRangeSaver
 import com.evg.statistics.presentation.mvi.StatisticsState
-import com.evg.utils.extensions.toTestLevel
+import com.evg.statistics.presentation.mvi.StatisticsViewModel
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
 import com.evg.ui.theme.HorizontalPaddingTile
 import com.evg.ui.theme.VerticalPadding
-import com.evg.utils.model.TestIcons
 import com.evg.utils.model.TestScore
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.flow.MutableStateFlow
-import java.text.SimpleDateFormat
 import java.time.DayOfWeek
-import java.util.Date
-import java.util.Locale
 
 @Composable
 fun StatisticsScreen(
     state: StatisticsState,
-    getStatisticsInRange: (Pair<Long, Long>) -> Unit,
+    getAllStatistics: (DateRange) -> Unit,
+    getStatisticsInRange: (DateRange) -> Unit,
 ) {
     val context = LocalContext.current
+    val refreshingState = rememberSwipeRefreshState(isRefreshing = false)
+    var currentTimeRange by rememberSaveable(stateSaver = dateRangeSaver) {
+        mutableStateOf(StatisticsViewModel.defaultSelect)
+    }
+
     val isStatisticsLoading = state.isStatisticsLoading
     val tests = state.statistics.collectAsState().value
 
@@ -65,36 +70,61 @@ fun StatisticsScreen(
             dates = listOf(
                 DateTile(
                     dateResId = R.string.week,
-                    date = DateTile.Dates.WEEK,
+                    date = DateRange.Week,
                 ),
                 DateTile(
                     dateResId = R.string.month,
-                    date = DateTile.Dates.MONTH,
+                    date = DateRange.Month,
                 ),
                 DateTile(
                     dateResId = R.string.year,
-                    date = DateTile.Dates.YEAR,
+                    date = DateRange.Year,
                 ),
             ),
-            onDateRangeSelected = getStatisticsInRange,
+            selected = currentTimeRange,
+            onDateRangeSelected = { newDateRange ->
+                currentTimeRange = newDateRange
+                getStatisticsInRange(newDateRange)
+            }
         )
 
-        Spacer(modifier = Modifier.height(10.dp))
+        SwipeRefresh(
+            modifier = Modifier
+                .fillMaxSize(),
+            state = refreshingState,
+            onRefresh = { getAllStatistics(currentTimeRange) },
+            indicator = { indicatorState, indicatorTrigger ->
+                SwipeRefreshIndicator(
+                    state = indicatorState,
+                    refreshTriggerDistance = indicatorTrigger,
+                    backgroundColor = AppTheme.colors.background,
+                    contentColor = AppTheme.colors.primary,
+                )
+            },
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                if (isStatisticsLoading) {
 
+                } else {
+                    if (tests.testStatisticsUI.size >= 2) {
+                        StylizedPieChart(
+                            points = tests.testStatisticsUI,
+                        )
+                    }
 
+                    Spacer(modifier = Modifier.height(20.dp))
 
-        if (tests.testStatisticsUI.size >= 2) {
-            StylizedPieChart(
-                points = tests.testStatisticsUI,
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            StylizedLineChart(
-                points = tests.testStatisticsUI,
-            )
+                    StylizedLineChart(
+                        points = tests.testStatisticsUI.reduceSize(),
+                    )
+                }
+            }
         }
-
     }
 }
 
@@ -114,6 +144,7 @@ fun StatisticsScreenPreview(darkTheme: Boolean = true) {
                         )
                     ),
                 ),
+                getAllStatistics = { _ -> },
                 getStatisticsInRange = { _ -> },
             )
         }

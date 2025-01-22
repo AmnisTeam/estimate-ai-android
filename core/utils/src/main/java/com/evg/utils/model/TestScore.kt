@@ -4,11 +4,8 @@ import com.evg.utils.extensions.toTestLevel
 
 
 data class TestScore(
-    val score: Int
+    private val scoreInit: Int
 ) {
-    init {
-        require(score in 0..100) { "Score must be between 0 and 100" }
-    }
-
+    val score: Int = scoreInit.coerceIn(0, 100)
     val level: TestLevelColors = score.toTestLevel()
 }

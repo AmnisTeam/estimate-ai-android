@@ -3,7 +3,9 @@ package com.evg.statistics.presentation.mapper
 import com.evg.statistics.domain.model.TestStatistics
 import com.evg.statistics.presentation.model.StatisticsUI
 import com.evg.statistics.presentation.model.TestStatisticsUI
+import com.evg.utils.extensions.toDateString
 import com.evg.utils.mapper.toTestIcons
+import com.evg.utils.model.TestIcons
 import com.evg.utils.model.TestScore
 import java.time.Instant
 import java.time.ZoneId
@@ -35,4 +37,34 @@ fun List<TestStatistics>.toStatisticsUI(): StatisticsUI {
         frequentDayOfWeek = frequentDayOfWeek,
         testStatisticsUI = testStatisticsUI
     )
+}
+
+fun List<TestStatisticsUI>.reduceSize(): List<TestStatisticsUI> {
+    val reduceSize = 30
+    if (this.isEmpty()) {
+        return emptyList()
+    } else if (this.size <= reduceSize) {
+        return this
+    }
+
+    val sortedList = this.sortedBy { it.createdAt }
+    val groupSize = (sortedList.size / 30).coerceAtLeast(1)
+
+    sortedList.forEach {
+        println(it.createdAt.toDateString())
+    }
+    println("chunked")
+
+    return sortedList.chunked(groupSize).mapIndexed { index, group ->
+        val avgScore = group.map { it.testScore.score }.average().toInt()
+        //val avgCreatedAt = group.map { it.createdAt }.average().toLong()
+        val mostCommonType = group.groupingBy { it.type }.eachCount().maxByOrNull { it.value }?.key ?: TestIcons.UNKNOWN
+
+        println(group.first().createdAt.toDateString())
+        TestStatisticsUI(
+            type = mostCommonType,
+            testScore = TestScore(avgScore),
+            createdAt = group.first().createdAt,
+        )
+    }
 }

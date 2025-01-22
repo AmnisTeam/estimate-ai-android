@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.evg.charts.line.render.line.EmptyLineShader
 import com.evg.charts.line.render.line.IGridLineDrawer
 import com.evg.charts.line.render.line.ILineDrawer
@@ -40,6 +42,7 @@ fun CustomLineChart(
     yAxisDrawer: IYAxisDrawer = SimpleYAxisDrawer(),
     verticalLineDrawer: IGridLineDrawer = VerticalLineDrawer(),
     horizontalOffset: Float = 5F,
+    minVerticalLineSpace: Dp = 20.dp,
 ) {
     check(horizontalOffset in 0F..25F) {
         "Horizontal Offset is the percentage offset from side, and must be between 0 and 25, included."
@@ -78,18 +81,20 @@ fun CustomLineChart(
                 offset = horizontalOffset
             )
 
-            lineChartData.points.forEachIndexed { index, point ->
-                val x = computePointLocation(
-                    drawableArea = chartDrawableArea,
-                    lineChartData = lineChartData,
-                    point = point,
-                    index = index
-                ).x
+            val totalWidth = chartDrawableArea.width
+            val maxLineCount = (totalWidth / minVerticalLineSpace.toPx()).toInt().coerceAtMost(lineChartData.points.size)
+            val lineStep = totalWidth / (maxLineCount - 1).toFloat()
+
+            for (i in 0 until maxLineCount) {
+                val x = chartDrawableArea.left + lineStep * i
+                val start = Offset(x, chartDrawableArea.top)
+                val end = Offset(x, chartDrawableArea.bottom)
+
                 verticalLineDrawer.drawLine(
                     drawScope = this,
                     canvas = canvas,
-                    start = Offset(x, chartDrawableArea.top),
-                    end = Offset(x, chartDrawableArea.bottom)
+                    start = start,
+                    end = end
                 )
             }
 

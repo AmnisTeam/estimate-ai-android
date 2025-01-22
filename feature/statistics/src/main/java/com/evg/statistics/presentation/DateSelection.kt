@@ -29,7 +29,9 @@ import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
 import androidx.compose.ui.unit.dp
 import com.evg.resource.R
+import com.evg.statistics.presentation.model.DateRange
 import com.evg.statistics.presentation.model.DateTile
+import com.evg.statistics.presentation.model.dateRangeSaver
 import com.evg.statistics.presentation.mvi.StatisticsViewModel
 import com.evg.ui.extensions.clickableRipple
 import com.evg.ui.extensions.lighten
@@ -39,9 +41,9 @@ import com.evg.ui.theme.BorderRadius
 @Composable
 fun DateSelection(
     dates: List<DateTile>,
-    onDateRangeSelected: (Pair<Long, Long>) -> Unit,
+    selected: DateRange,
+    onDateRangeSelected: (DateRange) -> Unit,
 ) {
-    var selected: DateTile.Dates? by rememberSaveable { mutableStateOf(StatisticsViewModel.defaultSelect) }
     var showDateRangePicker by remember { mutableStateOf(false) }
 
     Row(
@@ -62,9 +64,7 @@ fun DateSelection(
                         .padding(vertical = 5.dp, horizontal = 2.dp)
                         .clip(RoundedCornerShape(BorderRadius))
                         .clickableRipple {
-                            selected = dateTile.date
-                            val range = dateTile.date.toTimeRange()
-                            onDateRangeSelected(range.first to range.second)
+                            onDateRangeSelected(dateTile.date)
                         }
                         .then(
                             if (selected == dateTile.date) {
@@ -104,8 +104,8 @@ fun DateSelection(
             onDateRangeSelected = { dateRange ->
                 val range = Pair(dateRange.first ?: return@DateRangePickerModal, dateRange.second?: return@DateRangePickerModal)
                 showDateRangePicker = false
-                onDateRangeSelected(range)
-                selected = null
+                val timeRange = DateRange.Custom(timeRange = range)
+                onDateRangeSelected(timeRange)
             },
             onDismiss = { showDateRangePicker = false }
         )
@@ -121,17 +121,18 @@ fun DateSelectionPreview(darkTheme: Boolean = true) {
                 dates = listOf(
                     DateTile(
                         dateResId = R.string.week,
-                        date = DateTile.Dates.WEEK,
+                        date = DateRange.Week,
                     ),
                     DateTile(
                         dateResId = R.string.month,
-                        date = DateTile.Dates.MONTH,
+                        date = DateRange.Month,
                     ),
                     DateTile(
                         dateResId = R.string.year,
-                        date = DateTile.Dates.YEAR,
+                        date = DateRange.Year,
                     ),
                 ),
+                selected = DateRange.Week,
                 onDateRangeSelected = { }
             )
         }

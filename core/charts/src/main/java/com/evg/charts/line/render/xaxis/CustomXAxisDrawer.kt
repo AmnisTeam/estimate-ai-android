@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.evg.charts.AxisLabelFormatter
 import com.evg.charts.toLegacyInt
+import com.evg.charts.util.FLOAT_1_5
 
 /**
  * Created by iamzimin on 2025/1/19 : 21:52
@@ -44,7 +45,7 @@ data class CustomXAxisDrawer(
     }
 
     override fun requireHeight(drawScope: DrawScope): Float = with(drawScope) {
-        1.5F * (labelTextSize.toPx() + axisLineThickness.toPx())
+        FLOAT_1_5 * (labelTextSize.toPx() + axisLineThickness.toPx() + axisLabelShift)
     }
 
     override fun drawXAxisLine(
@@ -74,18 +75,33 @@ data class CustomXAxisDrawer(
                 textSize = labelTextSize.toPx()
                 textAlign = android.graphics.Paint.Align.CENTER
             }
-            val labelIncrements = drawableArea.width / (labels.size - 1)
-            labels.forEachIndexed { index, label ->
-                if (index.rem(drawLabelEvery) == 0) {
-                    val labelValue = axisLabelFormatter(label)
-                    val x = drawableArea.left + labelIncrements * index
-                    val y = drawableArea.bottom + axisLabelShift
 
-                    canvas.nativeCanvas.save()
-                    canvas.nativeCanvas.rotate(axisLabelRotation, x, y)
-                    canvas.nativeCanvas.drawText(labelValue, x, y, labelPaint)
-                    canvas.nativeCanvas.restore()
-                }
+            val totalWidth = drawableArea.width
+            val labelWidth = labelTextSize.toPx() * 3f
+            val maxLabelCount = (totalWidth / labelWidth).toInt()
+
+            val step = if (labels.size > maxLabelCount) {
+                (labels.size / maxLabelCount) + 1
+            } else {
+                1
+            }
+
+            val filteredLabels = mutableListOf<Any>()
+            for (i in labels.indices step step) {
+                labels[i]?.let { filteredLabels.add(it) }
+            }
+
+            val labelIncrements = totalWidth / (filteredLabels.size - 1).coerceAtLeast(1).toFloat()
+
+            filteredLabels.forEachIndexed { index, label ->
+                val labelValue = axisLabelFormatter(label)
+                val x = drawableArea.left + labelIncrements * index
+                val y = drawableArea.bottom - axisLabelShift
+
+                canvas.nativeCanvas.save()
+                canvas.nativeCanvas.rotate(axisLabelRotation, x, y)
+                canvas.nativeCanvas.drawText(labelValue, x, y, labelPaint)
+                canvas.nativeCanvas.restore()
             }
         }
     }
