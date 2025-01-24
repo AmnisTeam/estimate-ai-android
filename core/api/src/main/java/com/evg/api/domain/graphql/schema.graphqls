@@ -13,9 +13,9 @@ type Query {
 }
 
 type Mutation {
-  registerUserResponse(data: UserDTO!): UserRegistrationResponse!
+  registerUserResponse(data: UserDTO!): CodeResponse!
   loginUserResponse(data: UserDTO!): UserLoginResponse!
-  passwordResetResponse(data: PasswordResetDTO!): PasswordResetResponse!
+  passwordResetResponse(data: PasswordResetDTO!): CodeResponse!
   createEssayTestResponse(data: CreateEssayTestDTO!): CreateEssayTestResponse!
 }
 
@@ -27,7 +27,7 @@ input UserDTO {
   email: String!
   password: String!
 }
-type UserRegistrationResponse {
+type CodeResponse {
   code: Int!
 }
 type UserLoginResponse {
@@ -37,9 +37,6 @@ type UserLoginResponse {
 
 input PasswordResetDTO {
   email: String!
-}
-type PasswordResetResponse {
-  code: Int!
 }
 
 input CreateEssayTestDTO {
