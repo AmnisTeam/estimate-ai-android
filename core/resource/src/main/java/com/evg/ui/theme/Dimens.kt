@@ -13,4 +13,4 @@ val AuthorizationWelcomeTextSpaceBy = 10.dp
 val AuthorizationTextFieldSpaceBy = 25.dp
 val AuthorizationSpaceBy = 40.dp
 
-val ButtonPadding = 25.dp
+val ButtonPadding = 10.dp

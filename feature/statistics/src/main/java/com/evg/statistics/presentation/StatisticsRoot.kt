@@ -1,9 +1,11 @@
 package com.evg.statistics.presentation
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.evg.LocalNavHostController
 import com.evg.statistics.presentation.mvi.StatisticsSideEffect
 import com.evg.statistics.presentation.mvi.StatisticsViewModel
 import com.evg.utils.mapper.toErrorMessage
@@ -13,7 +15,8 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun StatisticsRoot(
-    viewModel: StatisticsViewModel = koinViewModel()
+    viewModel: StatisticsViewModel = koinViewModel(),
+    bottomBar: @Composable () -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -25,9 +28,15 @@ fun StatisticsRoot(
         }
     }
 
-    StatisticsScreen(
-        state = viewModel.collectAsState().value,
-        getAllStatistics = viewModel::getAllStatistics,
-        getStatisticsInRange = viewModel::getStatisticsInRange,
-    )
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        StatisticsScreen(
+            modifier = Modifier.weight(1f),
+            state = viewModel.collectAsState().value,
+            getAllStatistics = viewModel::getAllStatistics,
+            getStatisticsInRange = viewModel::getStatisticsInRange,
+        )
+        bottomBar()
+    }
 }

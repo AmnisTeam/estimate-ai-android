@@ -2,16 +2,12 @@ package com.evg.tests_list.presentation
 
 import android.content.Intent
 import android.widget.Toast
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.evg.LocalNavHostController
-import com.evg.api.domain.utils.CombinedLoginError
-import com.evg.api.domain.utils.LoginError
 import com.evg.tests_list.presentation.mvi.TestsListSideEffect
 import com.evg.tests_list.presentation.mvi.TestsListViewModel
 import com.evg.tests_list.presentation.service.TestStatusService
@@ -22,7 +18,8 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun TestsListRoot(
-    viewModel: TestsListViewModel = koinViewModel()
+    viewModel: TestsListViewModel = koinViewModel(),
+    bottomBar: @Composable () -> Unit,
 ) {
     val context = LocalContext.current
     val navigation = LocalNavHostController.current
@@ -41,9 +38,15 @@ fun TestsListRoot(
         }
     }
 
-    TestsListScreen(
-        navigation = navigation,
-        state = viewModel.collectAsState().value,
-        getAllTests = viewModel::getAllTests,
-    )
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        TestsListScreen(
+            modifier = Modifier.weight(1f),
+            navigation = navigation,
+            state = viewModel.collectAsState().value,
+            getAllTests = viewModel::getAllTests,
+        )
+        bottomBar()
+    }
 }

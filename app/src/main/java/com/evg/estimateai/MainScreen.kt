@@ -1,11 +1,8 @@
 package com.evg.estimateai
 
 import android.content.res.Configuration
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -17,7 +14,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
@@ -47,33 +43,23 @@ fun MainScreen() {
         "registration"
     }*/
     val startDestination = "login"
+    val bottomBar = @Composable { BottomBar(navController) }
 
-    val currentDestination = navController.currentBackStackEntryAsState().value?.destination?.route
     CompositionLocalProvider(LocalNavHostController provides navController) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             containerColor = AppTheme.colors.background,
-            bottomBar = {
-                AnimatedVisibility(
-                    visible = currentDestination in BottomBarScreen.allRoutes,
-                    enter = fadeIn() + slideInVertically { it },
-                    exit = fadeOut() + slideOutVertically { it },
-                ) {
-                    BottomBar(navController)
-                }
-            }
         ) { paddingValues ->
             NavHost(
                 navController = navController,
                 startDestination = startDestination,
                 modifier = Modifier.padding(paddingValues)
             ) {
-                // Без BottomBar
+                // Without BottomBar
                 composable("registration") { RegistrationRoot() }
                 composable("login") { LoginRoot() }
                 composable( "password-reset") { PasswordResetRoot() }
 
-                composable( "tests-list") { TestsListRoot() }
                 composable( "test-select") { TestSelectRoot() }
                 composable(
                     route = "test-essay/{id}",
@@ -93,16 +79,18 @@ fun MainScreen() {
                     )
                 }
 
-
-                // С BottomBar
-                composable(route = BottomBarScreen.Statistics.route) {
-                    StatisticsRoot()
-                }
-                composable(route = BottomBarScreen.Tests.route) {
-                    TestsListRoot()
-                }
-                composable(route = BottomBarScreen.Account.route) {
-                    //
+                // With BottomBar
+                BottomBarScreen.allScreens.forEach { screen ->
+                    composable(route = screen.route) {
+                        when (screen) {
+                            is BottomBarScreen.Statistics -> StatisticsRoot(bottomBar = bottomBar)
+                            is BottomBarScreen.Tests -> TestsListRoot(bottomBar = bottomBar)
+                            is BottomBarScreen.Account -> Column(modifier = Modifier.fillMaxSize()) {
+                                Spacer(Modifier.weight(1f))
+                                bottomBar()
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -28,16 +29,16 @@ import com.evg.ui.theme.lightAddButtonColor
 
 @Composable
 fun TestsListScreen(
+    modifier: Modifier = Modifier,
     navigation: NavHostController,
     state: TestsListState,
     getAllTests: () -> Unit,
 ) {
-    val context = LocalContext.current
     val tests = state.tests.collectAsLazyPagingItems()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
             .padding(
                 horizontal = HorizontalPaddingTile,
                 vertical = VerticalPadding,
@@ -49,12 +50,6 @@ fun TestsListScreen(
             getAllTests = getAllTests,
             isTestsLoading = state.isTestsLoading,
         )
-    }
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
         RoundedButton(
             modifier = Modifier
                 .align(Alignment.BottomEnd)

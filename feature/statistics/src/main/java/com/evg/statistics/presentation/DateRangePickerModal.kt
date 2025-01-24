@@ -43,7 +43,7 @@ fun DateRangePickerModal(
                     onDateRangeSelected(
                         Pair(
                             dateRangePickerState.selectedStartDateMillis,
-                            dateRangePickerState.selectedEndDateMillis
+                            dateRangePickerState.selectedEndDateMillis, // ?.plus(86399000L)
                         )
                     )
                     onDismiss()

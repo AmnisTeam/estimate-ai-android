@@ -13,7 +13,6 @@ sealed class BottomBarScreen(
     val icon: ImageVector,
 ) {
     companion object {
-        val allRoutes = listOf(Statistics.route, Tests.route, Account.route)
         val allScreens = listOf(Statistics, Tests, Account)
     }
 

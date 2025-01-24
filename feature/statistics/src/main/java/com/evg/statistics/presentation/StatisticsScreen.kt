@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -50,6 +51,7 @@ import java.time.DayOfWeek
 
 @Composable
 fun StatisticsScreen(
+    modifier: Modifier = Modifier,
     state: StatisticsState,
     getAllStatistics: (DateRange) -> Unit,
     getStatisticsInRange: (DateRange) -> Unit,
@@ -65,8 +67,8 @@ fun StatisticsScreen(
 
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
+            .fillMaxWidth()
             .padding(
                 horizontal = HorizontalPaddingTile,
                 vertical = VerticalPadding,
