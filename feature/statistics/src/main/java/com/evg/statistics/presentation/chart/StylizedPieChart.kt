@@ -1,21 +1,33 @@
 package com.evg.statistics.presentation.chart
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.evg.charts.pie.PieChart
 import com.evg.charts.pie.PieChartData
 import com.evg.charts.pie.render.SimpleSliceDrawer
 import com.evg.charts.simpleChartAnimation
-import com.evg.utils.model.TestLevelColors
 import com.evg.statistics.presentation.model.TestStatisticsUI
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
+import com.evg.utils.extensions.toTestLevel
 import com.evg.utils.model.TestIcons
+import com.evg.utils.model.TestLevelColors
 import com.evg.utils.model.TestScore
 
 @Composable
@@ -24,22 +36,91 @@ fun StylizedPieChart(
 ) {
     val total = points.size.toFloat()
 
-    val groupedSlices = points
+    val groupedPoints = points
+        .sortedBy { it.testScore.score }
         .groupBy { it.testScore.level }
+
+    val groupedSlices = groupedPoints
         .map { (level, tests) ->
             val percentage = (tests.size / total) * 100
             PieChartData.Slice(percentage, level.color)
         }
+        .ifEmpty { listOf(PieChartData.Slice(100f, TestLevelColors.UNKNOWN.color)) }
 
-    PieChart(
+    Box(
         modifier = Modifier
-            .size(200.dp),
-        pieChartData = PieChartData(
-            slices = groupedSlices
-        ),
-        animation = simpleChartAnimation(),
-        sliceDrawer = SimpleSliceDrawer(),
-    )
+            .fillMaxWidth(),
+        contentAlignment = Alignment.Center,
+    ) {
+        PieChart(
+            modifier = Modifier
+                .size(200.dp),
+            pieChartData = PieChartData(
+                slices = groupedSlices
+            ),
+            animation = simpleChartAnimation(),
+            sliceDrawer = SimpleSliceDrawer(),
+        )
+
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.CenterEnd,
+        ) {
+            Column {
+                groupedPoints.toList().asReversed().forEach { (testLevelColor, _) ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(6.dp)
+                                .background(testLevelColor.color, shape = CircleShape)
+                        )
+
+                        Spacer(modifier = Modifier.width(5.dp))
+
+                        Text(
+                            text = testLevelColor.name,
+                            color = testLevelColor.color,
+                            style = AppTheme.typography.small,
+                        )
+                    }
+                }
+            }
+        }
+
+        val languageAvg = points.map { it.testScore.score }.average()
+        val languageLevel = if (languageAvg.isNaN()) {
+            "??"
+        } else {
+            languageAvg.toTestLevel().name
+        }
+
+        ConstraintLayout {
+            val (bottomText, centerText) = createRefs()
+
+            Text(
+                text = languageLevel,
+                color = AppTheme.colors.text,
+                style = AppTheme.typography.heading,
+                modifier = Modifier.constrainAs(centerText) {
+                    centerHorizontallyTo(parent)
+                    centerVerticallyTo(parent)
+                }
+            )
+
+            Text(
+                modifier = Modifier.constrainAs(bottomText) {
+                    centerHorizontallyTo(parent)
+                    top.linkTo(centerText.bottom)
+                },
+                text = "average level",
+                color = AppTheme.colors.textField,
+                style = AppTheme.typography.small,
+            )
+        }
+    }
+
 }
 
 @Composable

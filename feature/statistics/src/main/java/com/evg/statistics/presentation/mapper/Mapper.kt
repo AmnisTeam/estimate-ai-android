@@ -1,5 +1,7 @@
 package com.evg.statistics.presentation.mapper
 
+import android.content.Context
+import com.evg.resource.R
 import com.evg.statistics.domain.model.TestStatistics
 import com.evg.statistics.presentation.model.StatisticsUI
 import com.evg.statistics.presentation.model.TestStatisticsUI
@@ -7,6 +9,7 @@ import com.evg.utils.extensions.toDateString
 import com.evg.utils.mapper.toTestIcons
 import com.evg.utils.model.TestIcons
 import com.evg.utils.model.TestScore
+import java.time.DayOfWeek
 import java.time.Instant
 import java.time.ZoneId
 
@@ -65,5 +68,17 @@ fun List<TestStatisticsUI>.reduceSize(): List<TestStatisticsUI> {
             testScore = TestScore(avgScore),
             createdAt = group.first().createdAt,
         )
+    }
+}
+
+fun DayOfWeek.toStringLocale(context: Context): String {
+    return when (this) {
+        DayOfWeek.MONDAY -> context.getString(R.string.monday)
+        DayOfWeek.TUESDAY -> context.getString(R.string.tuesday)
+        DayOfWeek.WEDNESDAY -> context.getString(R.string.wednesday)
+        DayOfWeek.THURSDAY -> context.getString(R.string.thursday)
+        DayOfWeek.FRIDAY -> context.getString(R.string.friday)
+        DayOfWeek.SATURDAY -> context.getString(R.string.saturday)
+        DayOfWeek.SUNDAY -> context.getString(R.string.sunday)
     }
 }

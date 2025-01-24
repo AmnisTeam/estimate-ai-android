@@ -82,6 +82,16 @@
     <string name="cancel">Cancel</string>
     <string name="select_date_range">Select date range</string>
     <string name="not_enough_data">Not enough data</string>
+    <string name="no_data">No data</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="frequent_level">Frequent level</string>
+    <string name="frequent_day">Frequent day</string>
 
 
 </resources>
