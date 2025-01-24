@@ -48,8 +48,6 @@ fun StylizedLineChart(
             )
         }
     } else {
-        val drawLabelEvery = (points.size / 10).coerceAtLeast(1)
-
         CustomLineChart(
             modifier = Modifier
                 .height(300.dp),

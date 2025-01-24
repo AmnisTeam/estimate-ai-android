@@ -43,8 +43,8 @@ fun List<TestStatisticsUI>.reduceSize(): List<TestStatisticsUI> {
     val reduceSize = 30
     if (this.isEmpty()) {
         return emptyList()
-    } else if (this.size <= reduceSize) {
-        return this
+    } else if (this.size <= reduceSize) { //TODO sort on server?
+        return this.sortedBy { it.createdAt }
     }
 
     val sortedList = this.sortedBy { it.createdAt }
@@ -53,7 +53,6 @@ fun List<TestStatisticsUI>.reduceSize(): List<TestStatisticsUI> {
     sortedList.forEach {
         println(it.createdAt.toDateString())
     }
-    println("chunked")
 
     return sortedList.chunked(groupSize).mapIndexed { index, group ->
         val avgScore = group.map { it.testScore.score }.average().toInt()
