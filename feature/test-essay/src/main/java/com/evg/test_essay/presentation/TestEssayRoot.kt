@@ -18,7 +18,6 @@ fun TestEssayRoot(
     viewModel: TestEssayViewModel,
     modifier: Modifier,
     onTestsListScreen: () -> Unit,
-    onBackScreen: () -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -42,7 +41,6 @@ fun TestEssayRoot(
     TestEssayScreen(
         state = viewModel.collectAsState().value,
         modifier = modifier,
-        onBackScreen = onBackScreen,
         sendTest = viewModel::sendTest,
         isEditable = viewModel.isEditable,
     )

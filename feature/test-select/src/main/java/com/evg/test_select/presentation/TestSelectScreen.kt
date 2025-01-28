@@ -3,15 +3,12 @@ package com.evg.test_select.presentation
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.evg.resource.R
 import com.evg.test_select.presentation.model.TestType
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
@@ -23,7 +20,6 @@ import com.evg.utils.model.TestIcons
 fun TestSelectScreen(
     modifier: Modifier = Modifier,
     onTestEssayScreen: () -> Unit,
-    onBackScreen: () -> Unit,
 ) {
         
     Column(
@@ -54,7 +50,6 @@ fun TestSelectScreenPreview(darkTheme: Boolean = true) {
         Surface(color = AppTheme.colors.background) {
             TestSelectScreen(
                 onTestEssayScreen = {},
-                onBackScreen = {},
             )
         }
     }

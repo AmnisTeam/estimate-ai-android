@@ -48,7 +48,6 @@ import kotlinx.coroutines.launch
 fun TestEssayScreen(
     state: TestEssayState,
     modifier: Modifier = Modifier,
-    onBackScreen: () -> Unit,
     sendTest: (EssayTestData) -> Unit,
     isEditable: Boolean,
 ) {
@@ -173,7 +172,6 @@ fun TestsListScreenPreview(darkTheme: Boolean = true) {
                 state = TestEssayState(
                     isTestSending = false,
                 ),
-                onBackScreen = {},
                 sendTest = {},
                 isEditable = true,
             )

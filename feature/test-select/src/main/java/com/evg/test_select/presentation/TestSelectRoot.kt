@@ -7,12 +7,10 @@ import androidx.compose.ui.Modifier
 fun TestSelectRoot(
     modifier: Modifier,
     onTestEssayScreen: () -> Unit,
-    onBackScreen: () -> Unit,
 ) {
 
     TestSelectScreen(
         modifier = modifier,
         onTestEssayScreen = onTestEssayScreen,
-        onBackScreen = onBackScreen,
     )
 }

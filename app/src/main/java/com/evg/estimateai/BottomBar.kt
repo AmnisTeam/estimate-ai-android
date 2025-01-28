@@ -5,6 +5,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -27,7 +28,7 @@ import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
 
 
-val bottomNavPadding = 81.dp
+val bottomNavPadding = 71.dp
 
 @Composable
 fun BottomBar(
@@ -35,18 +36,13 @@ fun BottomBar(
 ) {
     val navBackStackEntry by navigation.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    /*val bottomBarDestination = BottomBarScreen.allScreens.any {
-        it.route::class.qualifiedName == currentDestination?.route
-    }*/
-    val bottomBarDestination = BottomBarScreen.allScreens.any { bottomBarScreen ->
-        currentDestination?.hierarchy?.any { navDestination ->
-            navDestination.hasRoute(bottomBarScreen.route::class)
-        } == true
+    val bottomBarVisible = BottomBarScreen.allScreens.any { bottomBarScreen ->
+        currentDestination?.hasRoute(bottomBarScreen.route::class) == true
     }
 
 
     AnimatedVisibility(
-        visible = bottomBarDestination,
+        visible = bottomBarVisible,
         modifier = Modifier.fillMaxWidth(),
         enter = slideInVertically(initialOffsetY = { it }),
         exit = slideOutVertically(targetOffsetY = { it }),
@@ -57,6 +53,7 @@ fun BottomBar(
                 color = AppTheme.colors.bottomBarSelected,
             )
             NavigationBar(
+                modifier = Modifier.height(bottomNavPadding - 1.dp),
                 containerColor = AppTheme.colors.background,
             ) {
                 BottomBarScreen.allScreens.forEach { screen ->
@@ -70,9 +67,7 @@ fun BottomBar(
                                 color = AppTheme.colors.text,
                             )
                         },
-                        selected = currentDestination?.hierarchy?.any { navDestination ->
-                            navDestination.hasRoute(screen.route::class)
-                        } == true,
+                        selected = currentDestination?.hasRoute(screen.route::class) == true,
                         onClick = {
                             navigation.navigate(screen.route)
                         },

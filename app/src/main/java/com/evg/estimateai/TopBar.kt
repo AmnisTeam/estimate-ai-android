@@ -5,15 +5,11 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -26,39 +22,33 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hasRoute
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.evg.resource.R
 import com.evg.ui.extensions.clickableRipple
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
-import com.evg.ui.theme.VerticalPadding
 
 
-val topNavPadding = 81.dp
+val topNavPadding = 56.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(
-    navigation: NavController
+    navigation: NavController,
 ) {
-    /*val bottomBarDestination = TopBarTitle.allTitles.any {
-        it.route::class.qualifiedName == currentDestination?.route
-    }*/
     val navBackStackEntry by navigation.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
     var lastMatchedTitle by remember { mutableStateOf<TopBarTitle?>(null) }
-    val (bottomBarVisible, matchedTitle) = remember(currentDestination) {
+    val (topBarVisible, matchedTitle) = remember(currentDestination) {
         val match = TopBarTitle.allTitles.firstOrNull { topBarTitle ->
-            currentDestination?.hierarchy?.any { navDestination ->
-                navDestination.hasRoute(topBarTitle.route::class)
-            } == true
+            currentDestination?.hasRoute(topBarTitle.route::class) == true
         }
 
         if (match != null) {
@@ -69,17 +59,18 @@ fun TopBar(
     }
 
     AnimatedVisibility(
-        visible = bottomBarVisible,
+        visible = topBarVisible,
         modifier = Modifier.fillMaxWidth(),
         enter = slideInVertically(initialOffsetY = { -it }),
         exit = slideOutVertically(targetOffsetY = { -it }),
     ) {
         Column {
             TopAppBar(
-                modifier = Modifier.height(topNavPadding),
+                expandedHeight = topNavPadding - 1.dp,
                 navigationIcon = {
                     Icon(
                         modifier = Modifier
+                            .padding(start = 5.dp)
                             .size(30.dp)
                             .clickableRipple {
                                 navigation.popBackStack()
@@ -91,9 +82,11 @@ fun TopBar(
                 },
                 title = {
                     Text(
-                        text = matchedTitle?.title ?: "Default Title",
+                        modifier = Modifier.padding(start = 10.dp),
+                        text = matchedTitle?.title ?: "Test Test Test",
                         style = AppTheme.typography.heading,
                         color = AppTheme.colors.text,
+                        textAlign = TextAlign.Center,
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors().copy(

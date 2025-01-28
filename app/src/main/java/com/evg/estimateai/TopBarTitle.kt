@@ -8,16 +8,15 @@ sealed class TopBarTitle(
     val title: String,
 ) {
     companion object {
-        val allTitles = listOf(TestSelect, TestsList(1))
-        val allTitlesRoutes = listOf(TestSelect.route, TestsList(1).route)
+        val allTitles = listOf(TestSelect, TestsList)
     }
 
     data object TestSelect : TopBarTitle(
         route = Route.TestSelect,
         title = "Select the test type",
     )
-    data class TestsList(val id: Int?) : TopBarTitle(
-        route = Route.TestEssay(id = id),
+    data object TestsList : TopBarTitle(
+        route = Route.TestEssay(id = null),
         title = "The essay test",
     )
 }

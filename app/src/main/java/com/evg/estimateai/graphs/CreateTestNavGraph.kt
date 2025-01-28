@@ -27,7 +27,6 @@ fun NavGraphBuilder.createTestNavGraph(navController: NavHostController) {
                 TestSelectRoot(
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
                     onTestEssayScreen = { navController.navigate(route = Route.TestEssay(id = null)) },
-                    onBackScreen = { navController.popBackStack() },
                 )
             }
         }
@@ -42,7 +41,6 @@ fun NavGraphBuilder.createTestNavGraph(navController: NavHostController) {
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
                     viewModel = koinViewModel(parameters = { parametersOf(id) }),
                     onTestsListScreen = { navController.navigate(route = Route.Home) },
-                    onBackScreen = { navController.popBackStack() },
                 )
             }
         }
