@@ -1,11 +1,9 @@
 package com.evg.registration.presentation
 
 import android.util.Patterns
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -41,14 +40,17 @@ import com.evg.resource.R
 import com.evg.ui.custom.AuthorizationButton
 import com.evg.ui.custom.AuthorizationTextField
 import com.evg.ui.extensions.clickableRipple
+import com.evg.ui.snackbar.SnackBarController
+import com.evg.ui.snackbar.SnackBarEvent
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.AuthorizationIconSize
 import com.evg.ui.theme.AuthorizationSpaceBy
 import com.evg.ui.theme.AuthorizationTextFieldSpaceBy
+import com.evg.ui.theme.AuthorizationWelcomeTextSpaceBy
 import com.evg.ui.theme.EstimateAITheme
 import com.evg.ui.theme.HorizontalPadding
 import com.evg.ui.theme.VerticalPadding
-import com.evg.ui.theme.AuthorizationWelcomeTextSpaceBy
+import kotlinx.coroutines.launch
 
 @Composable
 fun RegistrationScreen(
@@ -58,6 +60,7 @@ fun RegistrationScreen(
     registrationUser: (User) -> Unit,
 ) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val isRegistrationLoading = state.isRegistrationLoading
 
     var emailText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
@@ -161,18 +164,20 @@ fun RegistrationScreen(
         AuthorizationButton(
             isLoading = isRegistrationLoading,
             onClick = {
-                if (!Patterns.EMAIL_ADDRESS.matcher(emailText.text).matches()) {
-                    Toast.makeText(context, errorInvalidEmail, Toast.LENGTH_SHORT).show()
-                } else if (passwordText.text != passwordRepeatText.text) {
-                    Toast.makeText(context, errorPasswordMismatch, Toast.LENGTH_SHORT).show()
-                } else if (passwordText.text.isEmpty()) {
-                    Toast.makeText(context, errorEmptyPassword, Toast.LENGTH_SHORT).show()
-                } else if (passwordText.text.length < 8) {
-                    Toast.makeText(context, errorPasswordMinLength, Toast.LENGTH_SHORT).show()
-                } else if (passwordText.text.length >= 24) {
-                    Toast.makeText(context, errorPasswordMaxLength, Toast.LENGTH_SHORT).show()
-                } else {
-                    registrationUser(User(email = emailText.text, password = passwordText.text))
+                scope.launch {
+                    if (!Patterns.EMAIL_ADDRESS.matcher(emailText.text).matches()) {
+                        SnackBarController.sendEvent(event = SnackBarEvent(message = errorInvalidEmail))
+                    } else if (passwordText.text != passwordRepeatText.text) {
+                        SnackBarController.sendEvent(event = SnackBarEvent(message = errorPasswordMismatch))
+                    } else if (passwordText.text.isEmpty()) {
+                        SnackBarController.sendEvent(event = SnackBarEvent(message = errorEmptyPassword))
+                    } else if (passwordText.text.length < 8) {
+                        SnackBarController.sendEvent(event = SnackBarEvent(message = errorPasswordMinLength))
+                    } else if (passwordText.text.length >= 24) {
+                        SnackBarController.sendEvent(event = SnackBarEvent(message = errorPasswordMaxLength))
+                    } else {
+                        registrationUser(User(email = emailText.text, password = passwordText.text))
+                    }
                 }
             },
             buttonText = signUpText,

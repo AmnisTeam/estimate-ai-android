@@ -1,6 +1,5 @@
 package com.evg.login.presentation
 
-import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -10,6 +9,8 @@ import com.evg.api.domain.utils.LoginError
 import com.evg.login.presentation.mvi.LoginSideEffect
 import com.evg.login.presentation.mvi.LoginViewModel
 import com.evg.resource.R
+import com.evg.ui.snackbar.SnackBarController
+import com.evg.ui.snackbar.SnackBarEvent
 import com.evg.utils.mapper.toErrorMessage
 import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
@@ -32,16 +33,16 @@ fun LoginRoot(
         when (sideEffect) {
             LoginSideEffect.LoginSuccess -> {
                 onTestsListScreen()
-                Toast.makeText(context, loginSuccess, Toast.LENGTH_SHORT).show()
+                SnackBarController.sendEvent(event = SnackBarEvent(message = loginSuccess))
             }
             is LoginSideEffect.LoginFail -> {
                 when (sideEffect.combinedLoginError) {
                     is CombinedLoginError.Network -> {
-                        Toast.makeText(context, sideEffect.combinedLoginError.networkError.toErrorMessage(context), Toast.LENGTH_SHORT).show()
+                        SnackBarController.sendEvent(event = SnackBarEvent(message = sideEffect.combinedLoginError.networkError.toErrorMessage(context)))
                     }
                     is CombinedLoginError.Login -> {
                         when (sideEffect.combinedLoginError.loginError) {
-                            LoginError.WRONG_EMAIL_OR_PASS -> Toast.makeText(context, errorWrongEmailOrPassword, Toast.LENGTH_SHORT).show()
+                            LoginError.WRONG_EMAIL_OR_PASS -> SnackBarController.sendEvent(event = SnackBarEvent(message = errorWrongEmailOrPassword))
                         }
                     }
                 }

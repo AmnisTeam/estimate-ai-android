@@ -1,13 +1,12 @@
 package com.evg.statistics.presentation
 
-import android.widget.Toast
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.evg.statistics.presentation.mvi.StatisticsSideEffect
 import com.evg.statistics.presentation.mvi.StatisticsViewModel
+import com.evg.ui.snackbar.SnackBarController
+import com.evg.ui.snackbar.SnackBarEvent
 import com.evg.utils.mapper.toErrorMessage
 import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
@@ -23,7 +22,7 @@ fun StatisticsRoot(
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
             is StatisticsSideEffect.StatisticsFail -> {
-                Toast.makeText(context, sideEffect.error.toErrorMessage(context), Toast.LENGTH_SHORT).show()
+                SnackBarController.sendEvent(event = SnackBarEvent(message = sideEffect.error.toErrorMessage(context)))
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.evg.password_reset.presentation
 
-import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -10,6 +9,8 @@ import com.evg.api.domain.utils.PasswordResetError
 import com.evg.password_reset.presentation.mvi.PasswordResetSideEffect
 import com.evg.password_reset.presentation.mvi.PasswordResetViewModel
 import com.evg.resource.R
+import com.evg.ui.snackbar.SnackBarController
+import com.evg.ui.snackbar.SnackBarEvent
 import com.evg.utils.mapper.toErrorMessage
 import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
@@ -30,16 +31,16 @@ fun PasswordResetRoot(
         when (sideEffect) {
             PasswordResetSideEffect.PasswordResetSuccess -> {
                 onLoginScreen()
-                Toast.makeText(context, letterSend, Toast.LENGTH_SHORT).show()
+                SnackBarController.sendEvent(event = SnackBarEvent(message = letterSend))
             }
             is PasswordResetSideEffect.PasswordResetFail -> {
                 when (sideEffect.combinedPasswordResetError) {
                     is CombinedPasswordResetError.Network -> {
-                        Toast.makeText(context, sideEffect.combinedPasswordResetError.networkError.toErrorMessage(context), Toast.LENGTH_SHORT).show()
+                        SnackBarController.sendEvent(event = SnackBarEvent(message = sideEffect.combinedPasswordResetError.networkError.toErrorMessage(context)))
                     }
                     is CombinedPasswordResetError.PasswordReset -> {
                         when (sideEffect.combinedPasswordResetError.passwordResetError) {
-                            PasswordResetError.UNKNOWN_EMAIL -> Toast.makeText(context, mailDoesNotExist, Toast.LENGTH_SHORT).show()
+                            PasswordResetError.UNKNOWN_EMAIL -> SnackBarController.sendEvent(event = SnackBarEvent(message = mailDoesNotExist))
                         }
                     }
                 }

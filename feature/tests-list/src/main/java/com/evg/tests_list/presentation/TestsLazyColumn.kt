@@ -1,7 +1,6 @@
 package com.evg.tests_list.presentation
 
 import android.content.res.Configuration
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,9 +13,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -27,21 +27,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.evg.api.domain.utils.NetworkError
 import com.evg.api.domain.utils.ServerResult
-import com.evg.utils.model.TestIcons
-import com.evg.utils.model.TestLevelColors
 import com.evg.resource.R
 import com.evg.tests_list.presentation.model.TestState
-import com.evg.utils.mapper.toErrorMessage
+import com.evg.ui.snackbar.SnackBarController
+import com.evg.ui.snackbar.SnackBarEvent
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
 import com.evg.ui.theme.VerticalPadding
+import com.evg.utils.mapper.toErrorMessage
+import com.evg.utils.model.TestIcons
+import com.evg.utils.model.TestLevelColors
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -55,6 +56,7 @@ fun TestsLazyColumn(
     isTestsLoading: Boolean,
 ) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val refreshingState = rememberSwipeRefreshState(isRefreshing = false)
     var swipeEnabled by rememberSaveable { mutableStateOf(true) }
 
@@ -158,7 +160,10 @@ fun TestsLazyColumn(
                             }
 
                             is ServerResult.Error -> {
-                                Toast.makeText(context, item.error.toErrorMessage(context), Toast.LENGTH_SHORT).show()
+                                val errorMessage = item.error.toErrorMessage(context)
+                                LaunchedEffect(errorMessage) {
+                                    SnackBarController.sendEvent(SnackBarEvent(errorMessage))
+                                }
                             }
 
                             null -> { }
@@ -169,8 +174,10 @@ fun TestsLazyColumn(
 
             is LoadState.Error -> {
                 swipeEnabled = true
-
-                Toast.makeText(context, stringResource(id = R.string.server_error), Toast.LENGTH_SHORT).show()
+                val errorMessage = stringResource(id = R.string.server_error)
+                LaunchedEffect(errorMessage) {
+                    SnackBarController.sendEvent(SnackBarEvent(errorMessage))
+                }
             }
         }
     }
