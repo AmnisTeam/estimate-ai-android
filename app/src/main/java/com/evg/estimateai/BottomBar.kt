@@ -17,11 +17,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
+
+
+val bottomNavPadding = 81.dp
 
 @Composable
 fun BottomBar(
@@ -29,9 +35,15 @@ fun BottomBar(
 ) {
     val navBackStackEntry by navigation.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    val bottomBarDestination = BottomBarScreen.allScreens.any {
+    /*val bottomBarDestination = BottomBarScreen.allScreens.any {
         it.route::class.qualifiedName == currentDestination?.route
+    }*/
+    val bottomBarDestination = BottomBarScreen.allScreens.any { bottomBarScreen ->
+        currentDestination?.hierarchy?.any { navDestination ->
+            navDestination.hasRoute(bottomBarScreen.route::class)
+        } == true
     }
+
 
     AnimatedVisibility(
         visible = bottomBarDestination,
@@ -58,7 +70,9 @@ fun BottomBar(
                                 color = AppTheme.colors.text,
                             )
                         },
-                        selected = currentDestination?.route == screen.route::class.qualifiedName,
+                        selected = currentDestination?.hierarchy?.any { navDestination ->
+                            navDestination.hasRoute(screen.route::class)
+                        } == true,
                         onClick = {
                             navigation.navigate(screen.route)
                         },

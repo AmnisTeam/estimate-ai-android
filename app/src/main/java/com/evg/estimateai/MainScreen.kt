@@ -26,7 +26,6 @@ import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
 import kotlinx.coroutines.launch
 
-val bottomNavPadding = 81.dp
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -65,6 +64,7 @@ fun MainScreen() {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        topBar = { TopBar(navController) },
         bottomBar = { BottomBar(navController) },
         containerColor = AppTheme.colors.background,
         snackbarHost = { SwipeableSnackBarHost(hostState = snackBarHostState) }

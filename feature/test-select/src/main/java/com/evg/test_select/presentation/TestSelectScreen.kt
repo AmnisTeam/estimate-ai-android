@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.evg.resource.R
 import com.evg.test_select.presentation.model.TestType
-import com.evg.ui.custom.Header
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
 import com.evg.ui.theme.HorizontalPaddingTile
@@ -26,33 +25,25 @@ fun TestSelectScreen(
     onTestEssayScreen: () -> Unit,
     onBackScreen: () -> Unit,
 ) {
-    Column(
-        modifier = modifier,
-    ) {
-        Header(
-            title = stringResource(id = R.string.select_test_type),
-            onBackScreen = onBackScreen,
-        )
         
-        Column(
-            modifier = Modifier
-                .padding(
-                    horizontal = HorizontalPaddingTile,
-                    vertical = VerticalPadding,
-                ),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            TestTypeTile(
-                testType = TestType(
-                    icon = TestIcons.ESSAY,
-                    title = "The essay test",
-                    description = "Write an essay on any topic. Your English level will be estimated based on it",
-                ),
-                onClick = {
-                    onTestEssayScreen()
-                }
-            )
-        }
+    Column(
+        modifier = modifier
+            .padding(
+                horizontal = HorizontalPaddingTile,
+                vertical = VerticalPadding,
+            ),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        TestTypeTile(
+            testType = TestType(
+                icon = TestIcons.ESSAY,
+                title = "The essay test",
+                description = "Write an essay on any topic. Your English level will be estimated based on it",
+            ),
+            onClick = {
+                onTestEssayScreen()
+            }
+        )
     }
 }
 

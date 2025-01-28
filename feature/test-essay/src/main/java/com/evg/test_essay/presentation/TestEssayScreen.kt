@@ -33,7 +33,6 @@ import com.evg.resource.R
 import com.evg.test_essay.domain.model.EssayTestData
 import com.evg.test_essay.presentation.model.CharactersNumberState
 import com.evg.test_essay.presentation.mvi.TestEssayState
-import com.evg.ui.custom.Header
 import com.evg.ui.custom.RoundedButton
 import com.evg.ui.snackbar.SnackBarController
 import com.evg.ui.snackbar.SnackBarEvent
@@ -41,6 +40,7 @@ import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.BorderRadius
 import com.evg.ui.theme.ButtonPadding
 import com.evg.ui.theme.EstimateAITheme
+import com.evg.ui.theme.HorizontalPadding
 import com.evg.ui.theme.VerticalPadding
 import kotlinx.coroutines.launch
 
@@ -78,95 +78,87 @@ fun TestEssayScreen(
 
     val maximumCharactersExceeded = stringResource(R.string.maximum_characters_exceeded)
 
+
     Column(
-        modifier = modifier,
+        modifier = modifier
+            .padding(
+                vertical = VerticalPadding,
+                horizontal = HorizontalPadding,
+            )
+            .imePadding(),
     ) {
-        Header(
-            title = stringResource(id = R.string.essay_test),
-            onBackScreen = onBackScreen,
+        Text(
+            text = stringResource(id = R.string.essay_test_description),
+            color = AppTheme.colors.textField,
+            style = AppTheme.typography.body,
         )
 
         Spacer(modifier = Modifier.height(VerticalPadding))
 
-        Column(
+        TextField(
             modifier = Modifier
-                .imePadding(),
-        ) {
-            Text(
-                modifier = Modifier.padding(horizontal = horizontalPadding),
-                text = stringResource(id = R.string.essay_test_description),
-                color = AppTheme.colors.textField,
-                style = AppTheme.typography.body,
-            )
-
-            Spacer(modifier = Modifier.height(VerticalPadding))
-
-            TextField(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .padding(horizontal = horizontalPadding),
-                colors = TextFieldDefaults.colors().copy(
-                    cursorColor = AppTheme.colors.primary,
-                    focusedContainerColor = AppTheme.colors.textFieldBackground,
-                    unfocusedContainerColor = AppTheme.colors.textFieldBackground,
-                    errorContainerColor = AppTheme.colors.textFieldBackground,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    errorIndicatorColor = Color.Transparent,
-                    disabledContainerColor = AppTheme.colors.textFieldBackground,
-                    disabledIndicatorColor = Color.Transparent,
-                ),
-                enabled = !state.isTestSending && isEditable,
-                shape = (RoundedCornerShape(BorderRadius)),
-                textStyle = AppTheme.typography.body.copy(
-                    color = AppTheme.colors.text,
-                ),
-                supportingText = {
-                    Text(
-                        color = AppTheme.colors.textField,
-                        text = "${essayText.text.length} ${stringResource(id = R.string.characters)}",
-                    )
-                },
-                value = essayText,
-                onValueChange = {
-                    essayText = it
-                }
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(ButtonPadding)
-            ) {
-                CharactersNumberVisualization(
-                    state = charactersState
+                .weight(1f)
+                .fillMaxWidth(),
+            colors = TextFieldDefaults.colors().copy(
+                cursorColor = AppTheme.colors.primary,
+                focusedContainerColor = AppTheme.colors.textFieldBackground,
+                unfocusedContainerColor = AppTheme.colors.textFieldBackground,
+                errorContainerColor = AppTheme.colors.textFieldBackground,
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
+                errorIndicatorColor = Color.Transparent,
+                disabledContainerColor = AppTheme.colors.textFieldBackground,
+                disabledIndicatorColor = Color.Transparent,
+            ),
+            enabled = !state.isTestSending && isEditable,
+            shape = (RoundedCornerShape(BorderRadius)),
+            textStyle = AppTheme.typography.body.copy(
+                color = AppTheme.colors.text,
+            ),
+            supportingText = {
+                Text(
+                    color = AppTheme.colors.textField,
+                    text = "${essayText.text.length} ${stringResource(id = R.string.characters)}",
                 )
+            },
+            value = essayText,
+            onValueChange = {
+                essayText = it
+            }
+        )
 
-                Spacer(modifier = Modifier.weight(1f))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = VerticalPadding)
+        ) {
+            CharactersNumberVisualization(
+                state = charactersState
+            )
 
-                if (isEditable) {
-                    RoundedButton(
-                        modifier = Modifier,
-                        backgroundColor = AppTheme.colors.secondary,
-                        icon = painterResource(id = R.drawable.send),
-                        iconColor = AppTheme.colors.text,
-                        isLoading = state.isTestSending,
-                        onClick = {
-                            if (charactersState == CharactersNumberState.MAXIMUM) {
-                                scope.launch {
-                                    SnackBarController.sendEvent(event = SnackBarEvent(message = maximumCharactersExceeded))
-                                }
-                            } else {
-                                sendTest(
-                                    EssayTestData(
-                                        essay = essayText.text,
-                                    )
-                                )
+            Spacer(modifier = Modifier.weight(1f))
+
+            if (isEditable) {
+                RoundedButton(
+                    modifier = Modifier,
+                    backgroundColor = AppTheme.colors.secondary,
+                    icon = painterResource(id = R.drawable.send),
+                    iconColor = AppTheme.colors.text,
+                    isLoading = state.isTestSending,
+                    onClick = {
+                        if (charactersState == CharactersNumberState.MAXIMUM) {
+                            scope.launch {
+                                SnackBarController.sendEvent(event = SnackBarEvent(message = maximumCharactersExceeded))
                             }
-                        },
-                    )
-                }
+                        } else {
+                            sendTest(
+                                EssayTestData(
+                                    essay = essayText.text,
+                                )
+                            )
+                        }
+                    },
+                )
             }
         }
     }

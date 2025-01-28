@@ -10,6 +10,7 @@ import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import com.evg.estimateai.scaffold.EstimateAiScaffold
+import com.evg.estimateai.topNavPadding
 import com.evg.test_essay.presentation.TestEssayRoot
 import com.evg.test_select.presentation.TestSelectRoot
 import org.koin.androidx.compose.koinViewModel
@@ -20,7 +21,9 @@ fun NavGraphBuilder.createTestNavGraph(navController: NavHostController) {
         startDestination = Route.TestSelect,
     ) {
         composable<Route.TestSelect> {
-            EstimateAiScaffold { paddingValues ->
+            EstimateAiScaffold(
+                modifier = Modifier.padding(top = topNavPadding),
+            ) { paddingValues ->
                 TestSelectRoot(
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
                     onTestEssayScreen = { navController.navigate(route = Route.TestEssay(id = null)) },
@@ -32,7 +35,9 @@ fun NavGraphBuilder.createTestNavGraph(navController: NavHostController) {
             deepLinks = listOf(navDeepLink { uriPattern = "app://test-essay/{id}" })
         ) { entry ->
             val id = entry.toRoute<Route.TestEssay>().id
-            EstimateAiScaffold { paddingValues ->
+            EstimateAiScaffold(
+                modifier = Modifier.padding(top = topNavPadding),
+            ) { paddingValues ->
                 TestEssayRoot(
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
                     viewModel = koinViewModel(parameters = { parametersOf(id) }),
