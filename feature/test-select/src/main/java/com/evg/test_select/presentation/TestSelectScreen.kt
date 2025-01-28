@@ -8,11 +8,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.evg.resource.R
 import com.evg.test_select.presentation.model.TestType
 import com.evg.ui.custom.Header
@@ -24,15 +22,16 @@ import com.evg.utils.model.TestIcons
 
 @Composable
 fun TestSelectScreen(
-    navigation: NavHostController,
+    modifier: Modifier = Modifier,
+    onTestEssayScreen: () -> Unit,
+    onBackScreen: () -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = modifier,
     ) {
         Header(
-            navigation = navigation,
-            title = stringResource(id = R.string.select_test_type)
+            title = stringResource(id = R.string.select_test_type),
+            onBackScreen = onBackScreen,
         )
         
         Column(
@@ -50,7 +49,7 @@ fun TestSelectScreen(
                     description = "Write an essay on any topic. Your English level will be estimated based on it",
                 ),
                 onClick = {
-                    navigation.navigate("test-essay/")
+                    onTestEssayScreen()
                 }
             )
         }
@@ -63,7 +62,8 @@ fun TestSelectScreenPreview(darkTheme: Boolean = true) {
     EstimateAITheme(darkTheme = darkTheme) {
         Surface(color = AppTheme.colors.background) {
             TestSelectScreen(
-                navigation = NavHostController(LocalContext.current),
+                onTestEssayScreen = {},
+                onBackScreen = {},
             )
         }
     }

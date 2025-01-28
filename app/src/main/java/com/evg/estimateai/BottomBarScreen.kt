@@ -5,29 +5,30 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.evg.estimateai.graphs.Route
 
 
 sealed class BottomBarScreen(
-    val route: String,
+    val route: Route,
     val title: String,
     val icon: ImageVector,
 ) {
     companion object {
-        val allScreens = listOf(Statistics, Tests, Account)
+        val allScreens = listOf(Statistics, TestsList, Account)
     }
 
     data object Statistics : BottomBarScreen(
-        route = "statistics",
+        route = Route.Statistics,
         title = "Statistics",
         icon = Icons.Default.DateRange
     )
-    data object Tests : BottomBarScreen(
-        route = "tests-list",
+    data object TestsList : BottomBarScreen(
+        route = Route.TestsList,
         title = "Tests",
         icon = Icons.Default.Face
     )
     data object Account : BottomBarScreen(
-        route = "account",
+        route = Route.Account,
         title = "Account",
         icon = Icons.Default.Home
     )

@@ -2,12 +2,9 @@ package com.evg.tests_list.presentation
 
 import android.content.Intent
 import android.widget.Toast
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.evg.LocalNavHostController
 import com.evg.tests_list.presentation.mvi.TestsListSideEffect
 import com.evg.tests_list.presentation.mvi.TestsListViewModel
 import com.evg.tests_list.presentation.service.TestStatusService
@@ -19,10 +16,11 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun TestsListRoot(
     viewModel: TestsListViewModel = koinViewModel(),
-    bottomBar: @Composable () -> Unit,
+    modifier: Modifier,
+    onTestSelectScreen: () -> Unit,
+    onTestEssayScreen: (Int) -> Unit,
 ) {
     val context = LocalContext.current
-    val navigation = LocalNavHostController.current
 
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
@@ -38,15 +36,11 @@ fun TestsListRoot(
         }
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        TestsListScreen(
-            modifier = Modifier.weight(1f),
-            navigation = navigation,
-            state = viewModel.collectAsState().value,
-            getAllTests = viewModel::getAllTests,
-        )
-        bottomBar()
-    }
+    TestsListScreen(
+        state = viewModel.collectAsState().value,
+        modifier = modifier,
+        onTestSelectScreen = onTestSelectScreen,
+        onTestEssayScreen = onTestEssayScreen,
+        getAllTests = viewModel::getAllTests,
+    )
 }

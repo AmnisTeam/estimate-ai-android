@@ -20,7 +20,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -46,8 +45,9 @@ import com.evg.ui.theme.VerticalPadding
 
 @Composable
 fun TestEssayScreen(
-    navigation: NavHostController,
     state: TestEssayState,
+    modifier: Modifier = Modifier,
+    onBackScreen: () -> Unit,
     sendTest: (EssayTestData) -> Unit,
     isEditable: Boolean,
 ) {
@@ -77,12 +77,11 @@ fun TestEssayScreen(
     val maximumCharactersExceeded = stringResource(R.string.maximum_characters_exceeded)
 
     Column(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = modifier,
     ) {
         Header(
-            navigation = navigation,
-            title = stringResource(id = R.string.essay_test)
+            title = stringResource(id = R.string.essay_test),
+            onBackScreen = onBackScreen,
         )
 
         Spacer(modifier = Modifier.height(VerticalPadding))
@@ -175,10 +174,10 @@ fun TestsListScreenPreview(darkTheme: Boolean = true) {
     EstimateAITheme(darkTheme = darkTheme) {
         Surface(color = AppTheme.colors.background) {
             TestEssayScreen(
-                navigation = NavHostController(LocalContext.current),
                 state = TestEssayState(
                     isTestSending = false,
                 ),
+                onBackScreen = {},
                 sendTest = {},
                 isEditable = true,
             )

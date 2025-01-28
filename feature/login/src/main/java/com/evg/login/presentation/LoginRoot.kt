@@ -2,9 +2,9 @@ package com.evg.login.presentation
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import com.evg.LocalNavHostController
 import com.evg.api.domain.utils.CombinedLoginError
 import com.evg.api.domain.utils.LoginError
 import com.evg.login.presentation.mvi.LoginSideEffect
@@ -17,10 +17,13 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun LoginRoot(
-    viewModel: LoginViewModel = koinViewModel()
+    viewModel: LoginViewModel = koinViewModel(),
+    modifier: Modifier,
+    onTestsListScreen: () -> Unit,
+    onPasswordResetScreen: () -> Unit,
+    onRegistrationScreen: () -> Unit,
 ) {
     val context = LocalContext.current
-    val navigation = LocalNavHostController.current
 
     val loginSuccess = stringResource(R.string.login_success)
     val errorWrongEmailOrPassword = stringResource(R.string.wrong_email_or_password)
@@ -28,11 +31,7 @@ fun LoginRoot(
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
             LoginSideEffect.LoginSuccess -> {
-                navigation.navigate("tests-list") {
-                    popUpTo("login") {
-                        inclusive = true
-                    }
-                }
+                onTestsListScreen()
                 Toast.makeText(context, loginSuccess, Toast.LENGTH_SHORT).show()
             }
             is LoginSideEffect.LoginFail -> {
@@ -51,8 +50,11 @@ fun LoginRoot(
     }
 
     LoginScreen(
-        navigation = navigation,
+        modifier = modifier,
         state = viewModel.collectAsState().value,
+        onTestsListScreen = onTestsListScreen,
+        onPasswordResetScreen = onPasswordResetScreen,
+        onRegistrationScreen = onRegistrationScreen,
         loginUser = viewModel::loginUser,
     )
 }

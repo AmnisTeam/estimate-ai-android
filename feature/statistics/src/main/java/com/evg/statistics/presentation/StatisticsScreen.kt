@@ -51,8 +51,8 @@ import java.time.DayOfWeek
 
 @Composable
 fun StatisticsScreen(
-    modifier: Modifier = Modifier,
     state: StatisticsState,
+    modifier: Modifier = Modifier,
     getAllStatistics: (DateRange) -> Unit,
     getStatisticsInRange: (DateRange) -> Unit,
 ) {
@@ -68,7 +68,6 @@ fun StatisticsScreen(
 
     Column(
         modifier = modifier
-            .fillMaxWidth()
             .padding(
                 horizontal = HorizontalPaddingTile,
                 vertical = VerticalPadding,

@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -24,8 +22,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -36,7 +32,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.evg.password_reset.domain.model.PasswordReset
 import com.evg.password_reset.presentation.mvi.PasswordResetState
 import com.evg.resource.R
@@ -48,15 +43,15 @@ import com.evg.ui.theme.AuthorizationIconSize
 import com.evg.ui.theme.AuthorizationSpaceBy
 import com.evg.ui.theme.AuthorizationTextFieldSpaceBy
 import com.evg.ui.theme.AuthorizationWelcomeTextSpaceBy
-import com.evg.ui.theme.BorderRadius
 import com.evg.ui.theme.EstimateAITheme
 import com.evg.ui.theme.HorizontalPadding
 import com.evg.ui.theme.VerticalPadding
 
 @Composable
 fun PasswordResetScreen(
-    navigation: NavHostController,
     state: PasswordResetState,
+    modifier: Modifier = Modifier,
+    onLoginScreen: () -> Unit,
     passwordReset: (PasswordReset) -> Unit,
 ) {
     val isEmailResetLoading = state.isEmailResetLoading
@@ -73,8 +68,7 @@ fun PasswordResetScreen(
     val logInText = stringResource(R.string.log_in)
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
             .padding(
                 horizontal = HorizontalPadding,
                 vertical = VerticalPadding,
@@ -142,11 +136,7 @@ fun PasswordResetScreen(
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(5.dp))
                     .clickableRipple {
-                        navigation.navigate("login") {
-                            popUpTo("registration") {
-                                inclusive = true
-                            }
-                        }
+                        onLoginScreen()
                     },
                 text = buildAnnotatedString {
                     this.append("$iAlreadyHaveAccountText ")
@@ -168,10 +158,10 @@ fun PasswordResetScreenPreview(darkTheme: Boolean = true) {
     EstimateAITheme(darkTheme = darkTheme) {
         Surface(color = AppTheme.colors.background) {
             PasswordResetScreen(
-                navigation = NavHostController(LocalContext.current),
                 state = PasswordResetState(
                     isEmailResetLoading = false,
                 ),
+                onLoginScreen = {},
                 passwordReset = {}
             )
         }

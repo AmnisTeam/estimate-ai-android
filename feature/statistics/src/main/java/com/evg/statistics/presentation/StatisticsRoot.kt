@@ -16,7 +16,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun StatisticsRoot(
     viewModel: StatisticsViewModel = koinViewModel(),
-    bottomBar: @Composable () -> Unit,
+    modifier: Modifier,
 ) {
     val context = LocalContext.current
 
@@ -28,15 +28,10 @@ fun StatisticsRoot(
         }
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        StatisticsScreen(
-            modifier = Modifier.weight(1f),
-            state = viewModel.collectAsState().value,
-            getAllStatistics = viewModel::getAllStatistics,
-            getStatisticsInRange = viewModel::getStatisticsInRange,
-        )
-        bottomBar()
-    }
+    StatisticsScreen(
+        state = viewModel.collectAsState().value,
+        modifier = modifier,
+        getAllStatistics = viewModel::getAllStatistics,
+        getStatisticsInRange = viewModel::getStatisticsInRange,
+    )
 }

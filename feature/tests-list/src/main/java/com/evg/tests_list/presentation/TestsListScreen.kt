@@ -3,18 +3,15 @@ package com.evg.tests_list.presentation
 import android.content.res.Configuration
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
+import androidx.compose.ui.unit.dp
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.evg.resource.R
 import com.evg.tests_list.presentation.mvi.TestsListState
@@ -26,40 +23,45 @@ import com.evg.ui.theme.HorizontalPaddingTile
 import com.evg.ui.theme.VerticalPadding
 import com.evg.ui.theme.darkAddButtonColor
 import com.evg.ui.theme.lightAddButtonColor
-import androidx.compose.ui.unit.dp
 
 @Composable
 fun TestsListScreen(
-    modifier: Modifier = Modifier,
-    navigation: NavHostController,
     state: TestsListState,
+    modifier: Modifier = Modifier,
+    onTestSelectScreen: () -> Unit,
+    onTestEssayScreen: (Int) -> Unit,
     getAllTests: () -> Unit,
 ) {
     val tests = state.tests.collectAsLazyPagingItems()
 
     Box(
         modifier = modifier
-            .fillMaxWidth()
             .padding(
                 horizontal = HorizontalPaddingTile,
                 vertical = VerticalPadding,
             ),
     ) {
         TestsLazyColumn(
-            navigation = navigation,
+            onTestEssayScreen = onTestEssayScreen,
             tests = tests,
             getAllTests = getAllTests,
             isTestsLoading = state.isTestsLoading,
         )
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
         RoundedButton(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(10.dp),
+                .padding(ButtonPadding),
             backgroundColor = if (isSystemInDarkTheme()) darkAddButtonColor else lightAddButtonColor,
             icon = painterResource(id = R.drawable.plus),
             iconColor = AppTheme.colors.primary,
             onClick = {
-                navigation.navigate("test-select")
+                onTestSelectScreen()
             },
         )
     }
@@ -72,10 +74,11 @@ fun TestsListScreenPreview(darkTheme: Boolean = true) {
     EstimateAITheme(darkTheme = darkTheme) {
         Surface(color = AppTheme.colors.background) {
             TestsListScreen(
-                navigation = NavHostController(LocalContext.current),
                 state = TestsListState(
                     isTestsLoading = false,
                 ),
+                onTestSelectScreen = {},
+                onTestEssayScreen = {},
                 getAllTests = {},
             )
         }

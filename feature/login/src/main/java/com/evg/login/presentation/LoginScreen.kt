@@ -1,7 +1,6 @@
 package com.evg.login.presentation
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,8 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -29,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -40,7 +36,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.evg.login.domain.model.User
 import com.evg.login.presentation.mvi.LoginState
 import com.evg.resource.R
@@ -59,8 +54,11 @@ import com.evg.ui.theme.AuthorizationWelcomeTextSpaceBy
 
 @Composable
 fun LoginScreen(
-    navigation: NavHostController,
     state: LoginState,
+    modifier: Modifier = Modifier,
+    onTestsListScreen: () -> Unit,
+    onPasswordResetScreen: () -> Unit,
+    onRegistrationScreen: () -> Unit,
     loginUser: (User) -> Unit,
 ) {
     val isLoginLoading = state.isLoginLoading
@@ -84,15 +82,14 @@ fun LoginScreen(
     val forgotPasswordText = stringResource(R.string.forgot_password)
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
             .padding(
                 horizontal = HorizontalPadding,
                 vertical = VerticalPadding,
             )
             .verticalScroll(rememberScrollState()),
     ) {
-        Text(modifier = Modifier.clickableRipple { navigation.navigate("tests-list") }, text = "Go To Main", color = AppTheme.colors.text)
+        Text(modifier = Modifier.clickableRipple { onTestsListScreen() }, text = "Go To Main", color = AppTheme.colors.text)
 
         Column(
             modifier = Modifier
@@ -157,11 +154,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(5.dp))
                     .clickableRipple {
-                        navigation.navigate("password-reset") {
-                            popUpTo("login") {
-                                inclusive = true
-                            }
-                        }
+                        onPasswordResetScreen()
                     },
                 text = forgotPasswordText,
                 style = AppTheme.typography.body,
@@ -244,11 +237,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(5.dp))
                     .clickableRipple {
-                        navigation.navigate("registration") {
-                            popUpTo("login") {
-                                inclusive = true
-                            }
-                        }
+                        onRegistrationScreen()
                     },
                 text = buildAnnotatedString {
                     this.append("$iDontHaveAccountText ")
@@ -270,11 +259,13 @@ fun LoginScreenPreview(darkTheme: Boolean = true) {
     EstimateAITheme(darkTheme = darkTheme) {
         Surface(color = AppTheme.colors.background) {
             LoginScreen(
-                navigation = NavHostController(LocalContext.current),
                 state = LoginState(
                     isLoginLoading = false,
                 ),
-                loginUser = {}
+                onTestsListScreen = {},
+                onPasswordResetScreen = {},
+                onRegistrationScreen = {},
+                loginUser = {},
             )
         }
     }

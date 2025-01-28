@@ -17,11 +17,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.evg.resource.R
 import com.evg.ui.extensions.clickableRipple
 import com.evg.ui.theme.AppTheme
@@ -30,14 +28,14 @@ import com.evg.ui.theme.VerticalPadding
 
 @Composable
 fun Header(
-    navigation: NavHostController,
     title: String,
+    onBackScreen: () -> Unit,
 ) {
     Column {
         Spacer(modifier = Modifier.height(VerticalPadding))
 
         BackHandler {
-            handleBackNavigation(navigation)
+            onBackScreen()
         }
 
         Row(
@@ -49,7 +47,7 @@ fun Header(
                     .padding(start = 20.dp)
                     .size(30.dp)
                     .clickableRipple {
-                        handleBackNavigation(navigation)
+                        onBackScreen()
                     },
                 painter = painterResource(id = R.drawable.arrow_back),
                 contentDescription = null,
@@ -75,26 +73,14 @@ fun Header(
     }
 }
 
-private fun handleBackNavigation(navigation: NavHostController) {
-    val previousScreen = navigation.previousBackStackEntry?.destination?.route
-    val startScreen = navigation.graph.startDestinationRoute
-    if (previousScreen == startScreen && startScreen != null) {
-        navigation.navigate("tests-list") {
-            popUpTo(startScreen) { inclusive = true }
-        }
-    } else {
-        navigation.popBackStack()
-    }
-}
-
 @Composable
 @Preview(showBackground = true)
 fun HeaderPreview(darkTheme: Boolean = true) {
     EstimateAITheme(darkTheme = darkTheme) {
         Surface(color = AppTheme.colors.background) {
             Header(
-                navigation = NavHostController(LocalContext.current),
                 title = "Select the test type",
+                onBackScreen = {},
             )
         }
     }
