@@ -1,10 +1,10 @@
 package com.evg.estimateai.graphs
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
-import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -18,7 +18,11 @@ import com.evg.test_select.presentation.TestSelectRoot
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
-fun NavGraphBuilder.createTestNavGraph(navController: NavHostController) {
+@OptIn(ExperimentalSharedTransitionApi::class)
+fun NavGraphBuilder.createTestNavGraph(
+    navController: NavHostController,
+    animatedVisibilityScope: SharedTransitionScope,
+) {
     navigation<Route.TestCreation>(
         startDestination = Route.TestSelect,
     ) {
@@ -26,8 +30,9 @@ fun NavGraphBuilder.createTestNavGraph(navController: NavHostController) {
             EstimateAiScaffold(
                 modifier = Modifier.padding(top = topNavPadding),
             ) { paddingValues ->
-                TestSelectRoot(
+                animatedVisibilityScope.TestSelectRoot(
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
+                    animatedVisibilityScope = this,
                     onTestEssayScreen = {
                         navController.navigate(route = Route.TestEssay(id = null))
                     },

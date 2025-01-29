@@ -1,6 +1,9 @@
 package com.evg.tests_list.presentation
 
 import android.content.Intent
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -14,10 +17,12 @@ import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun TestsListRoot(
+fun SharedTransitionScope.TestsListRoot(
     viewModel: TestsListViewModel = koinViewModel(),
     modifier: Modifier,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     onTestSelectScreen: () -> Unit,
     onTestEssayScreen: (Int) -> Unit,
 ) {
@@ -40,6 +45,7 @@ fun TestsListRoot(
     TestsListScreen(
         state = viewModel.collectAsState().value,
         modifier = modifier,
+        animatedVisibilityScope = animatedVisibilityScope,
         onTestSelectScreen = onTestSelectScreen,
         onTestEssayScreen = onTestEssayScreen,
         getAllTests = viewModel::getAllTests,

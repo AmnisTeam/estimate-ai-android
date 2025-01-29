@@ -1,5 +1,7 @@
 package com.evg.estimateai.graphs
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
@@ -13,7 +15,11 @@ import com.evg.statistics.presentation.StatisticsRoot
 import com.evg.tests_list.presentation.TestsListRoot
 
 
-fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
+@OptIn(ExperimentalSharedTransitionApi::class)
+fun NavGraphBuilder.homeNavGraph(
+    navController: NavHostController,
+    animatedVisibilityScope: SharedTransitionScope,
+) {
     navigation<Route.Home>(
         startDestination = Route.TestsList,
     ) {
@@ -21,8 +27,9 @@ fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
             EstimateAiScaffold(
                 modifier = Modifier.padding(bottom = bottomNavPadding)
             ) { paddingValues ->
-                TestsListRoot(
+                animatedVisibilityScope.TestsListRoot(
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
+                    animatedVisibilityScope = this,
                     onTestSelectScreen = {
                         navController.navigate(route = Route.TestCreation)
                     },
@@ -41,6 +48,9 @@ fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
         }
         composable<Route.Account> { }
 
-        createTestNavGraph(navController = navController)
+        createTestNavGraph(
+            navController = navController,
+            animatedVisibilityScope = animatedVisibilityScope,
+        )
     }
 }

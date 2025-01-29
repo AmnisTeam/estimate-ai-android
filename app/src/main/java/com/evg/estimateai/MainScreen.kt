@@ -2,6 +2,8 @@ package com.evg.estimateai
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
@@ -27,6 +29,7 @@ import com.evg.ui.theme.EstimateAITheme
 import kotlinx.coroutines.launch
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen() {
@@ -69,14 +72,19 @@ fun MainScreen() {
         containerColor = AppTheme.colors.background,
         snackbarHost = { SwipeableSnackBarHost(hostState = snackBarHostState) }
     ) {
-        NavHost(
-            navController = navController,
-            startDestination = startDestination,
-            modifier = Modifier.background(AppTheme.colors.background),
-        ) {
-            authNavGraph(navController = navController)
+        SharedTransitionLayout {
+            NavHost(
+                navController = navController,
+                startDestination = startDestination,
+                modifier = Modifier.background(AppTheme.colors.background),
+            ) {
+                authNavGraph(navController = navController)
 
-            homeNavGraph(navController = navController)
+                homeNavGraph(
+                    navController = navController,
+                    animatedVisibilityScope = this@SharedTransitionLayout,
+                )
+            }
         }
     }
 }
