@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,6 +30,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.evg.estimateai.graphs.Route
 import com.evg.resource.R
 import com.evg.ui.extensions.clickableRipple
 import com.evg.ui.theme.AppTheme
@@ -70,10 +72,14 @@ fun TopBar(
                 navigationIcon = {
                     Icon(
                         modifier = Modifier
-                            .padding(start = 5.dp)
+                            .padding(start = 10.dp)
                             .size(30.dp)
                             .clickableRipple {
-                                navigation.popBackStack()
+                                //if (navigation.currentBackStackEntry?.destination?.hasRoute(Route.TestEssay::class) == true) { //TODO
+                                //    navigation.popBackStack(Route.TestSelect, inclusive = true)
+                                //} else {
+                                    navigation.popBackStack()
+                                //}
                             },
                         painter = painterResource(id = R.drawable.arrow_back),
                         contentDescription = null,
@@ -81,9 +87,12 @@ fun TopBar(
                     )
                 },
                 title = {
+                    val title = if (matchedTitle?.title != null) {
+                        stringResource(matchedTitle.title)
+                    } else { "" }
                     Text(
                         modifier = Modifier.padding(start = 10.dp),
-                        text = matchedTitle?.title ?: "Test Test Test",
+                        text = title,
                         style = AppTheme.typography.heading,
                         color = AppTheme.colors.text,
                         textAlign = TextAlign.Center,

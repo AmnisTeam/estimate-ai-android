@@ -5,7 +5,6 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -17,18 +16,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hasRoute
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
 
 
-val bottomNavPadding = 71.dp
+val bottomNavPadding = 81.dp
 
 @Composable
 fun BottomBar(
@@ -53,7 +52,7 @@ fun BottomBar(
                 color = AppTheme.colors.bottomBarSelected,
             )
             NavigationBar(
-                modifier = Modifier.height(bottomNavPadding - 1.dp),
+                //modifier = Modifier.height(bottomNavPadding - 1.dp),
                 containerColor = AppTheme.colors.background,
             ) {
                 BottomBarScreen.allScreens.forEach { screen ->
@@ -61,20 +60,30 @@ fun BottomBar(
                         colors = NavigationBarItemDefaults.colors().copy(
                             selectedIndicatorColor = AppTheme.colors.bottomBarSelected,
                         ),
+                        alwaysShowLabel = false,
                         label = {
                             Text(
-                                text = screen.title,
+                                text = stringResource(screen.title),
                                 color = AppTheme.colors.text,
                             )
                         },
                         selected = currentDestination?.hasRoute(screen.route::class) == true,
                         onClick = {
-                            navigation.navigate(screen.route)
+                            navigation.navigate(screen.route) {
+                                currentDestination?.route?.let {
+                                    popUpTo(it) {
+                                        inclusive = true
+                                        saveState = true
+                                    }
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                         },
                         icon = {
                             Icon(
                                 imageVector = screen.icon,
-                                contentDescription = screen.title,
+                                contentDescription = stringResource(screen.title),
                                 tint = AppTheme.colors.text,
                             )
                         }

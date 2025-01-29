@@ -23,7 +23,9 @@ fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
             ) { paddingValues ->
                 TestsListRoot(
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
-                    onTestSelectScreen = { navController.navigate(route = Route.TestCreation) },
+                    onTestSelectScreen = {
+                        navController.navigate(route = Route.TestCreation)
+                    },
                     onTestEssayScreen = { id -> navController.navigate(route = Route.TestEssay(id = id)) },
                 )
             }

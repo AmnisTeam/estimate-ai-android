@@ -3,6 +3,7 @@ package com.evg.estimateai.graphs
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -21,9 +22,25 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
             EstimateAiScaffold { paddingValues ->
                 LoginRoot(
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
-                    onTestsListScreen = { navController.navigate(route = Route.Home) },
-                    onPasswordResetScreen = { navController.navigate(route = Route.PasswordReset) },
-                    onRegistrationScreen = { navController.navigate(route = Route.Registration) },
+                    onTestsListScreen = {
+                        navController.navigate(route = Route.Home) {
+                            popUpTo<Route.Authentication> {
+                                inclusive = true
+                            }
+                        }
+                    },
+                    onPasswordResetScreen = {
+                        navController.navigateWithPopAndRestore(
+                            targetRoute = Route.PasswordReset,
+                            popUpToRoute = Route.Login,
+                        )
+                    },
+                    onRegistrationScreen = {
+                        navController.navigateWithPopAndRestore(
+                            targetRoute = Route.Registration,
+                            popUpToRoute = Route.Login,
+                        )
+                    },
                 )
             }
         }
@@ -31,7 +48,12 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
             EstimateAiScaffold { paddingValues ->
                 RegistrationRoot(
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
-                    onLoginScreen = { navController.navigate(route = Route.Login) },
+                    onLoginScreen = {
+                        navController.navigateWithPopAndRestore(
+                            targetRoute = Route.Login,
+                            popUpToRoute = Route.Registration,
+                        )
+                    },
                 )
             }
         }
@@ -39,10 +61,27 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
             EstimateAiScaffold { paddingValues ->
                 PasswordResetRoot(
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
-                    onLoginScreen = { navController.navigate(route = Route.Login) },
+                    onLoginScreen = {
+                        navController.navigateWithPopAndRestore(
+                            targetRoute = Route.Login,
+                            popUpToRoute = Route.PasswordReset,
+                        )
+                    },
                 )
             }
         }
     }
 }
 
+private fun NavController.navigateWithPopAndRestore(
+    targetRoute: Route,
+    popUpToRoute: Route,
+) {
+    this.navigate(targetRoute) {
+        popUpTo(popUpToRoute) {
+            this.inclusive = true
+            this.saveState = true
+        }
+        this.restoreState = true
+    }
+}

@@ -50,7 +50,7 @@ fun TestsListScreen(
     }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
     ) {
         RoundedButton(

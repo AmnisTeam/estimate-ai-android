@@ -1,16 +1,19 @@
 package com.evg.estimateai
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.evg.estimateai.graphs.Route
+import com.evg.resource.R
 
 
 sealed class BottomBarScreen(
     val route: Route,
-    val title: String,
+    @StringRes val title: Int,
     val icon: ImageVector,
 ) {
     companion object {
@@ -19,17 +22,17 @@ sealed class BottomBarScreen(
 
     data object Statistics : BottomBarScreen(
         route = Route.Statistics,
-        title = "Statistics",
+        title = R.string.tests,
         icon = Icons.Default.DateRange
     )
     data object TestsList : BottomBarScreen(
         route = Route.TestsList,
-        title = "Tests",
+        title = R.string.statistics,
         icon = Icons.Default.Face
     )
     data object Account : BottomBarScreen(
         route = Route.Account,
-        title = "Account",
+        title = R.string.account,
         icon = Icons.Default.Home
     )
 }

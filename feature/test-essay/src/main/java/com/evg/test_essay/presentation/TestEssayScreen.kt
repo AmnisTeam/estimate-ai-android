@@ -81,8 +81,9 @@ fun TestEssayScreen(
     Column(
         modifier = modifier
             .padding(
-                vertical = VerticalPadding,
-                horizontal = HorizontalPadding,
+                top = VerticalPadding,
+                start = HorizontalPadding,
+                end = HorizontalPadding,
             )
             .imePadding(),
     ) {
@@ -129,7 +130,10 @@ fun TestEssayScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = VerticalPadding)
+                .padding(
+                    top = VerticalPadding,
+                    bottom = HorizontalPadding
+                )
         ) {
             CharactersNumberVisualization(
                 state = charactersState

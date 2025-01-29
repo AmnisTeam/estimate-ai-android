@@ -1,11 +1,13 @@
 package com.evg.estimateai
 
+import androidx.annotation.StringRes
 import com.evg.estimateai.graphs.Route
+import com.evg.resource.R
 
 
 sealed class TopBarTitle(
     val route: Route,
-    val title: String,
+    @StringRes val title: Int,
 ) {
     companion object {
         val allTitles = listOf(TestSelect, TestsList)
@@ -13,10 +15,10 @@ sealed class TopBarTitle(
 
     data object TestSelect : TopBarTitle(
         route = Route.TestSelect,
-        title = "Select the test type",
+        title = R.string.select_test_type,
     )
     data object TestsList : TopBarTitle(
         route = Route.TestEssay(id = null),
-        title = "The essay test",
+        title = R.string.essay_test,
     )
 }

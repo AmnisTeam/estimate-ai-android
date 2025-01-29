@@ -58,6 +58,9 @@
     <string name="loading_test">Loading test</string>
     <string name="test_id_ready">Test №%1$d is ready</string>
     <string name="test_id_failed">Test №%1$d failed with an error</string>
+    <string name="tests">Tests</string>
+    <string name="statistics">Statistics</string>
+    <string name="account">Account</string>
 
     <!--Test select screen-->
     <string name="select_test_type">Select the test type</string>

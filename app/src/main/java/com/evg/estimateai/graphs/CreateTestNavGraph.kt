@@ -3,6 +3,8 @@ package com.evg.estimateai.graphs
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
+import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -26,7 +28,9 @@ fun NavGraphBuilder.createTestNavGraph(navController: NavHostController) {
             ) { paddingValues ->
                 TestSelectRoot(
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
-                    onTestEssayScreen = { navController.navigate(route = Route.TestEssay(id = null)) },
+                    onTestEssayScreen = {
+                        navController.navigate(route = Route.TestEssay(id = null))
+                    },
                 )
             }
         }
@@ -40,7 +44,13 @@ fun NavGraphBuilder.createTestNavGraph(navController: NavHostController) {
                 TestEssayRoot(
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
                     viewModel = koinViewModel(parameters = { parametersOf(id) }),
-                    onTestsListScreen = { navController.navigate(route = Route.Home) },
+                    onTestsListScreen = {
+                        navController.navigate(route = Route.Home) {
+                            popUpTo<Route.Home> {
+                                inclusive = true
+                            }
+                        }
+                    },
                 )
             }
         }
