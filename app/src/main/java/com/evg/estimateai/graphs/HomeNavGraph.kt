@@ -31,7 +31,7 @@ fun NavGraphBuilder.homeNavGraph(
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
                     animatedVisibilityScope = this,
                     onTestSelectScreen = {
-                        navController.navigate(route = Route.TestCreation)
+                        navController.navigate(route = Route.TestSelect)
                     },
                     onTestEssayScreen = { id, score -> navController.navigate(route = Route.TestEssay(id = id, score = score)) },
                 )

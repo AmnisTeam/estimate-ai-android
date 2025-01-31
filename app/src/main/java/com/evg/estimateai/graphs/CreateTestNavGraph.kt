@@ -9,7 +9,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
-import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import com.evg.estimateai.scaffold.EstimateAiScaffold
 import com.evg.estimateai.topNavPadding
@@ -23,42 +22,38 @@ fun NavGraphBuilder.createTestNavGraph(
     navController: NavHostController,
     animatedVisibilityScope: SharedTransitionScope,
 ) {
-    navigation<Route.TestCreation>(
-        startDestination = Route.TestSelect,
-    ) {
-        composable<Route.TestSelect> {
-            EstimateAiScaffold(
-                modifier = Modifier.padding(top = topNavPadding),
-            ) { paddingValues ->
-                animatedVisibilityScope.TestSelectRoot(
-                    modifier = Modifier.fillMaxSize().padding(paddingValues),
-                    animatedVisibilityScope = this,
-                    onTestEssayScreen = {
-                        navController.navigate(route = Route.TestEssay(id = null, score = null))
-                    },
-                )
-            }
+    composable<Route.TestSelect> {
+        EstimateAiScaffold(
+            modifier = Modifier.padding(top = topNavPadding),
+        ) { paddingValues ->
+            animatedVisibilityScope.TestSelectRoot(
+                modifier = Modifier.fillMaxSize().padding(paddingValues),
+                animatedVisibilityScope = this,
+                onTestEssayScreen = {
+                    navController.navigate(route = Route.TestEssay(id = null, score = null))
+                },
+            )
         }
-        composable<Route.TestEssay>(
-            deepLinks = listOf(navDeepLink { uriPattern = "app://test-essay/{id}/{score}" })
-        ) { entry ->
-            val testEssay = entry.toRoute<Route.TestEssay>()
-            EstimateAiScaffold(
-                modifier = Modifier.padding(top = topNavPadding),
-            ) { paddingValues ->
-                TestEssayRoot(
-                    modifier = Modifier.fillMaxSize().padding(paddingValues),
-                    viewModel = koinViewModel(parameters = { parametersOf(testEssay.id) }),
-                    onTestsListScreen = {
-                        navController.navigate(route = Route.Home) {
-                            popUpTo<Route.Home> {
-                                inclusive = true
-                            }
+    }
+    composable<Route.TestEssay>(
+        deepLinks = listOf(navDeepLink { uriPattern = "app://test-essay/{id}/{score}" })
+    ) { entry ->
+        val testEssay = entry.toRoute<Route.TestEssay>()
+        EstimateAiScaffold(
+            modifier = Modifier.padding(top = topNavPadding),
+        ) { paddingValues ->
+            TestEssayRoot(
+                modifier = Modifier.fillMaxSize().padding(paddingValues),
+                viewModel = koinViewModel(parameters = { parametersOf(testEssay.id) }),
+                onTestsListScreen = {
+                    navController.navigate(route = Route.Home) {
+                        popUpTo<Route.Home> {
+                            inclusive = true
                         }
-                    },
-                    score = testEssay.score,
-                )
-            }
+                    }
+                },
+                score = testEssay.score,
+            )
         }
     }
 }

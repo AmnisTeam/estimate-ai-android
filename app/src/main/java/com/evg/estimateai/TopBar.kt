@@ -30,7 +30,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.evg.estimateai.graphs.Route
 import com.evg.resource.R
 import com.evg.ui.extensions.clickableRipple
 import com.evg.ui.theme.AppTheme
@@ -75,11 +74,7 @@ fun TopBar(
                             .padding(start = 10.dp)
                             .size(30.dp)
                             .clickableRipple {
-                                //if (navigation.currentBackStackEntry?.destination?.hasRoute(Route.TestEssay::class) == true) { //TODO
-                                //    navigation.popBackStack(Route.TestSelect, inclusive = true)
-                                //} else {
-                                    navigation.popBackStack()
-                                //}
+                                navigation.popBackStack()
                             },
                         painter = painterResource(id = R.drawable.arrow_back),
                         contentDescription = null,
