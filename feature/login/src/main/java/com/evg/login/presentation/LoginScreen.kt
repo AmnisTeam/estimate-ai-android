@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -178,26 +179,26 @@ fun LoginScreen(
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box(
+            HorizontalDivider(
                 modifier = Modifier
                     .padding(horizontal = 10.dp)
                     .weight(1f)
-                    .height(3.dp)
-                    .clip(shape = RoundedCornerShape(BorderRadius))
-                    .background(AppTheme.colors.textField)
+                    .clip(shape = RoundedCornerShape(BorderRadius)),
+                thickness = 3.dp,
+                color = AppTheme.colors.textField,
             )
             Text(
                 text = "or continue with",
                 style = AppTheme.typography.body,
                 color = AppTheme.colors.textFieldName,
             )
-            Box(
+            HorizontalDivider(
                 modifier = Modifier
                     .padding(horizontal = 10.dp)
                     .weight(1f)
-                    .height(3.dp)
-                    .clip(shape = RoundedCornerShape(BorderRadius))
-                    .background(AppTheme.colors.textField)
+                    .clip(shape = RoundedCornerShape(BorderRadius)),
+                thickness = 3.dp,
+                color = AppTheme.colors.textField,
             )
         }
 

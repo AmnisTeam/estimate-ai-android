@@ -56,9 +56,10 @@ fun TestsLazyColumn(
     isTestsLoading: Boolean,
 ) {
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
     val refreshingState = rememberSwipeRefreshState(isRefreshing = false)
     var swipeEnabled by rememberSaveable { mutableStateOf(true) }
+
+    val spacedByPadding = 10.dp
 
     SwipeRefresh(
         modifier = Modifier
@@ -81,7 +82,7 @@ fun TestsLazyColumn(
 
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                    verticalArrangement = Arrangement.spacedBy(spacedByPadding)
                 ) {
                     items(10) {
                         ShimmerTestTile()
@@ -123,7 +124,7 @@ fun TestsLazyColumn(
 
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                    verticalArrangement = Arrangement.spacedBy(spacedByPadding)
                 ) {
                     items(
                         count = tests.itemCount,
