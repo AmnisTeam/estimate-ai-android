@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.evg.charts.pie.PieChart
 import com.evg.charts.pie.PieChartData
-import com.evg.charts.pie.render.SimpleSliceDrawer
+import com.evg.charts.pie.render.CustomSliceDrawer
 import com.evg.charts.simpleChartAnimation
 import com.evg.statistics.presentation.model.TestStatisticsUI
 import com.evg.ui.theme.AppTheme
@@ -59,7 +59,7 @@ fun StylizedPieChart(
                 slices = groupedSlices
             ),
             animation = simpleChartAnimation(),
-            sliceDrawer = SimpleSliceDrawer(),
+            sliceDrawer = CustomSliceDrawer(),
         )
 
         Box(
