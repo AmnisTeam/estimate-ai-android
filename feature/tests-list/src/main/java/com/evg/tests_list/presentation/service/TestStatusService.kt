@@ -10,15 +10,12 @@ import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
 import android.net.Uri
 import android.os.Build
 import android.os.IBinder
-import android.os.Parcelable
 import androidx.core.app.NotificationCompat
-import com.evg.api.domain.utils.ServerResult
-import com.evg.utils.model.TestIcons
 import com.evg.resource.R
-import com.evg.tests_list.domain.model.TestType
 import com.evg.tests_list.domain.usecase.ConnectTestProgressUseCase
 import com.evg.tests_list.presentation.mapper.toTestState
 import com.evg.tests_list.presentation.model.TestState
+import com.evg.utils.model.TestIcons
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -127,7 +124,7 @@ class TestStatusService : Service() {
                     TestIcons.UNKNOWN -> null
                 }
                 val intent = Intent(Intent.ACTION_VIEW).apply {
-                    data = Uri.parse("app://${testType}/${test.id}")
+                    data = Uri.parse("app://${testType}/${test.id}/${test.score.score}")
                 }
                 val pendingIntent = PendingIntent.getActivity(
                     this,
@@ -142,7 +139,7 @@ class TestStatusService : Service() {
                     .setStyle(
                         NotificationCompat.InboxStyle()
                             .addLine(test.title)
-                            .addLine("${getString(R.string.estimated_level)}: ${test.levelColor.name}")
+                            .addLine("${getString(R.string.estimated_level)}: ${test.score.level.name}")
                     )
                     .setGroup(READY_GROUP)
                     .setContentIntent(pendingIntent)

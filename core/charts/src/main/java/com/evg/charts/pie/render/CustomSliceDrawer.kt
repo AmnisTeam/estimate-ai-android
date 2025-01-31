@@ -58,7 +58,11 @@ class CustomSliceDrawer(
         val sliceThickness = computeSectorThickness(area)
         val drawableArea = computeDrawableArea(area)
 
-        val adjustedSweepAngle = (sweepAngle - slicePaddingAngle).coerceAtLeast(0F)
+        val adjustedSweepAngle = if (slice.value >= 100f) {
+            sweepAngle
+        } else {
+            (sweepAngle - slicePaddingAngle).coerceAtLeast(0F)
+        }
 
         canvas.drawArc(
             rect = drawableArea,

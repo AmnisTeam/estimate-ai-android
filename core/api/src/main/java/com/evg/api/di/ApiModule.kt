@@ -33,6 +33,8 @@ val apiModule = module {
         ApolloClient.Builder()
             .serverUrl("http://192.168.1.157:8000/graphql")
             .webSocketServerUrl("ws://192.168.1.157:8000/graphql")
+            //.serverUrl("http://95.68.168.118:7783/graphql")
+            //.webSocketServerUrl("ws://95.68.168.118:7783/graphql")
             .okHttpClient(okHttpClient)
             .webSocketIdleTimeoutMillis(timeout)
             .build()

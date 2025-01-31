@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -42,7 +41,7 @@ import com.evg.ui.theme.EstimateAITheme
 import com.evg.ui.theme.VerticalPadding
 import com.evg.utils.mapper.toErrorMessage
 import com.evg.utils.model.TestIcons
-import com.evg.utils.model.TestLevelColors
+import com.evg.utils.model.TestScore
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -50,7 +49,7 @@ import kotlinx.coroutines.flow.flowOf
 
 @Composable
 fun TestsLazyColumn(
-    onTestEssayScreen: (Int) -> Unit,
+    onTestEssayScreen: (id: Int, score: Int) -> Unit,
     tests: LazyPagingItems<ServerResult<TestState, NetworkError>>,
     getAllTests: () -> Unit,
     isTestsLoading: Boolean,
@@ -148,7 +147,7 @@ fun TestsLazyColumn(
                                             onClick = {
                                                 when (data.icon) {
                                                     TestIcons.ESSAY -> {
-                                                        onTestEssayScreen(data.id)
+                                                        onTestEssayScreen(data.id, data.score.score)
                                                     }
                                                     TestIcons.UNKNOWN -> { }
                                                 }
@@ -199,7 +198,7 @@ fun TestsLazyColumnPreview(darkTheme: Boolean = true) {
                                     icon = TestIcons.ESSAY,
                                     title = "Test 1",
                                     description = "qweqweqweqweqweqwe",
-                                    levelColor = TestLevelColors.A2,
+                                    score = TestScore(0),
                                     createdAt = 0,
                                 )
                             ),
@@ -219,7 +218,7 @@ fun TestsLazyColumnPreview(darkTheme: Boolean = true) {
                     )
                 ).collectAsLazyPagingItems(),
                 getAllTests = {},
-                onTestEssayScreen = {},
+                onTestEssayScreen = { _,_ -> },
                 isTestsLoading = false,
             )
         }

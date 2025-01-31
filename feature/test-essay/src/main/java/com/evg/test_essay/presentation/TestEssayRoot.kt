@@ -17,6 +17,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun TestEssayRoot(
     viewModel: TestEssayViewModel,
     modifier: Modifier,
+    score: Int?,
     onTestsListScreen: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -41,6 +42,7 @@ fun TestEssayRoot(
     TestEssayScreen(
         state = viewModel.collectAsState().value,
         modifier = modifier,
+        score = score,
         sendTest = viewModel::sendTest,
         isEditable = viewModel.isEditable,
     )

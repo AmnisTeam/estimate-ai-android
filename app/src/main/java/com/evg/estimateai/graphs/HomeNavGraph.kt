@@ -33,7 +33,7 @@ fun NavGraphBuilder.homeNavGraph(
                     onTestSelectScreen = {
                         navController.navigate(route = Route.TestCreation)
                     },
-                    onTestEssayScreen = { id -> navController.navigate(route = Route.TestEssay(id = id)) },
+                    onTestEssayScreen = { id, score -> navController.navigate(route = Route.TestEssay(id = id, score = score)) },
                 )
             }
         }

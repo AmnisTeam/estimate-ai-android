@@ -24,7 +24,7 @@ fun SharedTransitionScope.TestsListRoot(
     modifier: Modifier,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onTestSelectScreen: () -> Unit,
-    onTestEssayScreen: (Int) -> Unit,
+    onTestEssayScreen: (id: Int, score: Int) -> Unit,
 ) {
     val context = LocalContext.current
 

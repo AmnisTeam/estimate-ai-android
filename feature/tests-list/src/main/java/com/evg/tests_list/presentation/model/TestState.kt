@@ -1,7 +1,7 @@
 package com.evg.tests_list.presentation.model
 
 import com.evg.utils.model.TestIcons
-import com.evg.utils.model.TestLevelColors
+import com.evg.utils.model.TestScore
 
 sealed class TestState {
     data class FinishedTest(
@@ -9,7 +9,7 @@ sealed class TestState {
         val title: String,
         val icon: TestIcons,
         val description: String,
-        val levelColor: TestLevelColors,
+        val score: TestScore,
         val createdAt: Long,
     ) : TestState()
     data class LoadingTest(

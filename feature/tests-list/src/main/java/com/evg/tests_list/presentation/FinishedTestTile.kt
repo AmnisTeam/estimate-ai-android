@@ -29,7 +29,7 @@ import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.BorderRadius
 import com.evg.ui.theme.EstimateAITheme
 import com.evg.utils.model.TestIcons
-import com.evg.utils.model.TestLevelColors
+import com.evg.utils.model.TestScore
 
 @Composable
 fun FinishedTestTile(
@@ -89,10 +89,10 @@ fun FinishedTestTile(
             }
 
             Text(
-                text = finishedTest.levelColor.name,
+                text = finishedTest.score.level.name,
                 fontSize = 25.sp,
                 fontWeight = FontWeight.Bold,
-                color = finishedTest.levelColor.color,
+                color = finishedTest.score.level.color,
             )
         }
     }
@@ -109,7 +109,7 @@ fun FinishedTestTilePreview(darkTheme: Boolean = true) {
                     icon = TestIcons.ESSAY,
                     title = "Title name example",
                     description = "Write an essay on any topic. Your English level will be estimated based on it.",
-                    levelColor = TestLevelColors.A2,
+                    score = TestScore(0),
                     createdAt = 0,
                 ),
                 onClick = {},

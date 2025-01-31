@@ -21,14 +21,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.evg.resource.R
 import com.evg.test_essay.domain.model.EssayTestData
 import com.evg.test_essay.presentation.model.CharactersNumberState
@@ -38,20 +37,21 @@ import com.evg.ui.snackbar.SnackBarController
 import com.evg.ui.snackbar.SnackBarEvent
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.BorderRadius
-import com.evg.ui.theme.ButtonPadding
 import com.evg.ui.theme.EstimateAITheme
 import com.evg.ui.theme.HorizontalPadding
 import com.evg.ui.theme.VerticalPadding
+import com.evg.utils.model.TestLevelColors
+import com.evg.utils.model.TestScore
 import kotlinx.coroutines.launch
 
 @Composable
 fun TestEssayScreen(
     state: TestEssayState,
     modifier: Modifier = Modifier,
+    score: Int?,
     sendTest: (EssayTestData) -> Unit,
     isEditable: Boolean,
 ) {
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val textData: EssayTestData? = state.testData.collectAsState().value
     var essayText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
@@ -62,7 +62,6 @@ fun TestEssayScreen(
         if (!isEditable && textData != null) {
             essayText = TextFieldValue(textData.essay)
         }
-        println(textData)
     }
 
 
@@ -73,7 +72,6 @@ fun TestEssayScreen(
         charactersCount in 201..400 -> CharactersNumberState.ENOUGH
         else -> CharactersNumberState.MAXIMUM
     }
-    val horizontalPadding = 40.dp
 
     val maximumCharactersExceeded = stringResource(R.string.maximum_characters_exceeded)
 
@@ -133,7 +131,8 @@ fun TestEssayScreen(
                 .padding(
                     top = VerticalPadding,
                     bottom = HorizontalPadding
-                )
+                ),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             CharactersNumberVisualization(
                 state = charactersState
@@ -162,6 +161,17 @@ fun TestEssayScreen(
                         }
                     },
                 )
+            } else {
+                val level = if (score != null) {
+                    TestScore(scoreInit = score).level
+                } else {
+                    TestLevelColors.UNKNOWN
+                }
+                Text(
+                    style = AppTheme.typography.heading,
+                    text = level.name,
+                    color = level.color,
+                )
             }
         }
     }
@@ -176,8 +186,9 @@ fun TestsListScreenPreview(darkTheme: Boolean = true) {
                 state = TestEssayState(
                     isTestSending = false,
                 ),
+                score = 0,
                 sendTest = {},
-                isEditable = true,
+                isEditable = false,
             )
         }
     }

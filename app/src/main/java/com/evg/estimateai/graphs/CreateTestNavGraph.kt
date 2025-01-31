@@ -34,21 +34,21 @@ fun NavGraphBuilder.createTestNavGraph(
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
                     animatedVisibilityScope = this,
                     onTestEssayScreen = {
-                        navController.navigate(route = Route.TestEssay(id = null))
+                        navController.navigate(route = Route.TestEssay(id = null, score = null))
                     },
                 )
             }
         }
         composable<Route.TestEssay>(
-            deepLinks = listOf(navDeepLink { uriPattern = "app://test-essay/{id}" })
+            deepLinks = listOf(navDeepLink { uriPattern = "app://test-essay/{id}/{score}" })
         ) { entry ->
-            val id = entry.toRoute<Route.TestEssay>().id
+            val testEssay = entry.toRoute<Route.TestEssay>()
             EstimateAiScaffold(
                 modifier = Modifier.padding(top = topNavPadding),
             ) { paddingValues ->
                 TestEssayRoot(
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
-                    viewModel = koinViewModel(parameters = { parametersOf(id) }),
+                    viewModel = koinViewModel(parameters = { parametersOf(testEssay.id) }),
                     onTestsListScreen = {
                         navController.navigate(route = Route.Home) {
                             popUpTo<Route.Home> {
@@ -56,6 +56,7 @@ fun NavGraphBuilder.createTestNavGraph(
                             }
                         }
                     },
+                    score = testEssay.score,
                 )
             }
         }
