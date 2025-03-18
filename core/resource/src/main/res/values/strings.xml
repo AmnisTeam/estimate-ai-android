@@ -96,5 +96,12 @@
     <string name="frequent_level">Frequent level</string>
     <string name="frequent_day">Frequent day</string>
 
+    <!--Account screen-->
+    <string name="system">System</string>
+    <string name="english">English</string>
+    <string name="russian">Russian</string>
+    <string name="dark">Dark</string>
+    <string name="light">Light</string>
+
 
 </resources>

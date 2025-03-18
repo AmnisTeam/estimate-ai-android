@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.core.app.ActivityCompat
+import com.evg.account.di.accountModule
 import com.evg.api.di.apiModule
 import com.evg.database.di.databaseModule
 import com.evg.login.di.loginModule
@@ -26,7 +27,7 @@ class App: Application() {
         startKoin {
             androidLogger(Level.DEBUG) //TODO
             androidContext(this@App)
-            modules(sharedPrefsModule, apiModule, registrationModule, databaseModule, loginModule, passwordResetModule, testsListModule, testEssayModule, statisticsModule)
+            modules(sharedPrefsModule, apiModule, registrationModule, databaseModule, loginModule, passwordResetModule, testsListModule, testEssayModule, statisticsModule, accountModule)
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

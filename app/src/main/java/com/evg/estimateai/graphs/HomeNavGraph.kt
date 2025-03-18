@@ -9,6 +9,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.evg.account.presentation.AccountRoot
 import com.evg.estimateai.bottomNavPadding
 import com.evg.estimateai.scaffold.EstimateAiScaffold
 import com.evg.statistics.presentation.StatisticsRoot
@@ -46,7 +47,18 @@ fun NavGraphBuilder.homeNavGraph(
                 )
             }
         }
-        composable<Route.Account> { }
+        composable<Route.Account> {
+            EstimateAiScaffold(
+                modifier = Modifier.padding(bottom = bottomNavPadding),
+            ) { paddingValues ->
+                AccountRoot(
+                    modifier = Modifier.fillMaxSize().padding(paddingValues),
+                    onLoginScreen = {
+                        TODO()
+                    }
+                )
+            }
+        }
 
         createTestNavGraph(
             navController = navController,
