@@ -53,9 +53,9 @@ fun LoginRoot(
     LoginScreen(
         modifier = modifier,
         state = viewModel.collectAsState().value,
+        dispatch = viewModel::dispatch,
         onTestsListScreen = onTestsListScreen,
         onPasswordResetScreen = onPasswordResetScreen,
         onRegistrationScreen = onRegistrationScreen,
-        loginUser = viewModel::loginUser,
     )
 }

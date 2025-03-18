@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.evg.resource.R
+import com.evg.tests_list.presentation.mvi.TestListAction
 import com.evg.tests_list.presentation.mvi.TestsListState
 import com.evg.ui.custom.RoundedButton
 import com.evg.ui.theme.AppTheme
@@ -33,11 +34,11 @@ import com.evg.ui.theme.lightAddButtonColor
 @Composable
 fun SharedTransitionScope.TestsListScreen(
     state: TestsListState,
+    dispatch: (action: TestListAction) -> Unit,
     modifier: Modifier = Modifier,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onTestSelectScreen: () -> Unit,
     onTestEssayScreen: (id: Int, score: Int) -> Unit,
-    getAllTests: () -> Unit,
 ) {
     val tests = state.tests.collectAsLazyPagingItems()
 
@@ -51,7 +52,7 @@ fun SharedTransitionScope.TestsListScreen(
         TestsLazyColumn(
             onTestEssayScreen = onTestEssayScreen,
             tests = tests,
-            getAllTests = getAllTests,
+            getAllTests = { dispatch(TestListAction.GetAllTests) },
             isTestsLoading = state.isTestsLoading,
         )
     }
@@ -93,10 +94,10 @@ fun TestsListScreenPreview(darkTheme: Boolean = true) {
                         state = TestsListState(
                             isTestsLoading = false,
                         ),
+                        dispatch = {},
                         animatedVisibilityScope = this,
                         onTestSelectScreen = {},
                         onTestEssayScreen = { _,_, -> },
-                        getAllTests = {},
                     )
                 }
             }

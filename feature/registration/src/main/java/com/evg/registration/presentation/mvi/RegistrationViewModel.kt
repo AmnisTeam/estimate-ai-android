@@ -12,7 +12,13 @@ class RegistrationViewModel(
 ): ContainerHost<RegistrationState, RegistrationSideEffect>, ViewModel() {
     override val container = container<RegistrationState, RegistrationSideEffect>(RegistrationState())
 
-    fun registrationUser(user: User) = intent {
+    fun dispatch(action: RegistrationAction) {
+        when (action) {
+            is RegistrationAction.RegistrationUser -> registrationUser(user = action.user)
+        }
+    }
+
+    private fun registrationUser(user: User) = intent {
         reduce { state.copy(isRegistrationLoading = true) }
         when (val response = registrationUseCases.registrationUseCase.invoke(user = user)) {
             is ServerResult.Success -> {

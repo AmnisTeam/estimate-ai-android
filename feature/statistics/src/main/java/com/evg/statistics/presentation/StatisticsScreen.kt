@@ -35,6 +35,7 @@ import com.evg.statistics.presentation.model.DateTile
 import com.evg.statistics.presentation.model.StatisticsUI
 import com.evg.statistics.presentation.model.TestStatisticsUI
 import com.evg.statistics.presentation.model.dateRangeSaver
+import com.evg.statistics.presentation.mvi.StatisticsAction
 import com.evg.statistics.presentation.mvi.StatisticsState
 import com.evg.statistics.presentation.mvi.StatisticsViewModel
 import com.evg.ui.theme.AppTheme
@@ -52,9 +53,8 @@ import java.time.DayOfWeek
 @Composable
 fun StatisticsScreen(
     state: StatisticsState,
+    dispatch: (action: StatisticsAction) -> Unit,
     modifier: Modifier = Modifier,
-    getAllStatistics: (DateRange) -> Unit,
-    getStatisticsInRange: (DateRange) -> Unit,
 ) {
     val context = LocalContext.current
     val refreshingState = rememberSwipeRefreshState(isRefreshing = false)
@@ -92,7 +92,11 @@ fun StatisticsScreen(
             selected = currentTimeRange,
             onDateRangeSelected = { newDateRange ->
                 currentTimeRange = newDateRange
-                getStatisticsInRange(newDateRange)
+                dispatch(
+                    StatisticsAction.GetStatisticsInRange(
+                        dateRange = newDateRange
+                    )
+                )
             }
         )
 
@@ -102,7 +106,13 @@ fun StatisticsScreen(
             modifier = Modifier
                 .fillMaxSize(),
             state = refreshingState,
-            onRefresh = { getAllStatistics(currentTimeRange) },
+            onRefresh = {
+                dispatch(
+                    StatisticsAction.GetAllStatistics(
+                        dateRange = currentTimeRange
+                    )
+                )
+            },
             indicator = { indicatorState, indicatorTrigger ->
                 SwipeRefreshIndicator(
                     state = indicatorState,
@@ -172,8 +182,7 @@ fun StatisticsScreenPreview(darkTheme: Boolean = true) {
                         )
                     ),
                 ),
-                getAllStatistics = { _ -> },
-                getStatisticsInRange = { _ -> },
+                dispatch = {},
             )
         }
     }

@@ -18,7 +18,13 @@ class TestEssayViewModel(
         testId?.let { getEssayTestData(it) }
     }
 
-    fun sendTest(data: EssayTestData) = intent {
+    fun dispatch(action: TestEssayAction) {
+        when (action) {
+            is TestEssayAction.SendTest -> sendTest(data = action.data)
+        }
+    }
+
+    private fun sendTest(data: EssayTestData) = intent {
         reduce { state.copy(isTestSending = true) }
         when (val response = testEssayUseCases.sendTestToServerUseCase.invoke(data = data)) {
             is ServerResult.Success -> {

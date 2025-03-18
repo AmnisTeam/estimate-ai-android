@@ -50,8 +50,8 @@ fun PasswordResetRoot(
 
     PasswordResetScreen(
         state = viewModel.collectAsState().value,
+        dispatch = viewModel::dispatch,
         modifier = modifier,
         onLoginScreen = onLoginScreen,
-        passwordReset = viewModel::passwordReset,
     )
 }

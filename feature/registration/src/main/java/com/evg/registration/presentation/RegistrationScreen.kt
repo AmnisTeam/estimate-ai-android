@@ -35,6 +35,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.evg.registration.domain.model.User
+import com.evg.registration.presentation.mvi.RegistrationAction
 import com.evg.registration.presentation.mvi.RegistrationState
 import com.evg.resource.R
 import com.evg.ui.custom.AuthorizationButton
@@ -55,9 +56,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun RegistrationScreen(
     state: RegistrationState,
+    dispatch: (action: RegistrationAction) -> Unit,
     modifier: Modifier = Modifier,
     onLoginScreen: () -> Unit,
-    registrationUser: (User) -> Unit,
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -176,7 +177,11 @@ fun RegistrationScreen(
                     } else if (passwordText.text.length >= 24) {
                         SnackBarController.sendEvent(event = SnackBarEvent(message = errorPasswordMaxLength))
                     } else {
-                        registrationUser(User(email = emailText.text, password = passwordText.text))
+                        dispatch(
+                            RegistrationAction.RegistrationUser(
+                                user = User(email = emailText.text, password = passwordText.text)
+                            )
+                        )
                     }
                 }
             },
@@ -220,8 +225,8 @@ fun RegistrationScreenPreview(darkTheme: Boolean = true) {
                 state = RegistrationState(
                     isRegistrationLoading = false,
                 ),
+                dispatch = {},
                 onLoginScreen = {},
-                registrationUser = {}
             )
         }
     }

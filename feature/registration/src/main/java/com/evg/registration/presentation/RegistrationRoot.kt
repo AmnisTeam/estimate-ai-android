@@ -50,8 +50,8 @@ fun RegistrationRoot(
 
     RegistrationScreen(
         state = viewModel.collectAsState().value,
+        dispatch = viewModel::dispatch,
         modifier = modifier,
         onLoginScreen = onLoginScreen,
-        registrationUser = viewModel::registrationUser,
     )
 }

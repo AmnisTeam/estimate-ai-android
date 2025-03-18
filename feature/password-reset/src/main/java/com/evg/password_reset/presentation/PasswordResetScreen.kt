@@ -33,6 +33,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.evg.password_reset.domain.model.PasswordReset
+import com.evg.password_reset.presentation.mvi.PasswordResetAction
 import com.evg.password_reset.presentation.mvi.PasswordResetState
 import com.evg.resource.R
 import com.evg.ui.custom.AuthorizationButton
@@ -50,9 +51,9 @@ import com.evg.ui.theme.VerticalPadding
 @Composable
 fun PasswordResetScreen(
     state: PasswordResetState,
+    dispatch: (action: PasswordResetAction) -> Unit,
     modifier: Modifier = Modifier,
     onLoginScreen: () -> Unit,
-    passwordReset: (PasswordReset) -> Unit,
 ) {
     val isEmailResetLoading = state.isEmailResetLoading
 
@@ -119,7 +120,11 @@ fun PasswordResetScreen(
         AuthorizationButton(
             isLoading = isEmailResetLoading,
             onClick = {
-                passwordReset(PasswordReset(email = emailText.text))
+                dispatch(
+                   PasswordResetAction.PassReset(
+                       passwordReset = PasswordReset(email = emailText.text)
+                   )
+                )
             },
             buttonText = resetText,
         )
@@ -161,8 +166,8 @@ fun PasswordResetScreenPreview(darkTheme: Boolean = true) {
                 state = PasswordResetState(
                     isEmailResetLoading = false,
                 ),
+                dispatch = {},
                 onLoginScreen = {},
-                passwordReset = {}
             )
         }
     }

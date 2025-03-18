@@ -12,7 +12,13 @@ class LoginViewModel(
 ): ContainerHost<LoginState, LoginSideEffect>, ViewModel() {
     override val container = container<LoginState, LoginSideEffect>(LoginState())
 
-    fun loginUser(user: User) = intent {
+    fun dispatch(action: LoginAction) {
+        when (action) {
+            is LoginAction.LoginUser -> loginUser(user = action.user)
+        }
+    }
+
+    private fun loginUser(user: User) = intent {
         reduce { state.copy(isLoginLoading = true) }
         when (val response = loginUseCases.loginUseCase.invoke(user = user)) {
             is ServerResult.Success -> {

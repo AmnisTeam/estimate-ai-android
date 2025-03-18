@@ -38,6 +38,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.evg.login.domain.model.User
+import com.evg.login.presentation.mvi.LoginAction
 import com.evg.login.presentation.mvi.LoginState
 import com.evg.resource.R
 import com.evg.ui.custom.AuthorizationButton
@@ -56,11 +57,11 @@ import com.evg.ui.theme.AuthorizationWelcomeTextSpaceBy
 @Composable
 fun LoginScreen(
     state: LoginState,
+    dispatch: (action: LoginAction) -> Unit,
     modifier: Modifier = Modifier,
     onTestsListScreen: () -> Unit,
     onPasswordResetScreen: () -> Unit,
     onRegistrationScreen: () -> Unit,
-    loginUser: (User) -> Unit,
 ) {
     val isLoginLoading = state.isLoginLoading
 
@@ -169,7 +170,11 @@ fun LoginScreen(
         AuthorizationButton(
             isLoading = isLoginLoading,
             onClick = {
-                loginUser(User(email = emailText.text, password = passwordText.text))
+                dispatch(
+                    LoginAction.LoginUser(
+                        user = User(email = emailText.text, password = passwordText.text)
+                    )
+                )
             },
             buttonText = logInText,
         )
@@ -263,10 +268,10 @@ fun LoginScreenPreview(darkTheme: Boolean = true) {
                 state = LoginState(
                     isLoginLoading = false,
                 ),
+                dispatch = {},
                 onTestsListScreen = {},
                 onPasswordResetScreen = {},
                 onRegistrationScreen = {},
-                loginUser = {},
             )
         }
     }

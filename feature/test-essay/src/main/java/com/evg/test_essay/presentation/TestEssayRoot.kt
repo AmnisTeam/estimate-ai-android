@@ -41,9 +41,9 @@ fun TestEssayRoot(
 
     TestEssayScreen(
         state = viewModel.collectAsState().value,
+        dispatch = viewModel::dispatch,
         modifier = modifier,
         score = score,
-        sendTest = viewModel::sendTest,
         isEditable = viewModel.isEditable,
     )
 }

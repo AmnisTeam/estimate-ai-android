@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.evg.resource.R
 import com.evg.test_essay.domain.model.EssayTestData
 import com.evg.test_essay.presentation.model.CharactersNumberState
+import com.evg.test_essay.presentation.mvi.TestEssayAction
 import com.evg.test_essay.presentation.mvi.TestEssayState
 import com.evg.ui.custom.RoundedButton
 import com.evg.ui.snackbar.SnackBarController
@@ -47,9 +48,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun TestEssayScreen(
     state: TestEssayState,
+    dispatch: (action: TestEssayAction) -> Unit,
     modifier: Modifier = Modifier,
     score: Int?,
-    sendTest: (EssayTestData) -> Unit,
     isEditable: Boolean,
 ) {
     val scope = rememberCoroutineScope()
@@ -153,9 +154,9 @@ fun TestEssayScreen(
                                 SnackBarController.sendEvent(event = SnackBarEvent(message = maximumCharactersExceeded))
                             }
                         } else {
-                            sendTest(
-                                EssayTestData(
-                                    essay = essayText.text,
+                            dispatch(
+                                TestEssayAction.SendTest(
+                                    data = EssayTestData(essay = essayText.text)
                                 )
                             )
                         }
@@ -186,8 +187,8 @@ fun TestsListScreenPreview(darkTheme: Boolean = true) {
                 state = TestEssayState(
                     isTestSending = false,
                 ),
+                dispatch = {},
                 score = 0,
-                sendTest = {},
                 isEditable = false,
             )
         }

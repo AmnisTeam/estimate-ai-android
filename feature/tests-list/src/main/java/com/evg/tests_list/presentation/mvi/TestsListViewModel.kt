@@ -28,7 +28,13 @@ class TestsListViewModel(
         getAllTests()
     }
 
-    fun getAllTests() = intent {
+    fun dispatch(action: TestListAction) {
+        when (action) {
+            TestListAction.GetAllTests -> getAllTests()
+        }
+    }
+
+    private fun getAllTests() = intent {
         reduce { state.copy(isTestsLoading = true) }
         viewModelScope.launch {
             when (val testSource = testsListUseCases.getAllTestsUseCaseUseCase.invoke()) {
@@ -69,7 +75,7 @@ class TestsListViewModel(
     }
 
 
-    var test = 0
+    var test = 0 //TODO delete
     private fun connectTestProgress() = intent {
         connectTestProgressJobFlow.value?.cancel()
 

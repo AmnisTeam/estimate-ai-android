@@ -27,8 +27,15 @@ class StatisticsViewModel(
         getAllStatistics(dateRange = defaultSelect)
     }
 
-    fun getAllStatistics(
-        dateRange: (DateRange),
+    fun dispatch(action: StatisticsAction) {
+        when (action) {
+            is StatisticsAction.GetAllStatistics -> getAllStatistics(dateRange = action.dateRange)
+            is StatisticsAction.GetStatisticsInRange -> getStatisticsInRange(dateRange = action.dateRange)
+        }
+    }
+
+    private fun getAllStatistics(
+        dateRange: DateRange,
     ) = intent {
         reduce { state.copy(isStatisticsLoading = true) }
         viewModelScope.launch {
@@ -46,7 +53,7 @@ class StatisticsViewModel(
         }
     }
 
-    fun getStatisticsInRange(dateRange: DateRange) = intent {
+    private fun getStatisticsInRange(dateRange: DateRange) = intent {
         val timeRange = dateRange.toTimeRange()
         val filteredStatistics = statisticsFull.value
             .filter { it.createdAt in timeRange.first..timeRange.second }

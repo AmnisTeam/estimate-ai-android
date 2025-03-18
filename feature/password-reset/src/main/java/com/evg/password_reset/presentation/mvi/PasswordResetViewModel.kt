@@ -12,7 +12,13 @@ class PasswordResetViewModel(
 ): ContainerHost<PasswordResetState, PasswordResetSideEffect>, ViewModel() {
     override val container = container<PasswordResetState, PasswordResetSideEffect>(PasswordResetState())
 
-    fun passwordReset(passwordReset: PasswordReset) = intent {
+    fun dispatch(action: PasswordResetAction) {
+        when (action) {
+            is PasswordResetAction.PassReset -> passwordReset(passwordReset = action.passwordReset)
+        }
+    }
+
+    private fun passwordReset(passwordReset: PasswordReset) = intent {
         reduce { state.copy(isEmailResetLoading = true) }
         when (val response = passwordResetUseCases.passwordResetUseCase.invoke(passwordReset = passwordReset)) {
             is ServerResult.Success -> {

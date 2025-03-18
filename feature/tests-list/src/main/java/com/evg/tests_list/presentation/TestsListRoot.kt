@@ -44,10 +44,10 @@ fun SharedTransitionScope.TestsListRoot(
 
     TestsListScreen(
         state = viewModel.collectAsState().value,
+        dispatch = viewModel::dispatch,
         modifier = modifier,
         animatedVisibilityScope = animatedVisibilityScope,
         onTestSelectScreen = onTestSelectScreen,
         onTestEssayScreen = onTestEssayScreen,
-        getAllTests = viewModel::getAllTests,
     )
 }

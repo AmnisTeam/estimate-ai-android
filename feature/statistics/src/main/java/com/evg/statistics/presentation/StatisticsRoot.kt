@@ -29,8 +29,7 @@ fun StatisticsRoot(
 
     StatisticsScreen(
         state = viewModel.collectAsState().value,
+        dispatch = viewModel::dispatch,
         modifier = modifier,
-        getAllStatistics = viewModel::getAllStatistics,
-        getStatisticsInRange = viewModel::getStatisticsInRange,
     )
 }
