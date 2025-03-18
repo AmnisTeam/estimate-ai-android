@@ -1,12 +1,15 @@
 package com.evg.account.data.repository
 
 import com.evg.account.domain.mapper.toAccountAppLanguage
+import com.evg.account.domain.mapper.toAppStyle
 import com.evg.account.domain.mapper.toAppTheme
 import com.evg.account.domain.mapper.toSharedPrefsAppLanguage
+import com.evg.account.domain.mapper.toSharedPrefsAppStyle
 import com.evg.account.domain.mapper.toSharedPrefsAppTheme
 import com.evg.account.domain.mapper.toSharedPrefsTestingLanguage
 import com.evg.account.domain.mapper.toTestingLanguage
 import com.evg.account.domain.model.AppLanguage
+import com.evg.account.domain.model.AppStyle
 import com.evg.account.domain.model.AppTheme
 import com.evg.account.domain.model.TestingLanguage
 import com.evg.account.domain.repository.AccountRepository
@@ -38,5 +41,12 @@ class AccountRepositoryImpl(
     }
     override fun getTestingLanguage(): TestingLanguage {
         return sharedPrefsRepository.getTestingLanguage().toTestingLanguage()
+    }
+
+    override fun saveAppStyle(style: AppStyle) {
+        sharedPrefsRepository.saveAppStyle(style = style.toSharedPrefsAppStyle())
+    }
+    override fun getAppStyle(): AppStyle {
+        return sharedPrefsRepository.getAppStyle().toAppStyle()
     }
 }

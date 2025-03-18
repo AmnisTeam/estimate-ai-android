@@ -3,6 +3,12 @@ package com.evg.ui.theme
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import com.evg.ui.theme.palettes.blueDarkPalette
+import com.evg.ui.theme.palettes.blueLightPalette
+import com.evg.ui.theme.palettes.greenDarkPalette
+import com.evg.ui.theme.palettes.greenLightPalette
+import com.evg.ui.theme.palettes.purpleDarkPalette
+import com.evg.ui.theme.palettes.purpleLightPalette
 
 @Composable
 fun EstimateAITheme(
@@ -14,12 +20,16 @@ fun EstimateAITheme(
     val colors = when (darkTheme) {
         true -> {
             when (style) {
-                AppStyle.Purple -> baseDarkPalette
+                AppStyle.Purple -> purpleDarkPalette
+                AppStyle.Green -> greenDarkPalette
+                AppStyle.Blue -> blueDarkPalette
             }
         }
         false -> {
             when (style) {
-                AppStyle.Purple -> baseLightPalette
+                AppStyle.Purple -> purpleLightPalette
+                AppStyle.Green -> greenLightPalette
+                AppStyle.Blue -> blueLightPalette
             }
         }
     }

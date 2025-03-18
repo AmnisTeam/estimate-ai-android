@@ -1,9 +1,11 @@
 package com.evg.account.domain.mapper
 
 import com.evg.account.domain.model.AppLanguage
+import com.evg.account.domain.model.AppStyle
 import com.evg.account.domain.model.AppTheme
 import com.evg.account.domain.model.TestingLanguage
 import com.evg.shared_prefs.domain.model.SharedPrefsAppLanguage
+import com.evg.shared_prefs.domain.model.SharedPrefsAppStyle
 import com.evg.shared_prefs.domain.model.SharedPrefsAppTheme
 import com.evg.shared_prefs.domain.model.SharedPrefsTestingLanguage
 
@@ -45,5 +47,20 @@ fun TestingLanguage.toSharedPrefsTestingLanguage(): SharedPrefsTestingLanguage {
 fun SharedPrefsTestingLanguage.toTestingLanguage(): TestingLanguage {
     return when (this) {
         SharedPrefsTestingLanguage.ENGLISH -> TestingLanguage.ENGLISH
+    }
+}
+
+fun AppStyle.toSharedPrefsAppStyle(): SharedPrefsAppStyle {
+    return when (this) {
+        AppStyle.PURPLE -> SharedPrefsAppStyle.PURPLE
+        AppStyle.GREEN -> SharedPrefsAppStyle.GREEN
+        AppStyle.BLUE -> SharedPrefsAppStyle.BLUE
+    }
+}
+fun SharedPrefsAppStyle.toAppStyle(): AppStyle {
+    return when (this) {
+        SharedPrefsAppStyle.PURPLE -> AppStyle.PURPLE
+        SharedPrefsAppStyle.GREEN -> AppStyle.GREEN
+        SharedPrefsAppStyle.BLUE -> AppStyle.BLUE
     }
 }

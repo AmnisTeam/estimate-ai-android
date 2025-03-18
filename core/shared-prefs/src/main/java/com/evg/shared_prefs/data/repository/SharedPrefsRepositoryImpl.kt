@@ -2,6 +2,7 @@ package com.evg.shared_prefs.data.repository
 
 import android.content.Context
 import com.evg.shared_prefs.domain.model.SharedPrefsAppLanguage
+import com.evg.shared_prefs.domain.model.SharedPrefsAppStyle
 import com.evg.shared_prefs.domain.model.SharedPrefsAppTheme
 import com.evg.shared_prefs.domain.model.SharedPrefsTestingLanguage
 import com.evg.shared_prefs.domain.repository.SharedPrefsRepository
@@ -87,5 +88,21 @@ class SharedPrefsRepositoryImpl(
      */
     override fun getTestingLanguage(): SharedPrefsTestingLanguage {
         return prefs.getEnum("testing_language", SharedPrefsTestingLanguage.ENGLISH)
+    }
+
+
+    /**
+     * Сохраняет текущий стиль приложения [style] в SharedPreferences.
+     */
+    override fun saveAppStyle(style: SharedPrefsAppStyle) {
+        prefs.putEnum("app_style", style)
+    }
+
+    /**
+     * Возвращает сохранённый стиль приложения из SharedPreferences.
+     * Если стиль не найден, возвращает значение по умолчанию [SharedPrefsAppStyle.PURPLE].
+     */
+    override fun getAppStyle(): SharedPrefsAppStyle {
+        return prefs.getEnum("app_style", SharedPrefsAppStyle.PURPLE)
     }
 }

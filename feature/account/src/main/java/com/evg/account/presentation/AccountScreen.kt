@@ -12,6 +12,7 @@ import com.evg.account.domain.model.AppLanguage
 import com.evg.account.domain.model.TestingLanguage
 import com.evg.account.presentation.mvi.AccountAction
 import com.evg.account.presentation.mvi.AccountState
+import com.evg.account.presentation.settingstile.StyleTile
 import com.evg.account.presentation.settingstile.TileBlock
 import com.evg.account.presentation.settingstile.Tile
 import com.evg.ui.theme.AppTheme
@@ -26,7 +27,11 @@ fun AccountScreen(
     modifier: Modifier = Modifier,
     onLoginScreen: () -> Unit,
 ) {
-
+    /*
+    val currentAppLanguage by remember { mutableStateOf(state.appLanguage) }
+    val currentAppTheme by remember { mutableStateOf(state.appTheme) }
+    val currentTestingLanguage by remember { mutableStateOf(state.testingLanguage) }
+     */
 
     Column(
         modifier = modifier
@@ -41,34 +46,41 @@ fun AccountScreen(
                 {
                     Tile(
                         title = "App language",
-                        initialValue = AppLanguage.ENGLISH,
+                        initialValue = state.appLanguage,
                         options = AppLanguage.entries,
                         optionStringRes = { it.labelRes },
                         onOptionSelected = {
-
+                            dispatch(AccountAction.SaveAppLanguage(language = it))
                         },
                     )
                 },
                 {
                     Tile(
                         title = "App theme",
-                        initialValue = com.evg.account.domain.model.AppTheme.USER,
+                        initialValue = state.appTheme,
                         options = com.evg.account.domain.model.AppTheme.entries,
                         optionStringRes = { it.labelRes },
                         onOptionSelected = {
-
+                            dispatch(AccountAction.SaveAppTheme(theme = it))
                         },
                     )
                 },
                 {
                     Tile(
                         title = "Testing language",
-                        initialValue = TestingLanguage.ENGLISH,
+                        initialValue = state.testingLanguage,
                         options = TestingLanguage.entries,
                         optionStringRes = { it.labelRes },
                         onOptionSelected = {
-
+                            dispatch(AccountAction.SaveTestingLanguage(language = it))
                         },
+                    )
+                },
+                {
+                    StyleTile(
+                        onStyleSelected = {
+                            dispatch(AccountAction.SaveAppStyle(style = it))
+                        }
                     )
                 }
             )
@@ -83,7 +95,9 @@ fun AccountScreenPreview(darkTheme: Boolean = true) {
         Surface(color = AppTheme.colors.background) {
             AccountScreen(
                 state = AccountState(
-                    temp = false,
+                    appTheme = com.evg.account.domain.model.AppTheme.USER,
+                    appLanguage = AppLanguage.RUSSIAN,
+                    testingLanguage = TestingLanguage.ENGLISH,
                 ),
                 dispatch = {},
                 onLoginScreen = {},

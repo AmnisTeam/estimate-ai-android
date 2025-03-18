@@ -1,6 +1,14 @@
 package com.evg.ui.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import com.evg.ui.theme.palettes.blueDarkPalette
+import com.evg.ui.theme.palettes.blueLightPalette
+import com.evg.ui.theme.palettes.greenDarkPalette
+import com.evg.ui.theme.palettes.greenLightPalette
+import com.evg.ui.theme.palettes.purpleDarkPalette
+import com.evg.ui.theme.palettes.purpleLightPalette
 
 data class AppPalette(
     val primary: Color,
@@ -20,41 +28,23 @@ data class AppPalette(
 )
 
 enum class AppStyle {
-    Purple,
+    Purple, Green, Blue,
 }
 
-
-val baseDarkPalette = AppPalette(
-    primary = Color(0xFFC6B8FF),
-    secondary = Color(0xFF4F378B),
-    background = Color(0xFF161622),
-    shimmer = Color.LightGray,
-
-    text = Color(0xFFFFFFFF),
-
-    // TextField
-    textField = Color(0xFF6C6D8D),
-    textFieldName = Color(0xFFAAAAAA),
-    textFieldBackground = Color(0xFF1C1C2D),
-
-    // BottomBar
-    bottomBarSelected = Color(0xFF342F52),
-)
-
-val baseLightPalette = AppPalette(
-    primary = Color(0xFFC6B8FF),
-    secondary = Color(0xFFC6B8FF),
-    background = Color(0xFFFFFFFF),
-    shimmer = Color.Gray,
-
-    text = Color(0xFF000000),
-
-    // TextField
-    textField = Color(0xFF6C6D8D),
-    textFieldName = Color(0xFFAAAAAA),
-    textFieldBackground = Color(0xFFF1F1F1),
-
-    // BottomBar
-    bottomBarSelected = Color(0xFF342F52),
-)
-
+@Composable
+fun getStyleColors(): List<Color> {
+    val darkTheme = isSystemInDarkTheme()
+    return if (darkTheme) {
+        listOf(
+            purpleDarkPalette.primary,
+            greenDarkPalette.primary,
+            blueDarkPalette.primary,
+        )
+    } else {
+        listOf(
+            purpleLightPalette.primary,
+            greenLightPalette.primary,
+            blueLightPalette.primary,
+        )
+    }
+}
