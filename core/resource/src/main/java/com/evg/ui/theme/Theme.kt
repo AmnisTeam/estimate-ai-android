@@ -12,29 +12,29 @@ import com.evg.ui.theme.palettes.purpleLightPalette
 
 @Composable
 fun EstimateAITheme(
-    style: AppStyle = AppStyle.Purple,
+    style: AppStyle = AppStyle.PURPLE,
     textSize: AppSize = AppSize.Medium,
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = when (darkTheme) {
+    val colors = when (AppTheme.themeIsDark) {
         true -> {
-            when (style) {
-                AppStyle.Purple -> purpleDarkPalette
-                AppStyle.Green -> greenDarkPalette
-                AppStyle.Blue -> blueDarkPalette
+            when (AppTheme.style) {
+                AppStyle.PURPLE -> purpleDarkPalette
+                AppStyle.GREEN -> greenDarkPalette
+                AppStyle.BLUE -> blueDarkPalette
             }
         }
         false -> {
-            when (style) {
-                AppStyle.Purple -> purpleLightPalette
-                AppStyle.Green -> greenLightPalette
-                AppStyle.Blue -> blueLightPalette
+            when (AppTheme.style) {
+                AppStyle.PURPLE -> purpleLightPalette
+                AppStyle.GREEN -> greenLightPalette
+                AppStyle.BLUE -> blueLightPalette
             }
         }
     }
 
-    val typography = when(textSize) {
+    val typography = when(AppTheme.textSize) {
         AppSize.Medium -> mediumTextSize
     }
 

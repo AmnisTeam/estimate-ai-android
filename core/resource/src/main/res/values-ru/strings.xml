@@ -1,0 +1,106 @@
+<resources>
+    <!--Registration screen-->
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="create_account_progress">Создайте аккаунт, чтобы не потерять ваши настройки и прогресс</string>
+    <string name="email">Электронная почта</string>
+    <string name="enter_email">Введите ваш электронный адрес</string>
+    <string name="password">Пароль</string>
+    <string name="enter_password">Введите ваш пароль</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="enter_password_again">Введите ваш пароль ещё раз</string>
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="i_already_have_account">У меня уже есть аккаунт</string>
+
+    <string name="error_invalid_email">Неверный адрес электронной почты</string>
+    <string name="error_password_mismatch">Пароли не совпадают</string>
+    <string name="error_empty_password">Пароль не может быть пустым</string>
+    <string name="error_password_min_length">Минимальная длина пароля — 8 символов</string>
+    <string name="error_password_max_length">Максимальная длина пароля — 24 символа</string>
+
+    <string name="registration_success">Регистрация успешна. Проверьте вашу электронную почту</string>
+    <string name="request_timeout">Превышено время ожидания запроса</string>
+    <string name="too_many_requests">Слишком много запросов</string>
+    <string name="not_found">Ошибка: не найдено</string>
+    <string name="server_error">Ошибка сервера</string>
+    <string name="protocol_error">Ошибка протокола</string>
+    <string name="connect_error">Ошибка соединения</string>
+    <string name="unknown_error">Неизвестная ошибка</string>
+    <string name="email_exists">Электронная почта уже существует</string>
+    <string name="test_not_found">Тест не найден</string>
+    <string name="tests_loading_error">Тест не найден</string>
+
+    <!--Login screen-->
+    <string name="log_in">Войти</string>
+    <string name="wrong_email_or_password">Неверный адрес электронной почты или пароль</string>
+    <string name="login_success">Вход выполнен успешно!</string>
+    <string name="login_account_progress">Войдите в свой аккаунт, чтобы не потерять настройки и прогресс</string>
+    <string name="i_dont_have_account">У меня нет аккаунта</string>
+    <string name="forgot_password">Забыли пароль?</string>
+
+    <!--Registration screen-->
+    <string name="password_reset">Сброс пароля</string>
+    <string name="reset">Сбросить</string>
+
+    <!--Password reset screen-->
+    <string name="letter_with_instructions_send_to_email">Письмо с инструкциями отправлено на ваш электронный адрес</string>
+    <string name="email_does_not_exist">Электронная почта не существует</string>
+
+    <!--Tests list screen-->
+    <string name="list_tests_is_empty">Список тестов пуст</string>
+    <string name="swipe_to_update">Проведите, чтобы обновить</string>
+    <string name="reply_sent">Ваш ответ отправлен</string>
+    <string name="estimated_level">Оценочный уровень</string>
+    <string name="tests_left">Оставшиеся тесты</string>
+    <string name="queue">Очередь</string>
+    <string name="loading_tests">Загрузка тестов</string>
+    <string name="loading_test">Загрузка теста</string>
+    <string name="test_id_ready">Тест №%1$d готов</string>
+    <string name="test_id_failed">Тест №%1$d завершился ошибкой</string>
+    <string name="tests">Тесты</string>
+    <string name="statistics">Статистика</string>
+    <string name="account">Аккаунт</string>
+
+    <!--Test select screen-->
+    <string name="select_test_type">Выберите тип теста</string>
+    <string name="essay_test_description">Напишите эссе на любую тему. Ваш уровень английского будет оцениваться на его основе.</string>
+
+    <!--Test essay screen-->
+    <string name="essay_test">Тест на эссе</string>
+    <string name="characters">Символы</string>
+    <string name="number_characters">Количество символов</string>
+    <string name="not_enough">Недостаточно</string>
+    <string name="normal">Нормально</string>
+    <string name="enough">Достаточно</string>
+    <string name="maximum">Максимум</string>
+    <string name="maximum_characters_exceeded">Превышено максимальное количество символов</string>
+
+    <!--Statistics screen-->
+    <string name="week">Неделя</string>
+    <string name="month">Месяц</string>
+    <string name="year">Год</string>
+    <string name="calendar">Календарь</string>
+    <string name="apply">Применить</string>
+    <string name="cancel">Отмена</string>
+    <string name="select_date_range">Выберите диапазон дат</string>
+    <string name="not_enough_data">Недостаточно данных</string>
+    <string name="no_data">Нет данных</string>
+    <string name="monday">Понедельник</string>
+    <string name="tuesday">Вторник</string>
+    <string name="wednesday">Среда</string>
+    <string name="thursday">Четверг</string>
+    <string name="friday">Пятница</string>
+    <string name="saturday">Суббота</string>
+    <string name="sunday">Воскресенье</string>
+    <string name="frequent_level">Наиболее частый уровень</string>
+    <string name="frequent_day">Наиболее частый день</string>
+
+    <!--Account screen-->
+    <string name="app_language">Язык приложения</string>
+    <string name="app_theme">Тема приложения</string>
+    <string name="testing_language">Язык тесторивания</string>
+    <string name="system">Система</string>
+    <string name="english">Английский</string>
+    <string name="russian">Русский</string>
+    <string name="dark">Темная</string>
+    <string name="light">Светлая</string>
+</resources>

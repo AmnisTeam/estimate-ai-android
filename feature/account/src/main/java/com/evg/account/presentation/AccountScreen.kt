@@ -1,5 +1,12 @@
 package com.evg.account.presentation
 
+import android.app.Activity
+import android.app.LocaleManager
+import android.content.Context
+import android.os.Build
+import android.os.LocaleList
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -7,7 +14,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.os.LocaleListCompat
+import com.evg.resource.R
+import com.evg.account.domain.mapper.toIsDarkTheme
+import com.evg.account.domain.mapper.toResourceAppStyle
 import com.evg.account.domain.model.AppLanguage
 import com.evg.account.domain.model.TestingLanguage
 import com.evg.account.presentation.mvi.AccountAction
@@ -27,12 +40,9 @@ fun AccountScreen(
     modifier: Modifier = Modifier,
     onLoginScreen: () -> Unit,
 ) {
-    /*
-    val currentAppLanguage by remember { mutableStateOf(state.appLanguage) }
-    val currentAppTheme by remember { mutableStateOf(state.appTheme) }
-    val currentTestingLanguage by remember { mutableStateOf(state.testingLanguage) }
-     */
-
+    val isDarkTheme = isSystemInDarkTheme()
+    val context = LocalContext.current
+    
     Column(
         modifier = modifier
             .padding(
@@ -45,29 +55,31 @@ fun AccountScreen(
             tileContents = listOf(
                 {
                     Tile(
-                        title = "App language",
+                        title = stringResource(R.string.app_language),
                         initialValue = state.appLanguage,
                         options = AppLanguage.entries,
                         optionStringRes = { it.labelRes },
                         onOptionSelected = {
                             dispatch(AccountAction.SaveAppLanguage(language = it))
+                            setLanguage(context = context, code = it.code)
                         },
                     )
                 },
                 {
                     Tile(
-                        title = "App theme",
+                        title = stringResource(R.string.app_theme),
                         initialValue = state.appTheme,
                         options = com.evg.account.domain.model.AppTheme.entries,
                         optionStringRes = { it.labelRes },
                         onOptionSelected = {
                             dispatch(AccountAction.SaveAppTheme(theme = it))
+                            AppTheme.themeIsDark = it.toIsDarkTheme(isDarkTheme = isDarkTheme)
                         },
                     )
                 },
                 {
                     Tile(
-                        title = "Testing language",
+                        title = stringResource(R.string.testing_language),
                         initialValue = state.testingLanguage,
                         options = TestingLanguage.entries,
                         optionStringRes = { it.labelRes },
@@ -80,11 +92,20 @@ fun AccountScreen(
                     StyleTile(
                         onStyleSelected = {
                             dispatch(AccountAction.SaveAppStyle(style = it))
+                            AppTheme.style = it.toResourceAppStyle()
                         }
                     )
                 }
             )
         )
+    }
+}
+
+fun setLanguage(context: Context, code: String) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        context.getSystemService(LocaleManager::class.java).applicationLocales = LocaleList.forLanguageTags(code)
+    } else {
+        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(code))
     }
 }
 

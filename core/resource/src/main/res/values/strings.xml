@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EstimateAI</string>
+    <string name="app_name" translatable="false">EstimateAI</string>
 
     <!--Registration screen-->
     <string name="welcome">Welcome!</string>
@@ -97,6 +97,9 @@
     <string name="frequent_day">Frequent day</string>
 
     <!--Account screen-->
+    <string name="app_language">App language</string>
+    <string name="app_theme">App theme</string>
+    <string name="testing_language">Testing language</string>
     <string name="system">System</string>
     <string name="english">English</string>
     <string name="russian">Russian</string>
