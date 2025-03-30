@@ -104,6 +104,7 @@
     <string name="system">System</string>
     <string name="english">English</string>
     <string name="russian">Russian</string>
+    <string name="spanish">Spanish</string>
     <string name="dark">Dark</string>
     <string name="light">Light</string>
     <string name="logout">Logout</string>

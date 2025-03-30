@@ -42,11 +42,13 @@ fun SharedPrefsAppTheme.toAppTheme(): AppTheme {
 fun TestingLanguage.toSharedPrefsTestingLanguage(): SharedPrefsTestingLanguage {
     return when (this) {
         TestingLanguage.ENGLISH -> SharedPrefsTestingLanguage.ENGLISH
+        TestingLanguage.SPANISH -> SharedPrefsTestingLanguage.SPANISH
     }
 }
 fun SharedPrefsTestingLanguage.toTestingLanguage(): TestingLanguage {
     return when (this) {
         SharedPrefsTestingLanguage.ENGLISH -> TestingLanguage.ENGLISH
+        SharedPrefsTestingLanguage.SPANISH -> TestingLanguage.SPANISH
     }
 }
 

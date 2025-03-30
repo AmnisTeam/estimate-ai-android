@@ -21,9 +21,12 @@ val apiModule = module {
             .readTimeout(timeout, TimeUnit.MILLISECONDS)
             .writeTimeout(timeout, TimeUnit.MILLISECONDS)
             .addInterceptor { chain ->
-                val token = get<SharedPrefsRepository>().getUserToken()
+                val repo = get<SharedPrefsRepository>()
+                val token = repo.getUserToken()
+                val lang = repo.getTestingLanguage().isoCode
                 val newRequest = chain.request().newBuilder()
                     .addHeader("Authorization", "Bearer $token")
+                    .addHeader("Lang", lang)
                     .build()
 
                 chain.proceed(newRequest)
