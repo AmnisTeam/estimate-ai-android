@@ -1,12 +1,10 @@
 package com.evg.account.presentation
 
-import android.app.Activity
 import android.app.LocaleManager
 import android.content.Context
 import android.os.Build
 import android.os.LocaleList
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -18,16 +16,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.LocaleListCompat
-import com.evg.resource.R
-import com.evg.account.domain.mapper.toIsDarkTheme
+import com.evg.account.domain.mapper.toAppCompatDelegateTheme
 import com.evg.account.domain.mapper.toResourceAppStyle
 import com.evg.account.domain.model.AppLanguage
 import com.evg.account.domain.model.TestingLanguage
 import com.evg.account.presentation.mvi.AccountAction
 import com.evg.account.presentation.mvi.AccountState
 import com.evg.account.presentation.settingstile.StyleTile
-import com.evg.account.presentation.settingstile.TileBlock
 import com.evg.account.presentation.settingstile.Tile
+import com.evg.account.presentation.settingstile.TileBlock
+import com.evg.resource.R
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
 import com.evg.ui.theme.HorizontalPadding
@@ -40,7 +38,6 @@ fun AccountScreen(
     modifier: Modifier = Modifier,
     onLoginScreen: () -> Unit,
 ) {
-    val isDarkTheme = isSystemInDarkTheme()
     val context = LocalContext.current
     
     Column(
@@ -73,7 +70,7 @@ fun AccountScreen(
                         optionStringRes = { it.labelRes },
                         onOptionSelected = {
                             dispatch(AccountAction.SaveAppTheme(theme = it))
-                            AppTheme.themeIsDark = it.toIsDarkTheme(isDarkTheme = isDarkTheme)
+                            AppTheme.nightMode = it.toAppCompatDelegateTheme()
                         },
                     )
                 },

@@ -1,13 +1,14 @@
 package com.evg.account.domain.mapper
 
+import androidx.appcompat.app.AppCompatDelegate
 import com.evg.account.domain.model.AppStyle
 import com.evg.account.domain.model.AppTheme
 
-fun AppTheme.toIsDarkTheme(isDarkTheme: Boolean): Boolean {
+fun AppTheme.toAppCompatDelegateTheme(): Int {
     return when (this) {
-        AppTheme.USER -> isDarkTheme
-        AppTheme.LIGHT -> false
-        AppTheme.DARK -> true
+        AppTheme.USER -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        AppTheme.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+        AppTheme.DARK -> AppCompatDelegate.MODE_NIGHT_YES
     }
 }
 

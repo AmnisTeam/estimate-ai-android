@@ -1,8 +1,10 @@
 package com.evg.ui.theme
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import com.evg.ui.theme.palettes.blueDarkPalette
 import com.evg.ui.theme.palettes.blueLightPalette
 import com.evg.ui.theme.palettes.greenDarkPalette
@@ -17,7 +19,11 @@ fun EstimateAITheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = when (AppTheme.themeIsDark) {
+    LaunchedEffect(AppTheme.nightMode) {
+        AppCompatDelegate.setDefaultNightMode(AppTheme.nightMode)
+    }
+
+    val colors = when (isSystemInDarkTheme()) {
         true -> {
             when (AppTheme.style) {
                 AppStyle.PURPLE -> purpleDarkPalette

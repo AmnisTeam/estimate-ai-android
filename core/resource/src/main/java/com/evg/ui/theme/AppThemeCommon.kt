@@ -1,14 +1,16 @@
 package com.evg.ui.theme
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 
 object AppTheme {
     var style by mutableStateOf(AppStyle.PURPLE)
-    var themeIsDark by mutableStateOf(true)
+    var nightMode: Int by mutableIntStateOf(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
     var textSize by mutableStateOf(AppSize.Medium)
 
     val colors: AppPalette
