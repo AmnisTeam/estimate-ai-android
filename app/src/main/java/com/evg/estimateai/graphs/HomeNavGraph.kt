@@ -5,6 +5,7 @@ import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -54,7 +55,9 @@ fun NavGraphBuilder.homeNavGraph(
                 AccountRoot(
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
                     onLoginScreen = {
-                        TODO()
+                        navController.navigate(Route.Login) {
+                            popUpTo(0) { inclusive = true }
+                        }
                     }
                 )
             }

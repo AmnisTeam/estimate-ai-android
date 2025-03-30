@@ -8,7 +8,11 @@ import com.evg.shared_prefs.domain.model.SharedPrefsTestingLanguage
 interface SharedPrefsRepository {
     fun saveUserToken(token: String)
     fun getUserToken(): String?
-    fun resetUserToken()
+
+    fun saveUser(email: String)
+    fun getUser(): String?
+
+    fun resetUser()
 
     fun saveAppLanguage(language: SharedPrefsAppLanguage)
     fun getAppLanguage(): SharedPrefsAppLanguage

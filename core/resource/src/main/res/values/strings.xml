@@ -97,6 +97,7 @@
     <string name="frequent_day">Frequent day</string>
 
     <!--Account screen-->
+    <string name="no_username">No username</string>
     <string name="app_language">App language</string>
     <string name="app_theme">App theme</string>
     <string name="testing_language">Testing language</string>
@@ -105,6 +106,7 @@
     <string name="russian">Russian</string>
     <string name="dark">Dark</string>
     <string name="light">Light</string>
+    <string name="logout">Logout</string>
 
 
 </resources>

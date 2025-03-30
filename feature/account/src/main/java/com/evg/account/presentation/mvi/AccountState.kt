@@ -5,6 +5,7 @@ import com.evg.account.domain.model.AppTheme
 import com.evg.account.domain.model.TestingLanguage
 
 data class AccountState(
+    val user: String?,
     val appLanguage: AppLanguage,
     val appTheme: AppTheme,
     val testingLanguage: TestingLanguage,

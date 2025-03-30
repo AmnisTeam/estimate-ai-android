@@ -13,6 +13,7 @@ class AccountViewModel(
     private val accountRepository: AccountRepository,
 ): ContainerHost<AccountState, AccountSideEffect>, ViewModel() {
     override val container = container<AccountState, AccountSideEffect>(AccountState(
+        user = accountRepository.getUser(),
         appTheme = accountRepository.getAppTheme(),
         appLanguage = accountRepository.getAppLanguage(),
         testingLanguage = accountRepository.getTestingLanguage(),

@@ -6,6 +6,7 @@ import com.evg.account.domain.model.AppTheme
 import com.evg.account.domain.model.TestingLanguage
 
 interface AccountRepository {
+    fun getUser(): String?
     fun logout()
 
     fun saveAppLanguage(language: AppLanguage)

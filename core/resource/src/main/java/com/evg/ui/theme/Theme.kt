@@ -14,7 +14,7 @@ import com.evg.ui.theme.palettes.purpleLightPalette
 
 @Composable
 fun EstimateAITheme(
-    style: AppStyle = AppStyle.PURPLE,
+    style: AppStyle = AppStyle.PURPLE, //TODO
     textSize: AppSize = AppSize.Medium,
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit

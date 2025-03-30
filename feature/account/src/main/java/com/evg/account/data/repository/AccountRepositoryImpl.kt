@@ -18,8 +18,12 @@ import com.evg.shared_prefs.domain.repository.SharedPrefsRepository
 class AccountRepositoryImpl(
     private val sharedPrefsRepository: SharedPrefsRepository,
 ): AccountRepository {
+    override fun getUser(): String? {
+        return sharedPrefsRepository.getUser()?.substringBefore('@')
+    }
+
     override fun logout() {
-        sharedPrefsRepository.resetUserToken()
+        sharedPrefsRepository.resetUser()
     }
 
     override fun saveAppLanguage(language: AppLanguage) {

@@ -13,7 +13,7 @@ data class AppPalette(
     // TextField
     val textField: Color,
     val textFieldName: Color,
-    val textFieldBackground: Color,
+    val textFieldBackground: Color, // TileBackground
 
     // BottomBar
     val bottomBarSelected: Color,
