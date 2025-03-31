@@ -147,7 +147,7 @@ fun TestsLazyColumn(
                                             onClick = {
                                                 when (data.icon) {
                                                     TestIcons.ESSAY -> {
-                                                        onTestEssayScreen(data.id, data.scoreAI.score, data.scoreHuman.score)
+                                                        onTestEssayScreen(data.id, data.scoreAI.score, data.scoreHuman?.score)
                                                     }
                                                     TestIcons.UNKNOWN -> { }
                                                 }

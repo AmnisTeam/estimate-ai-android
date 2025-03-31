@@ -11,6 +11,34 @@ import com.evg.api.domain.model.GetTestStatisticsResponse
 import com.evg.api.domain.model.GetTestsResponse
 import com.evg.api.domain.model.OnTestProgressResponse
 import com.evg.api.domain.model.TestResponse
+import com.evg.api.fragment.ErrorTestFragment
+import com.evg.api.fragment.LoadingTestFragment
+import com.evg.api.fragment.ReadyTestFragment
+
+private fun mapReadyTest(readyTest: ReadyTestFragment) = TestResponse.OnReadyTestResponse(
+    id = readyTest.id,
+    title = readyTest.title,
+    type = readyTest.type,
+    description = readyTest.description,
+    scoreAI = readyTest.scoreAI,
+    scoreHuman = readyTest.scoreHuman,
+    createdAt = readyTest.createdAt
+)
+
+private fun mapLoadingTest(loadingTest: LoadingTestFragment) = TestResponse.OnLoadingTestResponse(
+    id = loadingTest.id,
+    type = loadingTest.type,
+    queue = loadingTest.queue,
+    progress = loadingTest.progress,
+    createdAt = loadingTest.createdAt
+)
+
+private fun mapErrorTest(errorTest: ErrorTestFragment) = TestResponse.OnErrorTestResponse(
+    id = errorTest.id,
+    createdAt = errorTest.createdAt
+)
+
+
 
 fun GetTestsQuery.GetTestsResponse.toTestResponses(): GetTestsResponse {
     return GetTestsResponse(
@@ -21,26 +49,9 @@ fun GetTestsQuery.GetTestsResponse.toTestResponses(): GetTestsResponse {
         prev = prev,
         tests = tests.mapNotNull { topic ->
             when {
-                topic.onReadyTest != null -> TestResponse.OnReadyTestResponse(
-                    id = topic.onReadyTest.id,
-                    title = topic.onReadyTest.title,
-                    type = topic.onReadyTest.type,
-                    description = topic.onReadyTest.description,
-                    scoreAI = topic.onReadyTest.scoreAI,
-                    scoreHuman = topic.onReadyTest.scoreHuman,
-                    createdAt = topic.onReadyTest.createdAt,
-                )
-                topic.onLoadingTest != null -> TestResponse.OnLoadingTestResponse(
-                    id = topic.onLoadingTest.id,
-                    type = topic.onLoadingTest.type,
-                    queue = topic.onLoadingTest.queue,
-                    progress = topic.onLoadingTest.progress,
-                    createdAt = topic.onLoadingTest.createdAt,
-                )
-                topic.onErrorTest != null -> TestResponse.OnErrorTestResponse(
-                    id = topic.onErrorTest.id,
-                    createdAt = topic.onErrorTest.createdAt,
-                )
+                topic.testResultFragment.readyTestFragment != null -> mapReadyTest(topic.testResultFragment.readyTestFragment)
+                topic.testResultFragment.loadingTestFragment != null -> mapLoadingTest(topic.testResultFragment.loadingTestFragment)
+                topic.testResultFragment.errorTestFragment != null -> mapErrorTest(topic.testResultFragment.errorTestFragment)
                 else -> null
             }
         }
@@ -52,26 +63,9 @@ fun OnTestProgressSubscription.OnTestProgressResponse.toOnTestProgressResponse()
         code = this.code,
         tests = this.tests.mapNotNull { topic ->
             when {
-                topic.onReadyTest != null -> TestResponse.OnReadyTestResponse(
-                    id = topic.onReadyTest.id,
-                    title = topic.onReadyTest.title,
-                    type = topic.onReadyTest.type,
-                    description = topic.onReadyTest.description,
-                    scoreAI = topic.onReadyTest.scoreAI,
-                    scoreHuman = topic.onReadyTest.scoreHuman,
-                    createdAt = topic.onReadyTest.createdAt,
-                )
-                topic.onLoadingTest != null -> TestResponse.OnLoadingTestResponse(
-                    id = topic.onLoadingTest.id,
-                    type = topic.onLoadingTest.type,
-                    queue = topic.onLoadingTest.queue,
-                    progress = topic.onLoadingTest.progress,
-                    createdAt = topic.onLoadingTest.createdAt,
-                )
-                topic.onErrorTest != null -> TestResponse.OnErrorTestResponse(
-                    id = topic.onErrorTest.id,
-                    createdAt = topic.onErrorTest.createdAt,
-                )
+                topic.testResultFragment.readyTestFragment != null -> mapReadyTest(topic.testResultFragment.readyTestFragment)
+                topic.testResultFragment.loadingTestFragment != null -> mapLoadingTest(topic.testResultFragment.loadingTestFragment)
+                topic.testResultFragment.errorTestFragment != null -> mapErrorTest(topic.testResultFragment.errorTestFragment)
                 else -> null
             }
         }
@@ -101,15 +95,7 @@ fun GetTestStatisticsQuery.GetTestStatisticsResponse.toGetTestStatisticsResponse
     return GetTestStatisticsResponse(
         code = this.code,
         testStatistics = this.testStatistics.map {
-            TestResponse.OnReadyTestResponse(
-                id = it.id,
-                title = it.title,
-                type = it.type,
-                description = it.description,
-                scoreAI = it.scoreAI,
-                scoreHuman = it.scoreHuman,
-                createdAt = it.createdAt,
-            )
+            mapReadyTest(it.readyTestFragment)
         }
     )
 }

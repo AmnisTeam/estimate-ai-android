@@ -1,0 +1,4 @@
+fragment ErrorTestFragment on ErrorTest {
+    id
+    createdAt
+}

@@ -2,26 +2,7 @@ subscription OnTestProgress {
     onTestProgressResponse {
         code
         tests {
-            ... on ReadyTest {
-                id
-                title
-                type
-                description
-                scoreAI
-                scoreHuman
-                createdAt
-            }
-            ... on LoadingTest {
-                id
-                type
-                queue
-                progress
-                createdAt
-            }
-            ... on ErrorTest {
-                id
-                createdAt
-            }
+            ...TestResultFragment
         }
     }
 }

@@ -6,26 +6,7 @@ query GetTests($page: Int!) {
         next
         prev
         tests {
-            ... on ReadyTest {
-                id
-                title
-                type
-                description
-                scoreAI
-                scoreHuman
-                createdAt
-            }
-            ... on LoadingTest {
-                id
-                type
-                queue
-                progress
-                createdAt
-            }
-            ... on ErrorTest {
-                id
-                createdAt
-            }
+            ...TestResultFragment
         }
     }
 }

@@ -1,0 +1,5 @@
+fragment TestResultFragment on TestResult {
+    ...ReadyTestFragment
+    ...LoadingTestFragment
+    ...ErrorTestFragment
+}

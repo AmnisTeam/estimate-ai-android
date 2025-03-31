@@ -1,0 +1,7 @@
+fragment LoadingTestFragment on LoadingTest {
+    id
+    type
+    queue
+    progress
+    createdAt
+}

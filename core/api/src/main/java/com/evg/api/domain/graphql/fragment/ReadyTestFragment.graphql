@@ -1,0 +1,9 @@
+fragment ReadyTestFragment on ReadyTest {
+    id
+    title
+    type
+    description
+    scoreAI
+    scoreHuman
+    createdAt
+}

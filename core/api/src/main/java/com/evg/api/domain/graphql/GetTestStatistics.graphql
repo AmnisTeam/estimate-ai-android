@@ -2,13 +2,7 @@ query GetTestStatistics {
     getTestStatisticsResponse {
         code
         testStatistics {
-            id
-            title
-            type
-            description
-            scoreAI
-            scoreHuman
-            createdAt
+            ...ReadyTestFragment
         }
     }
 }
