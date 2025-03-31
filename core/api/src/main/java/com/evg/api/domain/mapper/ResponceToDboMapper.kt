@@ -18,7 +18,8 @@ fun TestResponse.toTestTypeDBO(): TestTypeDBO {
                     title = this@toTestTypeDBO.title
                     type = this@toTestTypeDBO.type
                     description = this@toTestTypeDBO.description
-                    score = this@toTestTypeDBO.score
+                    scoreAI = this@toTestTypeDBO.scoreAI
+                    scoreHuman = this@toTestTypeDBO.scoreHuman
                     createdAt = this@toTestTypeDBO.createdAt
                 }
             }

@@ -88,11 +88,12 @@ fun FinishedTestTile(
                 )
             }
 
+            val testScore = finishedTest.scoreHuman ?: finishedTest.scoreAI
             Text(
-                text = finishedTest.score.level.name,
+                text = testScore.level.name,
                 fontSize = 25.sp,
                 fontWeight = FontWeight.Bold,
-                color = finishedTest.score.level.color,
+                color = testScore.level.color,
             )
         }
     }
@@ -109,7 +110,8 @@ fun FinishedTestTilePreview(darkTheme: Boolean = true) {
                     icon = TestIcons.ESSAY,
                     title = "Title name example",
                     description = "Write an essay on any topic. Your English level will be estimated based on it.",
-                    score = TestScore(0),
+                    scoreAI = TestScore(0),
+                    scoreHuman = TestScore(0),
                     createdAt = 0,
                 ),
                 onClick = {},

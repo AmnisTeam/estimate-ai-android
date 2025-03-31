@@ -11,7 +11,8 @@ sealed class TestType : Parcelable {
         val title: String,
         val type: String,
         val description: String,
-        val score: Int,
+        val scoreAI: Int,
+        val scoreHuman: Int?,
         val createdAt: Long,
     ) : TestType()
     @Parcelize

@@ -15,7 +15,8 @@ open class ReadyTestTypeDBO : EmbeddedRealmObject {
     var title: String = ""
     var type: String = ""
     var description: String = ""
-    var score: Int = 0
+    var scoreAI: Int = 0
+    var scoreHuman: Int? = null
     var createdAt: Long = 0
 }
 

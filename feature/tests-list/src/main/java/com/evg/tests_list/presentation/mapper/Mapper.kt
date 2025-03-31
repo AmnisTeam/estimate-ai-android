@@ -2,7 +2,6 @@ package com.evg.tests_list.presentation.mapper
 
 import com.evg.tests_list.domain.model.TestType
 import com.evg.tests_list.presentation.model.TestState
-import com.evg.utils.extensions.toTestLevel
 import com.evg.utils.mapper.toTestIcons
 import com.evg.utils.model.TestScore
 
@@ -13,7 +12,8 @@ fun TestType.toTestState(): TestState {
             icon = this.type.toTestIcons(),
             title = this.title,
             description = this.description,
-            score = TestScore(this.score),
+            scoreAI = TestScore(this.scoreAI),
+            scoreHuman = this.scoreHuman?.let { TestScore(it) },
             createdAt = this.createdAt,
         )
         is TestType.OnLoadingTestType -> TestState.LoadingTest(

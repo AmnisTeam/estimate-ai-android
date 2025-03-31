@@ -9,7 +9,8 @@ sealed class TestState {
         val title: String,
         val icon: TestIcons,
         val description: String,
-        val score: TestScore,
+        val scoreAI: TestScore,
+        val scoreHuman: TestScore?,
         val createdAt: Long,
     ) : TestState()
     data class LoadingTest(

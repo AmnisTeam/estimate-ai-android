@@ -11,7 +11,8 @@ query GetTests($page: Int!) {
                 title
                 type
                 description
-                score
+                scoreAI
+                scoreHuman
                 createdAt
             }
             ... on LoadingTest {

@@ -26,7 +26,8 @@ fun GetTestsQuery.GetTestsResponse.toTestResponses(): GetTestsResponse {
                     title = topic.onReadyTest.title,
                     type = topic.onReadyTest.type,
                     description = topic.onReadyTest.description,
-                    score = topic.onReadyTest.score,
+                    scoreAI = topic.onReadyTest.scoreAI,
+                    scoreHuman = topic.onReadyTest.scoreHuman,
                     createdAt = topic.onReadyTest.createdAt,
                 )
                 topic.onLoadingTest != null -> TestResponse.OnLoadingTestResponse(
@@ -56,7 +57,8 @@ fun OnTestProgressSubscription.OnTestProgressResponse.toOnTestProgressResponse()
                     title = topic.onReadyTest.title,
                     type = topic.onReadyTest.type,
                     description = topic.onReadyTest.description,
-                    score = topic.onReadyTest.score,
+                    scoreAI = topic.onReadyTest.scoreAI,
+                    scoreHuman = topic.onReadyTest.scoreHuman,
                     createdAt = topic.onReadyTest.createdAt,
                 )
                 topic.onLoadingTest != null -> TestResponse.OnLoadingTestResponse(
@@ -104,7 +106,8 @@ fun GetTestStatisticsQuery.GetTestStatisticsResponse.toGetTestStatisticsResponse
                 title = it.title,
                 type = it.type,
                 description = it.description,
-                score = it.score,
+                scoreAI = it.scoreAI,
+                scoreHuman = it.scoreHuman,
                 createdAt = it.createdAt,
             )
         }

@@ -49,7 +49,7 @@ import kotlinx.coroutines.flow.flowOf
 
 @Composable
 fun TestsLazyColumn(
-    onTestEssayScreen: (id: Int, score: Int) -> Unit,
+    onTestEssayScreen: (id: Int, scoreAI: Int, scoreHuman: Int?) -> Unit,
     tests: LazyPagingItems<ServerResult<TestState, NetworkError>>,
     getAllTests: () -> Unit,
     isTestsLoading: Boolean,
@@ -147,7 +147,7 @@ fun TestsLazyColumn(
                                             onClick = {
                                                 when (data.icon) {
                                                     TestIcons.ESSAY -> {
-                                                        onTestEssayScreen(data.id, data.score.score)
+                                                        onTestEssayScreen(data.id, data.scoreAI.score, data.scoreHuman.score)
                                                     }
                                                     TestIcons.UNKNOWN -> { }
                                                 }
@@ -198,7 +198,8 @@ fun TestsLazyColumnPreview(darkTheme: Boolean = true) {
                                     icon = TestIcons.ESSAY,
                                     title = "Test 1",
                                     description = "qweqweqweqweqweqwe",
-                                    score = TestScore(0),
+                                    scoreAI = TestScore(0),
+                                    scoreHuman = TestScore(0),
                                     createdAt = 0,
                                 )
                             ),
@@ -218,7 +219,7 @@ fun TestsLazyColumnPreview(darkTheme: Boolean = true) {
                     )
                 ).collectAsLazyPagingItems(),
                 getAllTests = {},
-                onTestEssayScreen = { _,_ -> },
+                onTestEssayScreen = { _,_,_, -> },
                 isTestsLoading = false,
             )
         }

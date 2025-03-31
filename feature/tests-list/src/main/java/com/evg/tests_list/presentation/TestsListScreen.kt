@@ -38,7 +38,7 @@ fun SharedTransitionScope.TestsListScreen(
     modifier: Modifier = Modifier,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onTestSelectScreen: () -> Unit,
-    onTestEssayScreen: (id: Int, score: Int) -> Unit,
+    onTestEssayScreen: (id: Int, scoreAI: Int, scoreHuman: Int?) -> Unit,
 ) {
     val tests = state.tests.collectAsLazyPagingItems()
 
@@ -97,7 +97,7 @@ fun TestsListScreenPreview(darkTheme: Boolean = true) {
                         dispatch = {},
                         animatedVisibilityScope = this,
                         onTestSelectScreen = {},
-                        onTestEssayScreen = { _,_, -> },
+                        onTestEssayScreen = { _,_,_, -> },
                     )
                 }
             }

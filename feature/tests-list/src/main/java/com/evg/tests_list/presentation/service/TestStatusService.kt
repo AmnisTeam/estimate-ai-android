@@ -124,7 +124,7 @@ class TestStatusService : Service() {
                     TestIcons.UNKNOWN -> null
                 }
                 val intent = Intent(Intent.ACTION_VIEW).apply {
-                    data = Uri.parse("app://${testType}/${test.id}/${test.score.score}")
+                    data = Uri.parse("app://${testType}/${test.id}/${test.scoreAI.score}")
                 }
                 val pendingIntent = PendingIntent.getActivity(
                     this,
@@ -139,7 +139,7 @@ class TestStatusService : Service() {
                     .setStyle(
                         NotificationCompat.InboxStyle()
                             .addLine(test.title)
-                            .addLine("${getString(R.string.estimated_level)}: ${test.score.level.name}")
+                            .addLine("${getString(R.string.estimated_level)}: ${test.scoreAI.level.name}")
                     )
                     .setGroup(READY_GROUP)
                     .setContentIntent(pendingIntent)

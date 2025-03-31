@@ -30,7 +30,7 @@ fun NavGraphBuilder.createTestNavGraph(
                 modifier = Modifier.fillMaxSize().padding(paddingValues),
                 animatedVisibilityScope = this,
                 onTestEssayScreen = {
-                    navController.navigate(route = Route.TestEssay(id = null, score = null))
+                    navController.navigate(route = Route.TestEssay(id = null, scoreAI = null, scoreHuman = null))
                 },
             )
         }
@@ -52,7 +52,8 @@ fun NavGraphBuilder.createTestNavGraph(
                         }
                     }
                 },
-                score = testEssay.score,
+                scoreAI = testEssay.scoreAI,
+                scoreHuman = testEssay.scoreHuman,
             )
         }
     }

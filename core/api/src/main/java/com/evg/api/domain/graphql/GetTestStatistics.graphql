@@ -6,7 +6,8 @@ query GetTestStatistics {
             title
             type
             description
-            score
+            scoreAI
+            scoreHuman
             createdAt
         }
     }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -23,11 +24,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.evg.resource.R
 import com.evg.test_essay.domain.model.EssayTestData
 import com.evg.test_essay.presentation.model.CharactersNumberState
@@ -50,7 +55,8 @@ fun TestEssayScreen(
     state: TestEssayState,
     dispatch: (action: TestEssayAction) -> Unit,
     modifier: Modifier = Modifier,
-    score: Int?,
+    scoreAI: Int?,
+    scoreHuman: Int?,
     isEditable: Boolean,
 ) {
     val scope = rememberCoroutineScope()
@@ -163,16 +169,36 @@ fun TestEssayScreen(
                     },
                 )
             } else {
-                val level = if (score != null) {
-                    TestScore(scoreInit = score).level
+                val humanLevel = scoreHuman?.let { TestScore(scoreInit = it).level }
+                val aiLevel = scoreAI?.let { TestScore(scoreInit = it).level } ?: TestLevelColors.UNKNOWN
+
+                if (humanLevel != null) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = humanLevel.name,
+                            style = AppTheme.typography.heading,
+                            color = humanLevel.color,
+                        )
+                        Spacer(modifier = Modifier.width(5.dp))
+                        Text(
+                            text = aiLevel.name,
+                            style = AppTheme.typography.body,
+                            color = aiLevel.color.copy(alpha = 0.7f),
+                            modifier = Modifier
+                                .alpha(0.7f)
+                                .graphicsLayer {
+                                    clip = false
+                                },
+                            textDecoration = TextDecoration.LineThrough,
+                        )
+                    }
                 } else {
-                    TestLevelColors.UNKNOWN
+                    Text(
+                        text = aiLevel.name,
+                        style = AppTheme.typography.heading,
+                        color = aiLevel.color,
+                    )
                 }
-                Text(
-                    style = AppTheme.typography.heading,
-                    text = level.name,
-                    color = level.color,
-                )
             }
         }
     }
@@ -188,7 +214,8 @@ fun TestsListScreenPreview(darkTheme: Boolean = true) {
                     isTestSending = false,
                 ),
                 dispatch = {},
-                score = 0,
+                scoreAI = 20,
+                scoreHuman = 60,
                 isEditable = false,
             )
         }

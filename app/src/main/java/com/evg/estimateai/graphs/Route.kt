@@ -14,5 +14,5 @@ sealed interface Route {
         @Serializable data object Account: Route
 
         @Serializable data object TestSelect: Route
-        @Serializable data class TestEssay(val id: Int?, val score: Int?): Route
+        @Serializable data class TestEssay(val id: Int?, val scoreAI: Int?, val scoreHuman: Int?): Route
 }

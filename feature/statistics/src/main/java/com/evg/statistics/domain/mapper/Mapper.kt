@@ -9,7 +9,7 @@ fun GetTestStatisticsResponse.toTestStatistics(): List<TestStatistics> {
         TestStatistics(
             id = it.id,
             type = it.type,
-            score = it.score,
+            score = it.scoreAI,
             createdAt = it.createdAt,
         )
     }
@@ -21,7 +21,7 @@ fun List<TestTypeDBO>.toTestStatistics(): List<TestStatistics> {
             TestStatistics(
                 id = test.id,
                 type = readyTest.type,
-                score = readyTest.score,
+                score = readyTest.scoreHuman ?: readyTest.scoreAI,
                 createdAt = readyTest.createdAt,
             )
         }

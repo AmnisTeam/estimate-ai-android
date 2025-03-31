@@ -18,7 +18,7 @@ sealed class TopBarTitle(
         title = R.string.select_test_type,
     )
     data object TestsList : TopBarTitle(
-        route = Route.TestEssay(id = null, score = null),
+        route = Route.TestEssay(id = null, scoreAI = null, scoreHuman = null),
         title = R.string.essay_test,
     )
 }

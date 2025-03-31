@@ -15,7 +15,8 @@ fun TestResponse.toTestType(): TestType {
                 title = this.title,
                 type = this.type,
                 description = this.description,
-                score = this.score,
+                scoreAI = this.scoreAI,
+                scoreHuman = this.scoreHuman,
                 createdAt = this.createdAt,
             )
         }
@@ -46,7 +47,8 @@ fun TestTypeDBO.toTestType(): TestType {
                     title = it.title,
                     type = it.type,
                     description = it.description,
-                    score = it.score,
+                    scoreAI = it.scoreAI,
+                    scoreHuman = it.scoreHuman,
                     createdAt = it.createdAt,
                 )
             } ?: throw IllegalArgumentException("ReadyTestTypeDBO is null")
