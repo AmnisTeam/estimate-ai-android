@@ -84,7 +84,8 @@ fun GetTestDataResponseQuery.GetTestDataResponse.toGetTestDataResponse(): GetTes
         this.testData.onEssayTest != null -> {
             GetTestDataResponse.EssayTest(
                 id = this.testData.onEssayTest.id,
-                essay = this.testData.onEssayTest.essay
+                essay = this.testData.onEssayTest.essay,
+                passedTime = this.testData.onEssayTest.passedTime,
             )
         }
         else -> throw IllegalArgumentException("Response does not contain TestData")

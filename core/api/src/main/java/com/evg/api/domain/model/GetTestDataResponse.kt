@@ -4,5 +4,6 @@ sealed class GetTestDataResponse {
     data class EssayTest(
         val id: Int,
         val essay: String,
+        val passedTime: Int,
     ) : GetTestDataResponse()
 }

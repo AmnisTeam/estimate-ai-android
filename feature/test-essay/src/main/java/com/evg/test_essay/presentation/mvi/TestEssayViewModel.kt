@@ -41,7 +41,7 @@ class TestEssayViewModel(
         reduce { state.copy(isTestDataLoading = true) }
         when (val response = testEssayUseCases.getEssayTestData.invoke(id = id)) {
             is ServerResult.Success -> {
-                state.testData.value = response.data
+                reduce { state.copy(testData = response.data) }
             }
             is ServerResult.Error -> {
                 postSideEffect(TestEssaySideEffect.TestDataFail(error = response.error))

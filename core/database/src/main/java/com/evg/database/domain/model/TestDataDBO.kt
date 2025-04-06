@@ -11,4 +11,5 @@ open class TestDataDBO : RealmObject {
 
 open class EssayTestDBO : EmbeddedRealmObject {
     var essay: String = ""
+    var passedTime: Int = 0
 }

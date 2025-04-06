@@ -49,6 +49,7 @@ fun GetTestDataResponse.toTestDataDBO(): TestDataDBO {
                 id = this@toTestDataDBO.id
                 essayTestDBO = EssayTestDBO().apply {
                     essay = this@toTestDataDBO.essay
+                    passedTime = this@toTestDataDBO.passedTime
                 }
             }
         }

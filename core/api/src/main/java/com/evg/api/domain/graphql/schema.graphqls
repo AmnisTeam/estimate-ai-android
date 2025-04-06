@@ -41,6 +41,7 @@ input PasswordResetDTO {
 
 input CreateEssayTestDTO {
   essay: String!
+  passedTime: Int!
 }
 type CreateEssayTestResponse {
   code: Int!
@@ -90,6 +91,7 @@ type GetTestDataResponse {
 type EssayTest {
   id: Int!
   essay: String!
+  passedTime: Int!
 }
 
 type GetTestStatisticsResponse {

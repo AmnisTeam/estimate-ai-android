@@ -5,6 +5,7 @@ query GetTestDataResponse($id: Int!) {
             ... on EssayTest {
                 id
                 essay
+                passedTime
             }
         }
     }

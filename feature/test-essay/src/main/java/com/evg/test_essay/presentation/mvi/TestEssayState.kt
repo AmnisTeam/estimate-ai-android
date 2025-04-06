@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.MutableStateFlow
 data class TestEssayState(
     val isTestSending: Boolean = false,
     val isTestDataLoading: Boolean = false,
-    val testData: MutableStateFlow<EssayTestData?> = MutableStateFlow(null),
+    val testData: EssayTestData? = null,
 )

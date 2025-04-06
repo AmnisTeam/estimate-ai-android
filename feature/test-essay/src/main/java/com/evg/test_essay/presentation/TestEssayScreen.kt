@@ -18,7 +18,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -48,6 +50,7 @@ import com.evg.ui.theme.HorizontalPadding
 import com.evg.ui.theme.VerticalPadding
 import com.evg.utils.model.TestLevelColors
 import com.evg.utils.model.TestScore
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -60,14 +63,23 @@ fun TestEssayScreen(
     isEditable: Boolean,
 ) {
     val scope = rememberCoroutineScope()
-    val textData: EssayTestData? = state.testData.collectAsState().value
+    val testData = state.testData
     var essayText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue("qweqwe"))
     }
+    var passedTime by rememberSaveable { mutableIntStateOf(testData?.passedTime ?: 0) }
 
-    LaunchedEffect(textData) {
-        if (!isEditable && textData != null) {
-            essayText = TextFieldValue(textData.essay)
+    LaunchedEffect(Unit) {
+        while (isEditable) {
+            delay(1000)
+            passedTime++
+        }
+    }
+
+    LaunchedEffect(testData) {
+        if (!isEditable && testData != null) {
+            essayText = TextFieldValue(testData.essay)
+            passedTime = testData.passedTime
         }
     }
 
@@ -121,10 +133,21 @@ fun TestEssayScreen(
                 color = AppTheme.colors.text,
             ),
             supportingText = {
-                Text(
-                    color = AppTheme.colors.textField,
-                    text = "${essayText.text.length} ${stringResource(id = R.string.characters)}",
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        color = AppTheme.colors.textField,
+                        text = "${essayText.text.length} ${stringResource(id = R.string.characters)}",
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    TimerDisplay(
+                        timeInSeconds = passedTime,
+                    )
+                }
+
             },
             value = essayText,
             onValueChange = {
@@ -162,7 +185,7 @@ fun TestEssayScreen(
                         } else {
                             dispatch(
                                 TestEssayAction.SendTest(
-                                    data = EssayTestData(essay = essayText.text)
+                                    data = EssayTestData(essay = essayText.text, passedTime = passedTime)
                                 )
                             )
                         }

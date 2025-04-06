@@ -8,25 +8,23 @@ import com.evg.test_essay.domain.model.EssayTestData
 fun EssayTestData.toCreateEssayTestDTO(): CreateEssayTestDTO {
     return CreateEssayTestDTO(
         essay = this.essay,
+        passedTime = this.passedTime,
     )
 }
 
 fun EssayTestDBO?.toEssayTestData(): EssayTestData? {
     return this?.let {
         EssayTestData(
-            essay = it.essay
+            essay = it.essay,
+            passedTime = it.passedTime,
         )
     }
 }
 
 
 fun GetTestDataResponse.EssayTest.toEssayTestData(): EssayTestData {
-    /*return this?.let {
-        EssayTestData(
-            essay = it.essay
-        )
-    }*/
     return EssayTestData(
-        essay = this.essay
+        essay = this.essay,
+        passedTime = this.passedTime,
     )
 }
