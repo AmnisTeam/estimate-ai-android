@@ -32,19 +32,12 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalSharedTransitionApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainScreen() {
-    // val sharedPreferencesRepository = SharedPrefsRepositoryImpl(context = LocalContext.current)
-    // isUserAuthenticated: Boolean = sharedPreferencesRepository.getUserToken() != null
-    //val layoutDirection = LocalLayoutDirection.current
-
-    /*val startDestination = if (isUserAuthenticated) {
-        "product_list"
-    } else {
-        "registration"
-    }*/
+fun MainScreen(
+    isUserAuthenticated: Boolean,
+) {
     val navController = rememberNavController()
     val snackBarHostState = remember { SnackbarHostState() }
-    val startDestination = Route.Authentication
+    val startDestination = if (isUserAuthenticated) Route.Home else Route.Authentication
 
     val scope = rememberCoroutineScope()
     ObserveAsEvent(
@@ -94,6 +87,8 @@ fun MainScreen() {
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun MainScreenPreview() {
     EstimateAITheme {
-        MainScreen()
+        MainScreen(
+            isUserAuthenticated = false,
+        )
     }
 }

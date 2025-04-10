@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val initialStyle = sharedPrefsRepository.getAppStyle().toAppStyle()
+        val isUserAuthenticated = sharedPrefsRepository.getUserToken() != null
 
         enableEdgeToEdge()
         setContent {
@@ -50,7 +51,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             EstimateAITheme {
-                MainScreen()
+                MainScreen(
+                    isUserAuthenticated = isUserAuthenticated,
+                )
             }
         }
     }
@@ -61,6 +64,8 @@ class MainActivity : AppCompatActivity() {
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun MainActivityPreview() {
     EstimateAITheme {
-        MainScreen()
+        MainScreen(
+            isUserAuthenticated = false,
+        )
     }
 }

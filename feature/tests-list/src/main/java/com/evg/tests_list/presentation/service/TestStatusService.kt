@@ -134,13 +134,14 @@ class TestStatusService : Service() {
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
 
+                val finishedLevel = test.scoreHuman?.level ?: test.scoreAI.level
                 val notification = NotificationCompat.Builder(this, "ready_status_tests")
                     .setSmallIcon(R.drawable.estimateai_icon)
                     .setContentTitle(getString(R.string.test_id_ready, test.id))
                     .setStyle(
                         NotificationCompat.InboxStyle()
                             .addLine(test.title)
-                            .addLine("${getString(R.string.estimated_level)}: ${test.scoreAI.level.name}")
+                            .addLine("${getString(R.string.estimated_level)}: ${finishedLevel.name}")
                     )
                     .setGroup(READY_GROUP)
                     .setContentIntent(pendingIntent)
