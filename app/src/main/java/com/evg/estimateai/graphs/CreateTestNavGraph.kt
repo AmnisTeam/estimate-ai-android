@@ -36,7 +36,7 @@ fun NavGraphBuilder.createTestNavGraph(
         }
     }
     composable<Route.TestEssay>(
-        deepLinks = listOf(navDeepLink { uriPattern = "app://test-essay/{id}/{score}" })
+        deepLinks = listOf(navDeepLink { uriPattern = "app://test-essay/{id}/{scoreAI}/{scoreHuman}" })
     ) { entry ->
         val testEssay = entry.toRoute<Route.TestEssay>()
         EstimateAiScaffold(
@@ -44,7 +44,7 @@ fun NavGraphBuilder.createTestNavGraph(
         ) { paddingValues ->
             TestEssayRoot(
                 modifier = Modifier.fillMaxSize().padding(paddingValues),
-                viewModel = koinViewModel(parameters = { parametersOf(testEssay.id) }),
+                viewModel = koinViewModel(parameters = { parametersOf(testEssay.id, testEssay.scoreAI, testEssay.scoreHuman) }),
                 onTestsListScreen = {
                     navController.navigate(route = Route.Home) {
                         popUpTo<Route.Home> {

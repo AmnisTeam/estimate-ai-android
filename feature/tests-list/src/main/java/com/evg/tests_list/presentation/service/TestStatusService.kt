@@ -123,8 +123,9 @@ class TestStatusService : Service() {
                     TestIcons.ESSAY -> "test-essay"
                     TestIcons.UNKNOWN -> null
                 }
+                val args = "${test.id}/${test.scoreAI.score}/${test.scoreHuman?.score}"
                 val intent = Intent(Intent.ACTION_VIEW).apply {
-                    data = Uri.parse("app://${testType}/${test.id}/${test.scoreAI.score}")
+                    data = Uri.parse("app://${testType}/$args")
                 }
                 val pendingIntent = PendingIntent.getActivity(
                     this,
