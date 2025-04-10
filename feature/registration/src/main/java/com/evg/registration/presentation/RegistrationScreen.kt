@@ -210,7 +210,7 @@ fun RegistrationScreen(
                 },
                 textAlign = TextAlign.Center,
                 style = AppTheme.typography.body,
-                color = AppTheme.colors.textFieldName,
+                color = AppTheme.colors.textFieldTitle,
             )
         }
     }

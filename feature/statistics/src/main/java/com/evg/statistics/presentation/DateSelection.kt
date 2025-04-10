@@ -12,11 +12,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,8 +29,6 @@ import androidx.compose.ui.unit.dp
 import com.evg.resource.R
 import com.evg.statistics.presentation.model.DateRange
 import com.evg.statistics.presentation.model.DateTile
-import com.evg.statistics.presentation.model.dateRangeSaver
-import com.evg.statistics.presentation.mvi.StatisticsViewModel
 import com.evg.ui.extensions.clickableRipple
 import com.evg.ui.extensions.lighten
 import com.evg.ui.theme.BorderRadius
@@ -54,7 +50,7 @@ fun DateSelection(
             modifier = Modifier
                 .weight(1f)
                 .clip(RoundedCornerShape((BorderRadius - 5.dp).coerceAtLeast(0.dp)))
-                .background(AppTheme.colors.textFieldBackground),
+                .background(AppTheme.colors.tileBackground),
             horizontalArrangement = Arrangement.Absolute.SpaceBetween,
         ) {
             dates.forEach { dateTile ->
@@ -69,7 +65,7 @@ fun DateSelection(
                         .then(
                             if (selected == dateTile.date) {
                                 Modifier
-                                    .background(AppTheme.colors.textFieldBackground.lighten(0.07f)) //TODO check on light theme
+                                    .background(AppTheme.colors.tileBackground.lighten(0.07f)) //TODO check on light theme
                             } else {
                                 Modifier
                             }

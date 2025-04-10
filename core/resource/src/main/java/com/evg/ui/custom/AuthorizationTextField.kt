@@ -1,6 +1,5 @@
 package com.evg.ui.custom
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -36,7 +35,6 @@ import com.evg.resource.R
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.BorderRadius
 import com.evg.ui.theme.EstimateAITheme
-import java.lang.Error
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,7 +52,7 @@ fun AuthorizationTextField(
     Column {
         Text(
             text = filedName,
-            color = AppTheme.colors.textFieldName,
+            color = AppTheme.colors.textFieldTitle,
             style = AppTheme.typography.body,
         )
 
@@ -88,7 +86,7 @@ fun AuthorizationTextField(
                     placeholder = {
                         Text(
                             text = placeholder,
-                            color = AppTheme.colors.textField,
+                            color = AppTheme.colors.textFieldPlaceholder,
                             style = AppTheme.typography.body,
                         )
                     },
@@ -101,7 +99,7 @@ fun AuthorizationTextField(
                                         .weight(1f),
                                     painter = icon,
                                     contentDescription = null,
-                                    tint = AppTheme.colors.textField
+                                    tint = AppTheme.colors.textFieldPlaceholder
                                 )
                             }
                         }
@@ -111,9 +109,9 @@ fun AuthorizationTextField(
                     //isError = isError,
                     interactionSource = remember { MutableInteractionSource() },
                     colors = TextFieldDefaults.colors().copy(
-                        focusedContainerColor = AppTheme.colors.textFieldBackground,
-                        unfocusedContainerColor = AppTheme.colors.textFieldBackground,
-                        errorContainerColor = AppTheme.colors.textFieldBackground,
+                        focusedContainerColor = AppTheme.colors.tileBackground,
+                        unfocusedContainerColor = AppTheme.colors.tileBackground,
+                        errorContainerColor = AppTheme.colors.tileBackground,
                         unfocusedIndicatorColor = Color.Transparent,
                     )
                 )

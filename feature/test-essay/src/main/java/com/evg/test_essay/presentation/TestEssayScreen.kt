@@ -16,11 +16,9 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -106,7 +104,7 @@ fun TestEssayScreen(
     ) {
         Text(
             text = stringResource(id = R.string.essay_test_description),
-            color = AppTheme.colors.textField,
+            color = AppTheme.colors.textFieldPlaceholder,
             style = AppTheme.typography.body,
         )
 
@@ -118,13 +116,13 @@ fun TestEssayScreen(
                 .fillMaxWidth(),
             colors = TextFieldDefaults.colors().copy(
                 cursorColor = AppTheme.colors.primary,
-                focusedContainerColor = AppTheme.colors.textFieldBackground,
-                unfocusedContainerColor = AppTheme.colors.textFieldBackground,
-                errorContainerColor = AppTheme.colors.textFieldBackground,
+                focusedContainerColor = AppTheme.colors.tileBackground,
+                unfocusedContainerColor = AppTheme.colors.tileBackground,
+                errorContainerColor = AppTheme.colors.tileBackground,
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedIndicatorColor = Color.Transparent,
                 errorIndicatorColor = Color.Transparent,
-                disabledContainerColor = AppTheme.colors.textFieldBackground,
+                disabledContainerColor = AppTheme.colors.tileBackground,
                 disabledIndicatorColor = Color.Transparent,
             ),
             enabled = !state.isTestSending && isEditable,
@@ -137,7 +135,7 @@ fun TestEssayScreen(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        color = AppTheme.colors.textField,
+                        color = AppTheme.colors.textFieldPlaceholder,
                         text = "${essayText.text.length} ${stringResource(id = R.string.characters)}",
                     )
 

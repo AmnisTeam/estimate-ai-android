@@ -41,7 +41,7 @@ fun FinishedTestTile(
     Box(
         modifier = Modifier
             .clip(shape = RoundedCornerShape(BorderRadius))
-            .background(color = AppTheme.colors.textFieldBackground)
+            .background(color = AppTheme.colors.tileBackground)
             .clickableRipple {
                 onClick()
             }
@@ -83,7 +83,7 @@ fun FinishedTestTile(
                         .weight(1f),
                     text = finishedTest.description,
                     style = AppTheme.typography.small,
-                    color = AppTheme.colors.textField,
+                    color = AppTheme.colors.textFieldPlaceholder,
                     overflow = TextOverflow.Ellipsis,
                 )
             }

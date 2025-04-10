@@ -70,7 +70,7 @@ fun AccountScreen(
             modifier = Modifier
                 .clip(RoundedCornerShape(BorderRadius))
                 .fillMaxWidth()
-                .background(AppTheme.colors.textFieldBackground)
+                .background(AppTheme.colors.tileBackground)
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {

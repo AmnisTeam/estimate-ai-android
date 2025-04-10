@@ -37,7 +37,7 @@ fun LoginCard(
                     Modifier
                         .border(
                             width = 1.dp,
-                            color = AppTheme.colors.textField,
+                            color = AppTheme.colors.textFieldPlaceholder,
                             shape = RoundedCornerShape(BorderRadius)
                         )
                 } else {

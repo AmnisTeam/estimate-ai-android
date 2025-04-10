@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -41,7 +39,7 @@ fun TestTypeTile(
     Box(
         modifier = Modifier
             .clip(shape = RoundedCornerShape(BorderRadius))
-            .background(color = AppTheme.colors.textFieldBackground)
+            .background(color = AppTheme.colors.tileBackground)
             .clickableRipple {
                 onClick()
             }
@@ -83,7 +81,7 @@ fun TestTypeTile(
                         .weight(1f),
                     text = testType.description,
                     style = AppTheme.typography.small,
-                    color = AppTheme.colors.textField,
+                    color = AppTheme.colors.textFieldPlaceholder,
                     overflow = TextOverflow.Ellipsis,
                 )
             }

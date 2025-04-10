@@ -25,7 +25,7 @@ fun ColumnScope.TileBlock(
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(BorderRadius))
-            .background(AppTheme.colors.textFieldBackground)
+            .background(AppTheme.colors.tileBackground)
             .fillMaxWidth()
     ) {
         Column {

@@ -1,12 +1,9 @@
 package com.evg.login.presentation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -190,12 +187,12 @@ fun LoginScreen(
                     .weight(1f)
                     .clip(shape = RoundedCornerShape(BorderRadius)),
                 thickness = 3.dp,
-                color = AppTheme.colors.textField,
+                color = AppTheme.colors.textFieldPlaceholder,
             )
             Text(
                 text = "or continue with",
                 style = AppTheme.typography.body,
-                color = AppTheme.colors.textFieldName,
+                color = AppTheme.colors.textFieldTitle,
             )
             HorizontalDivider(
                 modifier = Modifier
@@ -203,7 +200,7 @@ fun LoginScreen(
                     .weight(1f)
                     .clip(shape = RoundedCornerShape(BorderRadius)),
                 thickness = 3.dp,
-                color = AppTheme.colors.textField,
+                color = AppTheme.colors.textFieldPlaceholder,
             )
         }
 
@@ -253,7 +250,7 @@ fun LoginScreen(
                 },
                 textAlign = TextAlign.Center,
                 style = AppTheme.typography.body,
-                color = AppTheme.colors.textFieldName,
+                color = AppTheme.colors.textFieldTitle,
             )
         }
     }

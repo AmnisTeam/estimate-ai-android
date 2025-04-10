@@ -3,7 +3,6 @@ package com.evg.statistics.presentation
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DateRangePicker
@@ -14,12 +13,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.evg.resource.R
-import com.evg.statistics.presentation.model.DateTile
 import com.evg.ui.extensions.invert
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
@@ -34,7 +31,7 @@ fun DateRangePickerModal(
 
     DatePickerDialog(
         colors = DatePickerDefaults.colors().copy(
-            containerColor = AppTheme.colors.textFieldBackground,
+            containerColor = AppTheme.colors.tileBackground,
         ),
         onDismissRequest = onDismiss,
         confirmButton = {
@@ -68,7 +65,7 @@ fun DateRangePickerModal(
     ) {
         DateRangePicker(
             colors = DatePickerDefaults.colors().copy(
-                containerColor = AppTheme.colors.textFieldBackground,
+                containerColor = AppTheme.colors.tileBackground,
                 titleContentColor = AppTheme.colors.text,
                 headlineContentColor = AppTheme.colors.text,
                 weekdayContentColor = AppTheme.colors.text,
@@ -85,7 +82,7 @@ fun DateRangePickerModal(
                 todayDateBorderColor = AppTheme.colors.primary,
                 dayInSelectionRangeContainerColor = AppTheme.colors.primary.copy(alpha = 0.2f),
                 dayInSelectionRangeContentColor = AppTheme.colors.text,
-                dividerColor = AppTheme.colors.textField,
+                dividerColor = AppTheme.colors.textFieldPlaceholder,
             ),
             state = dateRangePickerState,
             title = {

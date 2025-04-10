@@ -33,7 +33,6 @@ import com.evg.account.domain.model.AppLanguage
 import com.evg.resource.R
 import com.evg.ui.extensions.clickableRipple
 import com.evg.ui.theme.AppTheme
-import com.evg.ui.theme.BorderRadius
 import com.evg.ui.theme.EstimateAITheme
 
 @Composable
@@ -90,7 +89,7 @@ fun <T : Enum<T>> Tile(
 
         DropdownMenu(
             modifier = Modifier.fillMaxWidth(),
-            containerColor = AppTheme.colors.textFieldBackground,
+            containerColor = AppTheme.colors.tileBackground,
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {

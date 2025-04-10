@@ -12,9 +12,9 @@ val greenDarkPalette = AppPalette(
     text = Color(0xFFFFFFFF),
 
     // TextField
-    textField = Color(0xFF4A7F52),
-    textFieldName = Color(0xFFAAAAAA),
-    textFieldBackground = Color(0xFF1B3D2F),
+    textFieldPlaceholder = Color(0xFF4A7F52),
+    textFieldTitle = Color(0xFFAAAAAA),
+    tileBackground = Color(0xFF1B3D2F),
 
     // BottomBar
     bottomBarSelected = Color(0xFF2F5E41),
@@ -29,9 +29,9 @@ val greenLightPalette = AppPalette(
     text = Color(0xFF000000),
 
     // TextField
-    textField = Color(0xFF4A7F52),
-    textFieldName = Color(0xFF666666),
-    textFieldBackground = Color(0xFFE3F5E5),
+    textFieldPlaceholder = Color(0xFF4A7F52),
+    textFieldTitle = Color(0xFF666666),
+    tileBackground = Color(0xFFE3F5E5),
 
     // BottomBar
     bottomBarSelected = Color(0xFFCBEFCF),

@@ -115,7 +115,7 @@ fun StylizedPieChart(
                     top.linkTo(centerText.bottom)
                 },
                 text = "average level",
-                color = AppTheme.colors.textField,
+                color = AppTheme.colors.textFieldPlaceholder,
                 style = AppTheme.typography.small,
             )
         }
