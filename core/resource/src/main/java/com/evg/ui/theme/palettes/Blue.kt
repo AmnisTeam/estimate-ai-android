@@ -31,8 +31,8 @@ val blueLightPalette = AppPalette(
     // TextField
     textField = Color(0xFF4A6FA5),
     textFieldName = Color(0xFF666666),
-    textFieldBackground = Color(0xFFDCE6F2),
+    textFieldBackground = Color(0xFFDFE8F5),
 
     // BottomBar
-    bottomBarSelected = Color(0xFF2B4D6B),
+    bottomBarSelected = Color(0xFFB0C8E5),
 )

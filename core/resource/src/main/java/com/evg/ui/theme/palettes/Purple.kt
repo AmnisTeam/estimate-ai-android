@@ -31,8 +31,8 @@ val purpleLightPalette = AppPalette(
     // TextField
     textField = Color(0xFF6C6D8D),
     textFieldName = Color(0xFFAAAAAA),
-    textFieldBackground = Color(0xFFF1F1F1),
+    textFieldBackground = Color(0xFFE7E3F6),
 
     // BottomBar
-    bottomBarSelected = Color(0xFF342F52),
+    bottomBarSelected = Color(0xFFB8AFE5),
 )

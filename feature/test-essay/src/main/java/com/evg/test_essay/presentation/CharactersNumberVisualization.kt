@@ -59,7 +59,7 @@ fun CharactersNumberVisualization(
                         .clip(shape = RoundedCornerShape(BorderRadius))
                         .background(
                             if (index < filledBarsCount) state.color
-                            else Color(0xFF232332)
+                            else AppTheme.colors.textFieldBackground
                         )
                 )
             }

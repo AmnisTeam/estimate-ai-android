@@ -31,8 +31,8 @@ val greenLightPalette = AppPalette(
     // TextField
     textField = Color(0xFF4A7F52),
     textFieldName = Color(0xFF666666),
-    textFieldBackground = Color(0xFFDFF2E1),
+    textFieldBackground = Color(0xFFE3F5E5),
 
     // BottomBar
-    bottomBarSelected = Color(0xFF2F5E41),
+    bottomBarSelected = Color(0xFFCBEFCF),
 )
