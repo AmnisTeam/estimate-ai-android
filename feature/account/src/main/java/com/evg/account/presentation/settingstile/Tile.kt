@@ -81,7 +81,7 @@ fun <T : Enum<T>> Tile(
 
             Icon(
                 modifier = Modifier.size(10.dp),
-                painter = painterResource(id = R.drawable.arrow_back),
+                painter = painterResource(id = R.drawable.arrow_back2),
                 contentDescription = null,
                 tint = AppTheme.colors.text,
             )

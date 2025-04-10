@@ -1,7 +1,6 @@
 package com.evg.estimateai.snackbar
 
 import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.offset
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -20,8 +19,7 @@ import androidx.wear.compose.material.ExperimentalWearMaterialApi
 import androidx.wear.compose.material.FractionalThreshold
 import androidx.wear.compose.material.rememberSwipeableState
 import androidx.wear.compose.material.swipeable
-import com.evg.ui.extensions.darken
-import com.evg.ui.extensions.lighten
+import com.evg.ui.extensions.themedTint
 import com.evg.ui.theme.AppTheme
 
 enum class SwipeDirection {
@@ -64,15 +62,10 @@ fun SwipeableSnackBarHost(hostState: SnackbarHostState) {
     SnackbarHost(
         hostState = hostState,
         snackbar = { snackBarData ->
-            val containerColor = if (isSystemInDarkTheme()) {
-                AppTheme.colors.tileBackground.lighten(0.1f)
-            } else {
-                AppTheme.colors.tileBackground.darken(0.1f)
-            }
             Snackbar(
                 snackbarData = snackBarData,
                 modifier = Modifier.offset(x = offset),
-                containerColor = containerColor,
+                containerColor = AppTheme.colors.tileBackground.themedTint(0.1f),
                 contentColor = AppTheme.colors.text,
             )
         },

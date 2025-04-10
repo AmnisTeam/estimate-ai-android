@@ -30,7 +30,7 @@ import com.evg.resource.R
 import com.evg.statistics.presentation.model.DateRange
 import com.evg.statistics.presentation.model.DateTile
 import com.evg.ui.extensions.clickableRipple
-import com.evg.ui.extensions.lighten
+import com.evg.ui.extensions.themedTint
 import com.evg.ui.theme.BorderRadius
 
 
@@ -65,7 +65,7 @@ fun DateSelection(
                         .then(
                             if (selected == dateTile.date) {
                                 Modifier
-                                    .background(AppTheme.colors.tileBackground.lighten(0.07f)) //TODO check on light theme
+                                    .background(AppTheme.colors.tileBackground.themedTint(0.07f))
                             } else {
                                 Modifier
                             }
