@@ -80,7 +80,7 @@ class TestStatusService : Service() {
 
         val notification = if (tests.isEmpty()) {
             NotificationCompat.Builder(this, "loading_status_tests")
-                .setSmallIcon(R.drawable.discord)
+                .setSmallIcon(R.drawable.estimateai_icon)
                 .setContentTitle(getString(R.string.loading_tests))
                 .setProgress(100, 0, true)
                 .setOnlyAlertOnce(true)
@@ -112,7 +112,7 @@ class TestStatusService : Service() {
 
         if (onFinishedTests.isNotEmpty()) {
             val readyTestGroup = NotificationCompat.Builder(this, "ready_status_tests")
-                .setSmallIcon(R.drawable.discord)
+                .setSmallIcon(R.drawable.estimateai_icon)
                 .setGroup(READY_GROUP)
                 .setGroupSummary(true)
                 .build()
@@ -135,7 +135,7 @@ class TestStatusService : Service() {
                 )
 
                 val notification = NotificationCompat.Builder(this, "ready_status_tests")
-                    .setSmallIcon(R.drawable.discord)
+                    .setSmallIcon(R.drawable.estimateai_icon)
                     .setContentTitle(getString(R.string.test_id_ready, test.id))
                     .setStyle(
                         NotificationCompat.InboxStyle()
@@ -153,7 +153,7 @@ class TestStatusService : Service() {
 
         if (onErrorTests.isNotEmpty()) {
             val errorTestGroup = NotificationCompat.Builder(this, "error_status_tests")
-                .setSmallIcon(R.drawable.discord)
+                .setSmallIcon(R.drawable.estimateai_icon)
                 .setGroup(ERROR_GROUP)
                 .setGroupSummary(true)
                 .build()
@@ -161,7 +161,7 @@ class TestStatusService : Service() {
 
             onErrorTests.forEach { test ->
                 val notification = NotificationCompat.Builder(this, "error_status_tests")
-                    .setSmallIcon(R.drawable.discord)
+                    .setSmallIcon(R.drawable.estimateai_icon)
                     .setContentTitle(getString(R.string.test_id_failed, test.id))
                     .setStyle(NotificationCompat.BigTextStyle().bigText(test.toString()))
                     .setGroup(ERROR_GROUP)
@@ -180,7 +180,7 @@ class TestStatusService : Service() {
             }
 
             return NotificationCompat.Builder(this, "loading_status_tests")
-                .setSmallIcon(R.drawable.discord)
+                .setSmallIcon(R.drawable.estimateai_icon)
                 .setContentTitle("${getString(R.string.loading_test)} №${currentLoadingTest.id}")
                 .setStyle(
                     NotificationCompat.InboxStyle()
