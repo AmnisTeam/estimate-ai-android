@@ -1,5 +1,8 @@
 package com.evg.account.data.repository
 
+import android.app.NotificationManager
+import android.content.Context
+import android.content.Intent
 import com.evg.account.domain.mapper.toAccountAppLanguage
 import com.evg.account.domain.mapper.toAppStyle
 import com.evg.account.domain.mapper.toAppTheme
@@ -13,17 +16,38 @@ import com.evg.account.domain.model.AppStyle
 import com.evg.account.domain.model.AppTheme
 import com.evg.account.domain.model.TestingLanguage
 import com.evg.account.domain.repository.AccountRepository
+import com.evg.api.domain.repository.ApiRepository
+import com.evg.database.domain.repository.DatabaseRepository
 import com.evg.shared_prefs.domain.repository.SharedPrefsRepository
 
 class AccountRepositoryImpl(
+    private val context: Context,
     private val sharedPrefsRepository: SharedPrefsRepository,
+    private val apiRepository: ApiRepository,
+    private val databaseRepository: DatabaseRepository,
 ): AccountRepository {
     override fun getUser(): String? {
         return sharedPrefsRepository.getUser()?.substringBefore('@')
     }
 
-    override fun logout() {
+    override suspend fun logout() {
+        // Close socket
+        apiRepository.closeSocket()
+
+        // Stop service
+        val intent = Intent("STOP_STATUS_SERVICE").apply {
+            setPackage(context.packageName)
+        }
+        context.sendBroadcast(intent)
+
+        // Delete notifications
+        (context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).cancelAll()
+
+        // Delete user
         sharedPrefsRepository.resetUser()
+
+        // Delete database
+        databaseRepository.clearDatabase()
     }
 
     override fun saveAppLanguage(language: AppLanguage) {

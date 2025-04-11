@@ -46,11 +46,11 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.shareIn
 import okio.ProtocolException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
+import java.util.concurrent.CancellationException
 
 class ApiRepositoryImpl(
     private val context: Context,
@@ -58,6 +58,7 @@ class ApiRepositoryImpl(
     private val databaseRepository: DatabaseRepository,
 ): ApiRepository {
     private val apolloClient = apolloClientProvider()
+    private var socketApolloClient: ApolloClient? = null
     private var testProgressFlow: SharedFlow<OnTestProgressResponse>? = null
 
 
@@ -225,8 +226,9 @@ class ApiRepositoryImpl(
 
 
     private fun createTestProgressFlow(): SharedFlow<OnTestProgressResponse> {
-        val localApolloClient = apolloClientProvider()
-        return localApolloClient
+        socketApolloClient = apolloClientProvider()
+
+        return socketApolloClient!!
             .subscription(OnTestProgressSubscription())
             .toFlow()
             .map { response ->
@@ -235,13 +237,16 @@ class ApiRepositoryImpl(
                     .onTestProgressResponse
                     .toOnTestProgressResponse()
 
+                if (data.tests.isEmpty()) {
+                    throw CancellationException("No data")
+                }
+
                 databaseRepository.updateTests(tests = data.tests.map { it.toTestTypeDBO() })
                 data
             }
             .onCompletion {
-                println("onCompletion, reopening subscription")
-                localApolloClient.close()
-                testProgressFlow = null
+                println("onCompletion, closing subscription")
+                closeSocket()
             }
             .catch { e ->
                 println("catch in createTestProgressFlow")
@@ -252,8 +257,7 @@ class ApiRepositoryImpl(
                         tests = emptyList(),
                     )
                 )
-                localApolloClient.close()
-                testProgressFlow = null
+                closeSocket()
             }
             .shareIn(
                 scope = CoroutineScope(Dispatchers.IO),
@@ -268,6 +272,14 @@ class ApiRepositoryImpl(
         }
         return testProgressFlow ?: return createTestProgressFlow()
     }
+
+    override fun closeSocket() {
+        println("closeSocket")
+        socketApolloClient?.close()
+        testProgressFlow = null
+        socketApolloClient = null
+    }
+
 
     override fun isInternetAvailable(): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

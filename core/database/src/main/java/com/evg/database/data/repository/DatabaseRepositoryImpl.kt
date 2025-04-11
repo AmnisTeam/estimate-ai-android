@@ -66,4 +66,10 @@ class DatabaseRepositoryImpl(
             .first()
             .find()
     }
+
+    override suspend fun clearDatabase() {
+        realm.write {
+            deleteAll()
+        }
+    }
 }

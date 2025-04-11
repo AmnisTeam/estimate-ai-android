@@ -26,6 +26,7 @@ interface ApiRepository {
     suspend fun createEssayTest(data: CreateEssayTestDTO): ServerResult<Unit, NetworkError>
 
     suspend fun onTestProgress(): SharedFlow<OnTestProgressResponse>
+    fun closeSocket()
 
     fun isInternetAvailable(): Boolean
 }

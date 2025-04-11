@@ -7,7 +7,14 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val accountModule = module {
-    single<AccountRepository> { AccountRepositoryImpl(sharedPrefsRepository = get()) }
+    single<AccountRepository> {
+        AccountRepositoryImpl(
+            context = get(),
+            sharedPrefsRepository = get(),
+            apiRepository = get(),
+            databaseRepository = get(),
+        )
+    }
     viewModel { AccountViewModel(accountRepository = get()) }
     /*single { LoginUseCases(
         loginUseCase = get(),

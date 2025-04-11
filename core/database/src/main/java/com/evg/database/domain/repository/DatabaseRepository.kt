@@ -1,6 +1,5 @@
 package com.evg.database.domain.repository
 
-import com.evg.database.domain.model.ReadyTestTypeDBO
 import com.evg.database.domain.model.TestDataDBO
 import com.evg.database.domain.model.TestTypeDBO
 
@@ -13,4 +12,6 @@ interface DatabaseRepository {
 
     suspend fun addTestData(data: TestDataDBO)
     fun getTestData(id: Int): TestDataDBO?
+
+    suspend fun clearDatabase()
 }

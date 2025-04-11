@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 
 val apiModule = module {
     factory {
-        val timeout: Long = 2_000
+        val timeout: Long = 10_000
 
         val okHttpClient = OkHttpClient.Builder()
             .connectTimeout(timeout, TimeUnit.MILLISECONDS)

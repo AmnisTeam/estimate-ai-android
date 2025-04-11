@@ -21,7 +21,7 @@ class AccountViewModel(
 
     fun dispatch(action: AccountAction) {
         when (action) {
-            AccountAction.Logout -> accountRepository.logout()
+            AccountAction.Logout -> intent { accountRepository.logout() }
             is AccountAction.SaveAppLanguage -> saveAppLanguage(language = action.language)
             is AccountAction.SaveAppTheme -> saveAppTheme(theme = action.theme)
             is AccountAction.SaveTestingLanguage -> saveTestingLanguage(language =action.language)

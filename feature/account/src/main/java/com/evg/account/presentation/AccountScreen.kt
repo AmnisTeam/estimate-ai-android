@@ -1,5 +1,6 @@
 package com.evg.account.presentation
 
+import android.app.Activity
 import android.app.LocaleManager
 import android.content.Context
 import android.os.Build
@@ -57,7 +58,7 @@ fun AccountScreen(
     onLoginScreen: () -> Unit,
 ) {
     val context = LocalContext.current
-    
+
     Column(
         modifier = modifier
             .padding(
@@ -156,6 +157,13 @@ fun AccountScreen(
             onClick = {
                 dispatch(AccountAction.Logout)
                 onLoginScreen()
+
+                val activity = context as? Activity
+                activity?.let {
+                    val intent = it.intent
+                    it.finish()
+                    it.startActivity(intent)
+                }
             }
         ) {
             Text(

@@ -4,13 +4,16 @@ import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
 import android.net.Uri
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import com.evg.resource.R
 import com.evg.tests_list.domain.usecase.ConnectTestProgressUseCase
 import com.evg.tests_list.presentation.mapper.toTestState
@@ -36,6 +39,26 @@ class TestStatusService : Service() {
     private var isStarted = false
     private var job: Job? = null
     private val connectTestProgressUseCase: ConnectTestProgressUseCase by inject()
+    private val receiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            stopSocketConnection()
+        }
+    }
+
+    override fun onCreate() {
+        val filter = IntentFilter("STOP_STATUS_SERVICE")
+        ContextCompat.registerReceiver(
+            this,
+            receiver,
+            filter,
+            ContextCompat.RECEIVER_NOT_EXPORTED,
+        )
+    }
+
+    override fun onDestroy() {
+        unregisterReceiver(receiver)
+        super.onDestroy()
+    }
 
     override fun onBind(p0: Intent?): IBinder? {
         return null
@@ -57,14 +80,14 @@ class TestStatusService : Service() {
 
         job = CoroutineScope(Dispatchers.IO).launch {
             val result = connectTestProgressUseCase.invoke()
-                result.collect { tests ->
-                    println("data collected in service №${++cnt}")
-                    if (tests.isNotEmpty()) {
-                        updateNotification(tests = tests.map { it.toTestState() })
-                    } else {
-                        stopSocketConnection()
-                    }
+            result.collect { tests ->
+                println("data collected in service №${++cnt}")
+                if (tests.isNotEmpty()) {
+                    updateNotification(tests = tests.map { it.toTestState() })
+                } else {
+                    stopSocketConnection()
                 }
+            }
         }
     }
 

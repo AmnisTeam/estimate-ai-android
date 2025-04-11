@@ -13,6 +13,7 @@ import com.evg.tests_list.domain.usecase.TestsListUseCases
 import com.evg.tests_list.presentation.mapper.toTestState
 import com.evg.tests_list.presentation.model.TestState
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
@@ -82,16 +83,21 @@ class TestsListViewModel(
         val newJob = viewModelScope.launch {
             val result = testsListUseCases.connectTestProgressUseCase.invoke()
             result.collect { tests: List<TestType> ->
-               println("qwe ${++test}")
-               val testsById = tests.map { it.toTestState() } .associateBy {
+                if (tests.isEmpty()) {
+                    cancel()
+                    return@collect
+                }
+
+                println("qwe ${++test}")
+                val testsById = tests.map { it.toTestState() } .associateBy {
                    when (it) {
                        is TestState.ErrorTest -> it.id
                        is TestState.FinishedTest -> it.id
                        is TestState.LoadingTest -> it.id
                    }
-               }
+                }
 
-               state.tests.value = state.tests.value.map { test ->
+                state.tests.value = state.tests.value.map { test ->
                    when (test) {
                        is ServerResult.Success -> {
                            val currentTestId = when (val data = test.data) {
@@ -112,7 +118,7 @@ class TestsListViewModel(
                            ServerResult.Error(test.error)
                        }
                    }
-               }
+                }
             }
         }
         connectTestProgressJobFlow.value = newJob
