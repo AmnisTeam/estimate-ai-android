@@ -76,6 +76,8 @@ fun LoadingTestTile(
                     text = "Test #${loadingTest.id}",
                     style = AppTheme.typography.body,
                     color = AppTheme.colors.text,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
                 Text(
                     modifier = Modifier

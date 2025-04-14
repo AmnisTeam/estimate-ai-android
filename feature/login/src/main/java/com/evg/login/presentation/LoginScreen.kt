@@ -100,8 +100,8 @@ fun LoginScreen(
             Icon(
                 modifier = Modifier
                     .size(AuthorizationIconSize),
-                painter = painterResource(R.drawable.eye_off),
-                tint = AppTheme.colors.text,
+                painter = painterResource(R.drawable.estimateai_icon),
+                tint = Color.Unspecified,
                 contentDescription = null,
             )
             Text(

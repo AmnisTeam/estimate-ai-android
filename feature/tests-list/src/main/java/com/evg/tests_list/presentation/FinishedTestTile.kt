@@ -77,6 +77,8 @@ fun FinishedTestTile(
                     text = finishedTest.title,
                     style = AppTheme.typography.body,
                     color = AppTheme.colors.text,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
                 Text(
                     modifier = Modifier
@@ -108,8 +110,8 @@ fun FinishedTestTilePreview(darkTheme: Boolean = true) {
                 finishedTest = TestState.FinishedTest(
                     id = 1,
                     icon = TestIcons.ESSAY,
-                    title = "Title name example",
-                    description = "Write an essay on any topic. Your English level will be estimated based on it.",
+                    title = "Title name example example example example example example example",
+                    description = "Write an essay on any topic. Your English level will be estimated based based based based based based based based based based on it.",
                     scoreAI = TestScore(0),
                     scoreHuman = TestScore(0),
                     createdAt = 0,

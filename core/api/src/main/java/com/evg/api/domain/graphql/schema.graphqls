@@ -67,7 +67,7 @@ type ReadyTest {
   type: String!
   description: String!
   scoreAI: Int!
-  scoreHuman: Int!
+  scoreHuman: Int
   createdAt: Long!
 }
 type LoadingTest {

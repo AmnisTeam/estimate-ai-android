@@ -6,6 +6,7 @@ import com.evg.statistics.domain.model.TestStatistics
 import com.evg.statistics.presentation.model.StatisticsUI
 import com.evg.statistics.presentation.model.TestStatisticsUI
 import com.evg.utils.extensions.toDateString
+import com.evg.utils.extensions.toTestLevel
 import com.evg.utils.mapper.toTestIcons
 import com.evg.utils.model.TestIcons
 import com.evg.utils.model.TestScore
@@ -21,11 +22,10 @@ fun List<TestStatistics>.toStatisticsUI(): StatisticsUI {
         .maxByOrNull { it.value }?.key
 
     val frequentLevel = this
-        .groupingBy { it.score }
+        .groupingBy { it.score.toTestLevel() }
         .eachCount()
         .maxByOrNull { it.value }
         ?.key
-        ?.let { TestScore(it) }
 
     val testStatisticsUI = this.map { testStatistic ->
         TestStatisticsUI(

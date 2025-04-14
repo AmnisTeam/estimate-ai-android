@@ -8,6 +8,6 @@ import com.evg.tests_list.presentation.model.TestState
 import kotlinx.coroutines.flow.MutableStateFlow
 
 data class TestsListState(
-    val isTestsLoading: Boolean = false,
+    val isTestsLoading: Boolean = true,
     val tests: MutableStateFlow<PagingData<ServerResult<TestState, NetworkError>>> = MutableStateFlow(PagingData.empty())
 )

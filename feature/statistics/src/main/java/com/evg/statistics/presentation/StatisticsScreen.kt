@@ -43,6 +43,7 @@ import com.evg.ui.theme.EstimateAITheme
 import com.evg.ui.theme.HorizontalPaddingTile
 import com.evg.ui.theme.VerticalPadding
 import com.evg.utils.model.TestIcons
+import com.evg.utils.model.TestLevelColors
 import com.evg.utils.model.TestScore
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
@@ -145,7 +146,7 @@ fun StatisticsScreen(
 
                     InfoGridScreen(
                         tiles = listOf(
-                            Pair(stringResource(R.string.frequent_level), tests.frequentLevel?.level?.name),
+                            Pair(stringResource(R.string.frequent_level), tests.frequentLevel?.name),
                             Pair(stringResource(R.string.frequent_day), tests.frequentDayOfWeek?.toStringLocale(context)),
                         )
                     )
@@ -176,7 +177,7 @@ fun StatisticsScreenPreview(darkTheme: Boolean = true) {
                     isStatisticsLoading = false,
                     statistics = MutableStateFlow(
                         StatisticsUI(
-                            frequentLevel = TestScore(5),
+                            frequentLevel = TestLevelColors.A2,
                             frequentDayOfWeek = DayOfWeek.MONDAY,
                             testStatisticsUI = pointsRand,
                         )

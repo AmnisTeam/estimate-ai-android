@@ -84,9 +84,9 @@ fun TestEssayScreen(
 
     val charactersCount = essayText.text.length
     val charactersState = when {
-        charactersCount <= 100 -> CharactersNumberState.NOT_ENOUGH
-        charactersCount in 101..200 -> CharactersNumberState.NORMAL
-        charactersCount in 201..400 -> CharactersNumberState.ENOUGH
+        charactersCount <= 250 -> CharactersNumberState.NOT_ENOUGH
+        charactersCount in 251..500 -> CharactersNumberState.NORMAL
+        charactersCount in 501..1000 -> CharactersNumberState.ENOUGH
         else -> CharactersNumberState.MAXIMUM
     }
 

@@ -7,7 +7,7 @@ sealed class TestResponse {
         val type: String,
         val description: String,
         val scoreAI: Int,
-        val scoreHuman: Int,
+        val scoreHuman: Int?,
         val createdAt: Long,
     ) : TestResponse()
     data class OnLoadingTestResponse(

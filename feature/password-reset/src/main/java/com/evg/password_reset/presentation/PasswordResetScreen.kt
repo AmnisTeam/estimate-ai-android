@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -86,8 +87,8 @@ fun PasswordResetScreen(
             Icon(
                 modifier = Modifier
                     .size(AuthorizationIconSize),
-                painter = painterResource(R.drawable.eye_off),
-                tint = AppTheme.colors.text,
+                painter = painterResource(R.drawable.estimateai_icon),
+                tint = Color.Unspecified,
                 contentDescription = null,
             )
             Text(
