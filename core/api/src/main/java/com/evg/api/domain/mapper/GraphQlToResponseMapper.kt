@@ -35,6 +35,7 @@ private fun mapLoadingTest(loadingTest: LoadingTestFragment) = TestResponse.OnLo
 
 private fun mapErrorTest(errorTest: ErrorTestFragment) = TestResponse.OnErrorTestResponse(
     id = errorTest.id,
+    type = errorTest.type,
     createdAt = errorTest.createdAt
 )
 

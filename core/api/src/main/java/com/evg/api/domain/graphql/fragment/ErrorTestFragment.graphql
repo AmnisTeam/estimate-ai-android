@@ -1,4 +1,5 @@
 fragment ErrorTestFragment on ErrorTest {
     id
+    type
     createdAt
 }

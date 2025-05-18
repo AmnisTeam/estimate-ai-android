@@ -28,5 +28,6 @@ open class LoadingTestTypeDBO : EmbeddedRealmObject {
 }
 
 open class ErrorTestTypeDBO : EmbeddedRealmObject {
+    var type: String = ""
     var createdAt: Long = 0
 }

@@ -51,6 +51,7 @@ import com.evg.utils.model.TestScore
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+
 @Composable
 fun TestEssayScreen(
     state: TestEssayState,
@@ -91,6 +92,7 @@ fun TestEssayScreen(
     }
 
     val maximumCharactersExceeded = stringResource(R.string.maximum_characters_exceeded)
+    val insufficientCharacters = stringResource(R.string.insufficient_characters)
 
 
     Column(
@@ -176,16 +178,20 @@ fun TestEssayScreen(
                     iconColor = AppTheme.colors.text,
                     isLoading = state.isTestSending,
                     onClick = {
-                        if (charactersState == CharactersNumberState.MAXIMUM) {
-                            scope.launch {
-                                SnackBarController.sendEvent(event = SnackBarEvent(message = maximumCharactersExceeded))
+                        when (charactersState) {
+                            CharactersNumberState.NOT_ENOUGH -> {
+                                scope.launch { SnackBarController.sendEvent(event = SnackBarEvent(message = insufficientCharacters)) }
                             }
-                        } else {
-                            dispatch(
-                                TestEssayAction.SendTest(
-                                    data = EssayTestData(essay = essayText.text, passedTime = passedTime)
+                            CharactersNumberState.MAXIMUM -> {
+                                scope.launch { SnackBarController.sendEvent(event = SnackBarEvent(message = maximumCharactersExceeded)) }
+                            }
+                            else -> {
+                                dispatch(
+                                    TestEssayAction.SendTest(
+                                        data = EssayTestData(essay = essayText.text, passedTime = passedTime)
+                                    )
                                 )
-                            )
+                            }
                         }
                     },
                 )
@@ -224,7 +230,6 @@ fun TestEssayScreen(
         }
     }
 }
-
 @Composable
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun TestsListScreenPreview(darkTheme: Boolean = true) {

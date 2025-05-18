@@ -58,6 +58,9 @@
     <string name="loading_test">Loading test</string>
     <string name="test_id_ready">Test №%1$d is ready</string>
     <string name="test_id_failed">Test №%1$d failed with an error</string>
+    <string name="number_in_queue">Number in queue</string>
+    <string name="error_test">Error test</string>
+    <string name="test">Test</string>
     <string name="tests">Tests</string>
     <string name="statistics">Statistics</string>
     <string name="account">Account</string>
@@ -75,6 +78,7 @@
     <string name="enough">Enough</string>
     <string name="maximum">Maximum</string>
     <string name="maximum_characters_exceeded">The maximum number of characters has been exceeded</string>
+    <string name="insufficient_characters">Insufficient number of characters</string>
 
     <!--Statistics screen-->
     <string name="week">Week</string>

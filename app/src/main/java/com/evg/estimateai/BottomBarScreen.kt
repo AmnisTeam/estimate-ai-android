@@ -6,6 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.evg.estimateai.graphs.Route
 import com.evg.resource.R
@@ -22,13 +23,13 @@ sealed class BottomBarScreen(
 
     data object Statistics : BottomBarScreen(
         route = Route.Statistics,
-        title = R.string.tests,
+        title = R.string.statistics,
         icon = Icons.Default.DateRange
     )
     data object TestsList : BottomBarScreen(
         route = Route.TestsList,
-        title = R.string.statistics,
-        icon = Icons.Default.Face
+        title = R.string.tests,
+        icon = Icons.Default.Menu
     )
     data object Account : BottomBarScreen(
         route = Route.Account,

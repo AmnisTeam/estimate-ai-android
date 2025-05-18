@@ -25,6 +25,7 @@ fun TestType.toTestState(): TestState {
         )
         is TestType.OnErrorTestType -> TestState.ErrorTest(
             id = this.id,
+            icon = this.type.toTestIcons(),
             createdAt = this.createdAt,
         )
     }

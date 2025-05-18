@@ -32,6 +32,7 @@ fun TestResponse.toTestType(): TestType {
         is TestResponse.OnErrorTestResponse -> {
             TestType.OnErrorTestType(
                 id = this.id,
+                type = this.type,
                 createdAt = this.createdAt,
             )
         }
@@ -68,6 +69,7 @@ fun TestTypeDBO.toTestType(): TestType {
             errorTestTypeDBO?.let {
                 TestType.OnErrorTestType(
                     id = this.id,
+                    type = it.type,
                     createdAt = it.createdAt,
                 )
             } ?: throw IllegalArgumentException("ErrorTestTypeDBO is null")

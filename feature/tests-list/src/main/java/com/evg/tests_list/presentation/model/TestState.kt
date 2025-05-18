@@ -22,6 +22,7 @@ sealed class TestState {
     ) : TestState()
     data class ErrorTest(
         val id: Int,
+        val icon: TestIcons,
         val createdAt: Long,
     ) : TestState()
 }

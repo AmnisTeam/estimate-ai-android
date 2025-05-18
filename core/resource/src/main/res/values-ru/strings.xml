@@ -56,6 +56,9 @@
     <string name="loading_test">Загрузка теста</string>
     <string name="test_id_ready">Тест №%1$d готов</string>
     <string name="test_id_failed">Тест №%1$d завершился ошибкой</string>
+    <string name="number_in_queue">Номер в очереди</string>
+    <string name="error_test">Ошибочный тест</string>
+    <string name="test">Тест</string>
     <string name="tests">Тесты</string>
     <string name="statistics">Статистика</string>
     <string name="account">Аккаунт</string>
@@ -73,6 +76,7 @@
     <string name="enough">Достаточно</string>
     <string name="maximum">Максимум</string>
     <string name="maximum_characters_exceeded">Превышено максимальное количество символов</string>
+    <string name="insufficient_characters">Недостаточное количество символов</string>
 
     <!--Statistics screen-->
     <string name="week">Неделя</string>

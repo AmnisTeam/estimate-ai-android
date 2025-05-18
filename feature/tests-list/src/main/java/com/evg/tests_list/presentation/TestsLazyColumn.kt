@@ -135,9 +135,6 @@ fun TestsLazyColumn(
                                     is TestState.LoadingTest -> {
                                         LoadingTestTile(
                                             loadingTest = data,
-                                            onClick = {
-
-                                            },
                                         )
                                     }
 
@@ -155,7 +152,11 @@ fun TestsLazyColumn(
                                         )
                                     }
 
-                                    is TestState.ErrorTest -> TODO()
+                                    is TestState.ErrorTest -> {
+                                        ErrorTestTile(
+                                            errorTest = data
+                                        )
+                                    }
                                 }
                             }
 

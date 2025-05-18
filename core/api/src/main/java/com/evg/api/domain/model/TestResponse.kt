@@ -19,6 +19,7 @@ sealed class TestResponse {
     ) : TestResponse()
     data class OnErrorTestResponse(
         val id: Int,
+        val type: String,
         val createdAt: Long,
     ) : TestResponse()
 }

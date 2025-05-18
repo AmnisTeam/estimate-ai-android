@@ -26,6 +26,7 @@ sealed class TestType : Parcelable {
     @Parcelize
     data class OnErrorTestType(
         val id: Int,
+        val type: String,
         val createdAt: Long,
     ) : TestType()
 }

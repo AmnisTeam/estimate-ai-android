@@ -9,6 +9,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
@@ -32,15 +35,17 @@ import com.evg.ui.theme.BorderRadius
 import com.evg.ui.theme.EstimateAITheme
 
 @Composable
-fun LoadingTestTile(
-    loadingTest: TestState.LoadingTest,
+fun ErrorTestTile(
+    errorTest: TestState.ErrorTest,
 ) {
     val paddings = 10.dp
+    val cardBackground = AppTheme.colors.tileBackground
+        .copy(red = (AppTheme.colors.tileBackground.red + 0.05f))
 
     Box(
         modifier = Modifier
             .clip(shape = RoundedCornerShape(BorderRadius))
-            .background(color = AppTheme.colors.tileBackground)
+            .background(color = cardBackground)
     ) {
         Row(
             modifier = Modifier
@@ -49,7 +54,7 @@ fun LoadingTestTile(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            val icon = when(loadingTest.icon) {
+            val icon = when(errorTest.icon) {
                 TestIcons.ESSAY -> painterResource(id = R.drawable.essay)
                 TestIcons.UNKNOWN -> painterResource(id = R.drawable.unknown)
             }
@@ -70,50 +75,37 @@ fun LoadingTestTile(
                 Text(
                     modifier = Modifier
                         .weight(1f),
-                    text = "${stringResource(R.string.test)} #${loadingTest.id}",
+                    text = "${stringResource(R.string.error_test)} #${errorTest.id}",
                     style = AppTheme.typography.body,
                     color = AppTheme.colors.text,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Text(
-                    modifier = Modifier
-                        .weight(1f),
-                    text = "${stringResource(R.string.number_in_queue)}: ${loadingTest.queue}",
-                    style = AppTheme.typography.small,
-                    color = AppTheme.colors.textFieldPlaceholder,
-                    overflow = TextOverflow.Ellipsis,
-                )
             }
 
-            Box(
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(
-                    color = AppTheme.colors.primary,
-                )
-                Text(
-                    modifier = Modifier,
-                    text = "${loadingTest.progress}%",
-                    color = AppTheme.colors.text,
-                    fontSize = 11.sp,
-                )
-            }
+            Icon(
+                modifier = Modifier
+                    .size(40.dp)
+                    .clickableRipple {
+
+                    },
+                imageVector = Icons.Filled.Refresh,
+                contentDescription = null,
+                tint = AppTheme.colors.text,
+            )
         }
     }
 }
 
 @Composable
 @Preview(showBackground = true)
-fun LoadingTestTilePreview(darkTheme: Boolean = true) {
+fun ErrorTestTilePreview(darkTheme: Boolean = true) {
     EstimateAITheme(darkTheme = darkTheme) {
         Surface(color = AppTheme.colors.background) {
-            LoadingTestTile(
-                loadingTest = TestState.LoadingTest(
+            ErrorTestTile(
+                errorTest = TestState.ErrorTest(
                     id = 1,
                     icon = TestIcons.ESSAY,
-                    queue = 1,
-                    progress = 59,
                     createdAt = 0,
                 ),
             )
