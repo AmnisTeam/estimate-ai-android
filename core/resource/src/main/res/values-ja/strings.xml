@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">EstimateAI</string>
+
+    <!--Registration screen-->
+    <string name="welcome">ようこそ！</string>
+    <string name="create_account_progress">アカウントを作成して、設定や進行状況を失わないようにしましょう</string>
+    <string name="email">メール</string>
+    <string name="enter_email">メールを入力してください</string>
+    <string name="password">パスワード</string>
+    <string name="enter_password">パスワードを入力してください</string>
+    <string name="confirm_password">パスワードを確認</string>
+    <string name="enter_password_again">もう一度パスワードを入力してください</string>
+    <string name="sign_up">サインアップ</string>
+    <string name="i_already_have_account">既にアカウントをお持ちです</string>
+
+    <string name="error_invalid_email">無効なメールアドレスです</string>
+    <string name="error_password_mismatch">パスワードが一致しません</string>
+    <string name="error_empty_password">パスワードを入力してください</string>
+    <string name="error_password_min_length">パスワードは最低でも%1$d文字必要です</string>
+    <string name="error_password_max_length">パスワードは最大で%1$d文字までです</string>
+
+    <string name="registration_success">登録が完了しました。メールをご確認ください</string>
+    <string name="request_timeout">リクエストがタイムアウトしました</string>
+    <string name="too_many_requests">リクエストが多すぎます</string>
+    <string name="not_found">見つかりませんでした</string>
+    <string name="server_error">サーバーエラー</string>
+    <string name="protocol_error">プロトコルエラー</string>
+    <string name="connect_error">接続エラー</string>
+    <string name="unknown_error">不明なエラーが発生しました</string>
+    <string name="email_exists">このメールアドレスは既に使用されています</string>
+    <string name="test_not_found">テストが見つかりません</string>
+    <string name="tests_loading_error">テストの読み込み中にエラーが発生しました</string>
+
+    <!--Login screen-->
+    <string name="log_in">ログイン</string>
+    <string name="wrong_email_or_password">メールアドレスまたはパスワードが間違っています</string>
+    <string name="login_success">ログインに成功しました！</string>
+    <string name="login_account_progress">ログインして設定や進行状況を失わないようにしましょう</string>
+    <string name="i_dont_have_account">アカウントをお持ちでない方</string>
+    <string name="forgot_password">パスワードをお忘れですか？</string>
+
+    <!--Registration screen-->
+    <string name="password_reset">パスワードリセット</string>
+    <string name="reset">リセット</string>
+
+    <!--Password reset screen-->
+    <string name="letter_with_instructions_send_to_email">指示を記載したメールを送信しました</string>
+    <string name="email_does_not_exist">このメールアドレスは存在しません</string>
+
+    <!--Tests list screen-->
+    <string name="list_tests_is_empty">テストのリストが空です</string>
+    <string name="swipe_to_update">スワイプして更新</string>
+    <string name="reply_sent">回答が送信されました</string>
+    <string name="estimated_level">推定レベル</string>
+    <string name="tests_left">残りのテスト</string>
+    <string name="queue">キュー</string>
+    <string name="loading_tests">テストを読み込み中</string>
+    <string name="loading_test">テストを読み込み中</string>
+    <string name="test_id_ready">テスト №%1$d が準備完了</string>
+    <string name="test_id_failed">テスト №%1$d がエラーで失敗しました</string>
+    <string name="number_in_queue">キュー内の番号</string>
+    <string name="error_test">テストエラー</string>
+    <string name="test">テスト</string>
+    <string name="tests">テスト</string>
+    <string name="statistics">統計</string>
+    <string name="account">アカウント</string>
+
+    <!--Test select screen-->
+    <string name="select_test_type">テストの種類を選択</string>
+    <string name="essay_test_description">任意のトピックについてエッセイを書いてください。英語レベルを評価します。</string>
+
+    <!--Test essay screen-->
+    <string name="essay_test">エッセイテスト</string>
+    <string name="characters">文字数</string>
+    <string name="number_characters">文字の数</string>
+    <string name="not_enough">不足しています</string>
+    <string name="normal">適正です</string>
+    <string name="enough">十分です</string>
+    <string name="maximum">最大値</string>
+    <string name="maximum_characters_exceeded">最大文字数を超えています</string>
+    <string name="insufficient_characters">文字数が不足しています</string>
+
+    <!--Statistics screen-->
+    <string name="week">週</string>
+    <string name="month">月</string>
+    <string name="year">年</string>
+    <string name="calendar">カレンダー</string>
+    <string name="apply">適用</string>
+    <string name="cancel">キャンセル</string>
+    <string name="select_date_range">日付範囲を選択</string>
+    <string name="not_enough_data">データが不足しています</string>
+    <string name="no_data">データがありません</string>
+    <string name="monday">月曜日</string>
+    <string name="tuesday">火曜日</string>
+    <string name="wednesday">水曜日</string>
+    <string name="thursday">木曜日</string>
+    <string name="friday">金曜日</string>
+    <string name="saturday">土曜日</string>
+    <string name="sunday">日曜日</string>
+    <string name="frequent_level">最頻レベル</string>
+    <string name="frequent_day">最頻日</string>
+
+    <!--Account screen-->
+    <string name="no_username">ユーザー名がありません</string>
+    <string name="app_language">アプリの言語</string>
+    <string name="app_theme">アプリのテーマ</string>
+    <string name="testing_language">テスト言語</string>
+    <string name="system">システム</string>
+    <string name="english">英語</string>
+    <string name="chinese">中国語</string>
+    <string name="spanish">スペイン語</string>
+    <string name="french">フランス語</string>
+    <string name="russian">ロシア語</string>
+    <string name="portuguese">ポルトガル語</string>
+    <string name="german">ドイツ語</string>
+    <string name="hindi">ヒンディー語</string>
+    <string name="japanese">日本語</string>
+    <string name="turkish">トルコ語</string>
+    <string name="korean">韓国語</string>
+    <string name="italian">イタリア語</string>
+    <string name="dark">ダーク</string>
+    <string name="light">ライト</string>
+    <string name="logout">ログアウト</string>
+
+</resources>

@@ -90,8 +90,8 @@ fun RegistrationScreen(
     val errorInvalidEmail = stringResource(R.string.error_invalid_email)
     val errorPasswordMismatch = stringResource(R.string.error_password_mismatch)
     val errorEmptyPassword = stringResource(R.string.error_empty_password)
-    val errorPasswordMinLength = stringResource(R.string.error_password_min_length)
-    val errorPasswordMaxLength = stringResource(R.string.error_password_max_length)
+    val errorPasswordMinLength = stringResource(R.string.error_password_min_length, 8)
+    val errorPasswordMaxLength = stringResource(R.string.error_password_max_length, 24)
 
     Column(
         modifier = modifier

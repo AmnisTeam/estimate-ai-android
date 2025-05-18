@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">EstimateAI</string>
+
+    <!--Registration screen-->
+    <string name="welcome">Hoş geldiniz!</string>
+    <string name="create_account_progress">Tercihlerinizi ve ilerlemenizi kaybetmemek için bir hesap oluşturun</string>
+    <string name="email">E-posta</string>
+    <string name="enter_email">E-posta adresinizi girin</string>
+    <string name="password">Şifre</string>
+    <string name="enter_password">Şifrenizi girin</string>
+    <string name="confirm_password">Şifreyi onayla</string>
+    <string name="enter_password_again">Şifrenizi tekrar girin</string>
+    <string name="sign_up">Kayıt Ol</string>
+    <string name="i_already_have_account">Zaten bir hesabım var</string>
+
+    <string name="error_invalid_email">Geçersiz e-posta adresi</string>
+    <string name="error_password_mismatch">Şifreler uyuşmuyor</string>
+    <string name="error_empty_password">Şifre boş olamaz</string>
+    <string name="error_password_min_length">Şifre en az %1$d karakter olmalıdır</string>
+    <string name="error_password_max_length">Şifre en fazla %1$d karakter olabilir</string>
+
+    <string name="registration_success">Kayıt başarılı. Lütfen e-postanızı kontrol edin</string>
+    <string name="request_timeout">İstek zaman aşımına uğradı</string>
+    <string name="too_many_requests">Çok fazla istek gönderildi</string>
+    <string name="not_found">Bulunamadı</string>
+    <string name="server_error">Sunucu hatası</string>
+    <string name="protocol_error">Protokol hatası</string>
+    <string name="connect_error">Bağlantı hatası</string>
+    <string name="unknown_error">Bilinmeyen hata</string>
+    <string name="email_exists">E-posta zaten kayıtlı</string>
+    <string name="test_not_found">Test bulunamadı</string>
+    <string name="tests_loading_error">Testler yüklenirken hata oluştu</string>
+
+    <!--Login screen-->
+    <string name="log_in">Giriş Yap</string>
+    <string name="wrong_email_or_password">E-posta veya şifre yanlış</string>
+    <string name="login_success">Giriş başarılı!</string>
+    <string name="login_account_progress">Tercihlerinizi ve ilerlemenizi kaybetmemek için giriş yapın</string>
+    <string name="i_dont_have_account">Hesabım yok</string>
+    <string name="forgot_password">Şifrenizi mi unuttunuz?</string>
+
+    <!--Registration screen-->
+    <string name="password_reset">Şifre Sıfırlama</string>
+    <string name="reset">Sıfırla</string>
+
+    <!--Password reset screen-->
+    <string name="letter_with_instructions_send_to_email">Talimatları içeren bir e-posta gönderdik</string>
+    <string name="email_does_not_exist">E-posta adresi kayıtlı değil</string>
+
+    <!--Tests list screen-->
+    <string name="list_tests_is_empty">Test listesi boş</string>
+    <string name="swipe_to_update">Güncellemek için aşağı kaydırın</string>
+    <string name="reply_sent">Yanıtınız gönderildi</string>
+    <string name="estimated_level">Tahmini seviye</string>
+    <string name="tests_left">Kalan testler</string>
+    <string name="queue">Kuyruk</string>
+    <string name="loading_tests">Testler yükleniyor</string>
+    <string name="loading_test">Test yükleniyor</string>
+    <string name="test_id_ready">%1$d numaralı test hazır</string>
+    <string name="test_id_failed">%1$d numaralı test hata ile sonuçlandı</string>
+    <string name="number_in_queue">Kuyruktaki konum</string>
+    <string name="error_test">Test hatası</string>
+    <string name="test">Test</string>
+    <string name="tests">Testler</string>
+    <string name="statistics">İstatistikler</string>
+    <string name="account">Hesap</string>
+
+    <!--Test select screen-->
+    <string name="select_test_type">Test türünü seçin</string>
+    <string name="essay_test_description">Herhangi bir konuda bir deneme yazın. İngilizce seviyeniz buna göre tahmin edilecektir.</string>
+
+    <!--Test essay screen-->
+    <string name="essay_test">Deneme Testi</string>
+    <string name="characters">Karakterler</string>
+    <string name="number_characters">Karakter sayısı</string>
+    <string name="not_enough">Yetersiz</string>
+    <string name="normal">Normal</string>
+    <string name="enough">Yeterli</string>
+    <string name="maximum">Maksimum</string>
+    <string name="maximum_characters_exceeded">Maksimum karakter sayısı aşıldı</string>
+    <string name="insufficient_characters">Yetersiz karakter sayısı</string>
+
+    <!--Statistics screen-->
+    <string name="week">Hafta</string>
+    <string name="month">Ay</string>
+    <string name="year">Yıl</string>
+    <string name="calendar">Takvim</string>
+    <string name="apply">Uygula</string>
+    <string name="cancel">İptal</string>
+    <string name="select_date_range">Tarih aralığını seçin</string>
+    <string name="not_enough_data">Yeterli veri yok</string>
+    <string name="no_data">Veri yok</string>
+    <string name="monday">Pazartesi</string>
+    <string name="tuesday">Salı</string>
+    <string name="wednesday">Çarşamba</string>
+    <string name="thursday">Perşembe</string>
+    <string name="friday">Cuma</string>
+    <string name="saturday">Cumartesi</string>
+    <string name="sunday">Pazar</string>
+    <string name="frequent_level">En sık görülen seviye</string>
+    <string name="frequent_day">En sık görülen gün</string>
+
+    <!--Account screen-->
+    <string name="no_username">Kullanıcı adı yok</string>
+    <string name="app_language">Uygulama dili</string>
+    <string name="app_theme">Uygulama teması</string>
+    <string name="testing_language">Test dili</string>
+    <string name="system">Sistem</string>
+    <string name="english">İngilizce</string>
+    <string name="chinese">Çince</string>
+    <string name="spanish">İspanyolca</string>
+    <string name="french">Fransızca</string>
+    <string name="russian">Rusça</string>
+    <string name="portuguese">Portekizce</string>
+    <string name="german">Almanca</string>
+    <string name="hindi">Hintçe</string>
+    <string name="japanese">Japonca</string>
+    <string name="turkish">Türkçe</string>
+    <string name="korean">Korece</string>
+    <string name="italian">İtalyanca</string>
+    <string name="dark">Koyu</string>
+    <string name="light">Açık</string>
+    <string name="logout">Çıkış Yap</string>
+
+</resources>

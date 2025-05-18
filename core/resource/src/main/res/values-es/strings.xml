@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">EstimateAI</string>
+
+    <!--Registration screen-->
+    <string name="welcome">¡Bienvenido!</string>
+    <string name="create_account_progress">Crea una cuenta para no perder tus preferencias y progreso</string>
+    <string name="email">Correo electrónico</string>
+    <string name="enter_email">Introduce tu correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="enter_password">Introduce tu contraseña</string>
+    <string name="confirm_password">Confirmar contraseña</string>
+    <string name="enter_password_again">Vuelve a introducir tu contraseña</string>
+    <string name="sign_up">Registrarse</string>
+    <string name="i_already_have_account">Ya tengo una cuenta</string>
+
+    <string name="error_invalid_email">Dirección de correo electrónico no válida</string>
+    <string name="error_password_mismatch">Las contraseñas no coinciden</string>
+    <string name="error_empty_password">La contraseña no puede estar vacía</string>
+    <string name="error_password_min_length">La contraseña debe tener al menos %1$d caracteres</string>
+    <string name="error_password_max_length">La contraseña puede tener como máximo %1$d caracteres</string>
+
+    <string name="registration_success">Registro exitoso. Por favor, verifica tu correo electrónico</string>
+    <string name="request_timeout">Tiempo de espera de la solicitud agotado</string>
+    <string name="too_many_requests">Demasiadas solicitudes</string>
+    <string name="not_found">No encontrado</string>
+    <string name="server_error">Error del servidor</string>
+    <string name="protocol_error">Error de protocolo</string>
+    <string name="connect_error">Error de conexión</string>
+    <string name="unknown_error">Error desconocido</string>
+    <string name="email_exists">El correo electrónico ya está registrado</string>
+    <string name="test_not_found">Prueba no encontrada</string>
+    <string name="tests_loading_error">Error al cargar las pruebas</string>
+
+    <!--Login screen-->
+    <string name="log_in">Iniciar sesión</string>
+    <string name="wrong_email_or_password">Correo electrónico o contraseña incorrectos</string>
+    <string name="login_success">¡Inicio de sesión exitoso!</string>
+    <string name="login_account_progress">Inicia sesión para no perder tus preferencias y progreso</string>
+    <string name="i_dont_have_account">No tengo una cuenta</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+
+    <!--Registration screen-->
+    <string name="password_reset">Restablecer contraseña</string>
+    <string name="reset">Restablecer</string>
+
+    <!--Password reset screen-->
+    <string name="letter_with_instructions_send_to_email">Hemos enviado un correo electrónico con instrucciones</string>
+    <string name="email_does_not_exist">El correo electrónico no está registrado</string>
+
+    <!--Tests list screen-->
+    <string name="list_tests_is_empty">La lista de pruebas está vacía</string>
+    <string name="swipe_to_update">Desliza hacia abajo para actualizar</string>
+    <string name="reply_sent">Tu respuesta ha sido enviada</string>
+    <string name="estimated_level">Nivel estimado</string>
+    <string name="tests_left">Pruebas restantes</string>
+    <string name="queue">Cola</string>
+    <string name="loading_tests">Cargando pruebas</string>
+    <string name="loading_test">Cargando prueba</string>
+    <string name="test_id_ready">La prueba nº %1$d está lista</string>
+    <string name="test_id_failed">La prueba nº %1$d ha fallado con un error</string>
+    <string name="number_in_queue">Posición en la cola</string>
+    <string name="error_test">Error en la prueba</string>
+    <string name="test">Prueba</string>
+    <string name="tests">Pruebas</string>
+    <string name="statistics">Estadísticas</string>
+    <string name="account">Cuenta</string>
+
+    <!--Test select screen-->
+    <string name="select_test_type">Selecciona el tipo de prueba</string>
+    <string name="essay_test_description">Escribe un ensayo sobre cualquier tema. Tu nivel de inglés se estimará en base a él.</string>
+
+    <!--Test essay screen-->
+    <string name="essay_test">Prueba de ensayo</string>
+    <string name="characters">Caracteres</string>
+    <string name="number_characters">Número de caracteres</string>
+    <string name="not_enough">Insuficiente</string>
+    <string name="normal">Normal</string>
+    <string name="enough">Suficiente</string>
+    <string name="maximum">Máximo</string>
+    <string name="maximum_characters_exceeded">Se ha excedido el número máximo de caracteres</string>
+    <string name="insufficient_characters">Número de caracteres insuficiente</string>
+
+    <!--Statistics screen-->
+    <string name="week">Semana</string>
+    <string name="month">Mes</string>
+    <string name="year">Año</string>
+    <string name="calendar">Calendario</string>
+    <string name="apply">Aplicar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="select_date_range">Selecciona el rango de fechas</string>
+    <string name="not_enough_data">Datos insuficientes</string>
+    <string name="no_data">Sin datos</string>
+    <string name="monday">Lunes</string>
+    <string name="tuesday">Martes</string>
+    <string name="wednesday">Miércoles</string>
+    <string name="thursday">Jueves</string>
+    <string name="friday">Viernes</string>
+    <string name="saturday">Sábado</string>
+    <string name="sunday">Domingo</string>
+    <string name="frequent_level">Nivel más frecuente</string>
+    <string name="frequent_day">Día más frecuente</string>
+
+    <!--Account screen-->
+    <string name="no_username">Sin nombre de usuario</string>
+    <string name="app_language">Idioma de la app</string>
+    <string name="app_theme">Tema de la app</string>
+    <string name="testing_language">Idioma de prueba</string>
+    <string name="system">Sistema</string>
+    <string name="english">Inglés</string>
+    <string name="chinese">Chino</string>
+    <string name="spanish">Español</string>
+    <string name="french">Francés</string>
+    <string name="russian">Ruso</string>
+    <string name="portuguese">Portugués</string>
+    <string name="german">Alemán</string>
+    <string name="hindi">Hindi</string>
+    <string name="japanese">Japonés</string>
+    <string name="turkish">Turco</string>
+    <string name="korean">Coreano</string>
+    <string name="italian">Italiano</string>
+    <string name="dark">Oscuro</string>
+    <string name="light">Claro</string>
+    <string name="logout">Cerrar sesión</string>
+
+</resources>

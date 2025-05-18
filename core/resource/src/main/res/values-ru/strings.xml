@@ -14,8 +14,8 @@
     <string name="error_invalid_email">Неверный адрес электронной почты</string>
     <string name="error_password_mismatch">Пароли не совпадают</string>
     <string name="error_empty_password">Пароль не может быть пустым</string>
-    <string name="error_password_min_length">Минимальная длина пароля — 8 символов</string>
-    <string name="error_password_max_length">Максимальная длина пароля — 24 символа</string>
+    <string name="error_password_min_length">Минимальная длина пароля — %1$d символов</string>
+    <string name="error_password_max_length">Максимальная длина пароля — %1$d символов</string>
 
     <string name="registration_success">Регистрация успешна. Проверьте вашу электронную почту</string>
     <string name="request_timeout">Превышено время ожидания запроса</string>
@@ -105,8 +105,17 @@
     <string name="testing_language">Язык тесторивания</string>
     <string name="system">Система</string>
     <string name="english">Английский</string>
-    <string name="russian">Русский</string>
+    <string name="chinese">Китайский</string>
     <string name="spanish">Испанский</string>
+    <string name="french">Французский</string>
+    <string name="russian">Русский</string>
+    <string name="portuguese">Португальский</string>
+    <string name="german">Немецкий</string>
+    <string name="hindi">Хинди</string>
+    <string name="japanese">Японский</string>
+    <string name="turkish">Турецкий</string>
+    <string name="korean">Корейский</string>
+    <string name="italian">Итальянский</string>
     <string name="dark">Темная</string>
     <string name="light">Светлая</string>
     <string name="logout">Выйти из аккаунта</string>

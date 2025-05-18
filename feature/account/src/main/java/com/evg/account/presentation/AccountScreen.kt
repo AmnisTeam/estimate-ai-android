@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -44,6 +45,7 @@ import com.evg.account.presentation.settingstile.StyleTile
 import com.evg.account.presentation.settingstile.Tile
 import com.evg.account.presentation.settingstile.TileBlock
 import com.evg.resource.R
+import com.evg.ui.custom.AuthorizationButton
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.BorderRadius
 import com.evg.ui.theme.EstimateAITheme
@@ -145,15 +147,10 @@ fun AccountScreen(
 
         Spacer(Modifier.weight(1f))
 
-        Button(
+        AuthorizationButton(
             modifier = Modifier
-                .padding(top = 50.dp)
-                .fillMaxWidth()
-                .height(40.dp),
-            colors = ButtonDefaults.buttonColors().copy(
-                containerColor = AppTheme.colors.primary,
-            ),
-            shape = RoundedCornerShape(BorderRadius),
+                .padding(top = 50.dp),
+            isLoading = false,
             onClick = {
                 dispatch(AccountAction.Logout)
                 onLoginScreen()
@@ -164,14 +161,9 @@ fun AccountScreen(
                     it.finish()
                     it.startActivity(intent)
                 }
-            }
-        ) {
-            Text(
-                color = AppTheme.colors.background,
-                style = AppTheme.typography.body,
-                text = stringResource(R.string.logout)
-            )
-        }
+            },
+            buttonText = stringResource(R.string.logout),
+        )
     }
 }
 

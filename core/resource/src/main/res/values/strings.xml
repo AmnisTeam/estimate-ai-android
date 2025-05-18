@@ -16,8 +16,8 @@
     <string name="error_invalid_email">Invalid email address</string>
     <string name="error_password_mismatch">Passwords do not match</string>
     <string name="error_empty_password">Password cannot be empty</string>
-    <string name="error_password_min_length">Minimum password length is 8 characters</string>
-    <string name="error_password_max_length">Maximum password length is 24 characters</string>
+    <string name="error_password_min_length">Minimum password length is %1$d characters</string>
+    <string name="error_password_max_length">Maximum password length is %1$d characters</string>
 
     <string name="registration_success">Registration success. Check your email</string>
     <string name="request_timeout">Request Timeout</string>
@@ -107,8 +107,17 @@
     <string name="testing_language">Testing language</string>
     <string name="system">System</string>
     <string name="english">English</string>
-    <string name="russian">Russian</string>
+    <string name="chinese">Chinese</string>
     <string name="spanish">Spanish</string>
+    <string name="french">French</string>
+    <string name="russian">Russian</string>
+    <string name="portuguese">Portuguese</string>
+    <string name="german">German</string>
+    <string name="hindi">Hindi</string>
+    <string name="japanese">Japanese</string>
+    <string name="turkish">Turkish</string>
+    <string name="korean">Korean</string>
+    <string name="italian">Italian</string>
     <string name="dark">Dark</string>
     <string name="light">Light</string>
     <string name="logout">Logout</string>

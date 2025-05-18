@@ -68,7 +68,7 @@ fun <T : Enum<T>> Tile(
             Spacer(modifier = Modifier.width(10.dp))
 
             Text(
-                modifier = Modifier.width(70.dp),
+                modifier = Modifier.width(90.dp),
                 text = stringResource(optionStringRes(currentValue)),
                 style = AppTheme.typography.body,
                 color = AppTheme.colors.text,

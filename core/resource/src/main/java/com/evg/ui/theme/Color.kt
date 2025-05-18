@@ -2,8 +2,8 @@ package com.evg.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val lightAddButtonColor: Color = Color(0xFFECE6F0)
-val darkAddButtonColor: Color = Color(0xFF2B2930)
+val lightAddButtonColor: Color = Color(0x00E1E1E1)
+val darkAddButtonColor: Color = Color(0xFF373737)
 
 val A1 = Color(0xFFCC4A4A)
 val A2 = Color(0xFFCC704A)

@@ -21,12 +21,13 @@ import com.evg.ui.theme.EstimateAITheme
 
 @Composable
 fun AuthorizationButton(
+    modifier: Modifier = Modifier,
     isLoading: Boolean,
     onClick: () -> Unit,
     buttonText: String,
 ) {
     Button(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(45.dp),
         shape = RoundedCornerShape(BorderRadius),
@@ -41,9 +42,9 @@ fun AuthorizationButton(
     ) {
         Text(
             text = buttonText,
-            color = AppTheme.colors.background,
+            color = Color.Black,
             style = AppTheme.typography.body.copy(
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.SemiBold,
             ),
         )
     }

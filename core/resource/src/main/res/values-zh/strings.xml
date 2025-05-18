@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">EstimateAI</string>
+
+    <!--Registration screen-->
+    <string name="welcome">欢迎！</string>
+    <string name="create_account_progress">创建一个账号，以免丢失您的偏好设置和进度</string>
+    <string name="email">电子邮件</string>
+    <string name="enter_email">输入您的电子邮件</string>
+    <string name="password">密码</string>
+    <string name="enter_password">输入您的密码</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="enter_password_again">再次输入您的密码</string>
+    <string name="sign_up">注册</string>
+    <string name="i_already_have_account">我已有账号</string>
+
+    <string name="error_invalid_email">无效的电子邮件地址</string>
+    <string name="error_password_mismatch">密码不匹配</string>
+    <string name="error_empty_password">密码不能为空</string>
+    <string name="error_password_min_length">密码最少应为 %1$d 个字符</string>
+    <string name="error_password_max_length">密码最多可为 %1$d 个字符</string>
+
+    <string name="registration_success">注册成功。请检查您的邮箱</string>
+    <string name="request_timeout">请求超时</string>
+    <string name="too_many_requests">请求过多</string>
+    <string name="not_found">未找到错误</string>
+    <string name="server_error">服务器错误</string>
+    <string name="protocol_error">协议错误</string>
+    <string name="connect_error">连接错误</string>
+    <string name="unknown_error">未知错误</string>
+    <string name="email_exists">邮箱已存在</string>
+    <string name="test_not_found">未找到测试</string>
+    <string name="tests_loading_error">未找到测试</string>
+
+    <!--Login screen-->
+    <string name="log_in">登录</string>
+    <string name="wrong_email_or_password">电子邮件或密码错误</string>
+    <string name="login_success">登录成功！</string>
+    <string name="login_account_progress">登录您的账号，以免丢失您的偏好设置和进度</string>
+    <string name="i_dont_have_account">我没有账号</string>
+    <string name="forgot_password">忘记密码？</string>
+
+    <!--Registration screen-->
+    <string name="password_reset">重置密码</string>
+    <string name="reset">重置</string>
+
+    <!--Password reset screen-->
+    <string name="letter_with_instructions_send_to_email">已向邮箱发送了包含说明的邮件</string>
+    <string name="email_does_not_exist">电子邮件不存在</string>
+
+    <!--Tests list screen-->
+    <string name="list_tests_is_empty">测试列表为空</string>
+    <string name="swipe_to_update">下拉以更新</string>
+    <string name="reply_sent">您的回复已发送</string>
+    <string name="estimated_level">估计水平</string>
+    <string name="tests_left">剩余测试</string>
+    <string name="queue">排队</string>
+    <string name="loading_tests">正在加载测试</string>
+    <string name="loading_test">正在加载测试</string>
+    <string name="test_id_ready">第 %1$d 号测试已就绪</string>
+    <string name="test_id_failed">第 %1$d 号测试发生错误</string>
+    <string name="number_in_queue">排队号码</string>
+    <string name="error_test">错误测试</string>
+    <string name="test">测试</string>
+    <string name="tests">测试</string>
+    <string name="statistics">统计</string>
+    <string name="account">账户</string>
+
+    <!--Test select screen-->
+    <string name="select_test_type">选择测试类型</string>
+    <string name="essay_test_description">写一篇关于任何主题的文章。您的英语水平将根据此进行评估。</string>
+
+    <!--Test essay screen-->
+    <string name="essay_test">文章测试</string>
+    <string name="characters">字符</string>
+    <string name="number_characters">字符数</string>
+    <string name="not_enough">不足</string>
+    <string name="normal">正常</string>
+    <string name="enough">足够</string>
+    <string name="maximum">最大</string>
+    <string name="maximum_characters_exceeded">已超过最大字符数</string>
+    <string name="insufficient_characters">字符数不足</string>
+
+    <!--Statistics screen-->
+    <string name="week">周</string>
+    <string name="month">月</string>
+    <string name="year">年</string>
+    <string name="calendar">日历</string>
+    <string name="apply">应用</string>
+    <string name="cancel">取消</string>
+    <string name="select_date_range">选择日期范围</string>
+    <string name="not_enough_data">数据不足</string>
+    <string name="no_data">无数据</string>
+    <string name="monday">星期一</string>
+    <string name="tuesday">星期二</string>
+    <string name="wednesday">星期三</string>
+    <string name="thursday">星期四</string>
+    <string name="friday">星期五</string>
+    <string name="saturday">星期六</string>
+    <string name="sunday">星期日</string>
+    <string name="frequent_level">常见水平</string>
+    <string name="frequent_day">常见日期</string>
+
+    <!--Account screen-->
+    <string name="no_username">无用户名</string>
+    <string name="app_language">应用语言</string>
+    <string name="app_theme">应用主题</string>
+    <string name="testing_language">测试语言</string>
+    <string name="system">系统</string>
+    <string name="english">英语</string>
+    <string name="chinese">中文</string>
+    <string name="spanish">西班牙语</string>
+    <string name="french">法语</string>
+    <string name="russian">俄语</string>
+    <string name="portuguese">葡萄牙语</string>
+    <string name="german">德语</string>
+    <string name="hindi">印地语</string>
+    <string name="japanese">日语</string>
+    <string name="turkish">土耳其语</string>
+    <string name="korean">韩语</string>
+    <string name="italian">意大利语</string>
+    <string name="dark">暗黑</string>
+    <string name="light">明亮</string>
+    <string name="logout">登出</string>
+
+</resources>

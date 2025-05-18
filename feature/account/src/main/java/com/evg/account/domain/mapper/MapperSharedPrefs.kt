@@ -11,16 +11,36 @@ import com.evg.shared_prefs.domain.model.SharedPrefsTestingLanguage
 
 fun AppLanguage.toSharedPrefsAppLanguage(): SharedPrefsAppLanguage {
     return when (this) {
-        AppLanguage.USER -> SharedPrefsAppLanguage.USER
-        AppLanguage.ENGLISH -> SharedPrefsAppLanguage.ENGLISH
-        AppLanguage.RUSSIAN -> SharedPrefsAppLanguage.RUSSIAN
+        AppLanguage.USER        -> SharedPrefsAppLanguage.USER
+        AppLanguage.CHINESE     -> SharedPrefsAppLanguage.CHINESE
+        AppLanguage.ENGLISH     -> SharedPrefsAppLanguage.ENGLISH
+        AppLanguage.FRENCH      -> SharedPrefsAppLanguage.FRENCH
+        AppLanguage.GERMAN      -> SharedPrefsAppLanguage.GERMAN
+        AppLanguage.HINDI       -> SharedPrefsAppLanguage.HINDI
+        AppLanguage.ITALIAN     -> SharedPrefsAppLanguage.ITALIAN
+        AppLanguage.JAPANESE    -> SharedPrefsAppLanguage.JAPANESE
+        AppLanguage.KOREAN      -> SharedPrefsAppLanguage.KOREAN
+        AppLanguage.PORTUGUESE  -> SharedPrefsAppLanguage.PORTUGUESE
+        AppLanguage.RUSSIAN     -> SharedPrefsAppLanguage.RUSSIAN
+        AppLanguage.SPANISH     -> SharedPrefsAppLanguage.SPANISH
+        AppLanguage.TURKISH     -> SharedPrefsAppLanguage.TURKISH
     }
 }
 fun SharedPrefsAppLanguage.toAccountAppLanguage(): AppLanguage {
     return when (this) {
-        SharedPrefsAppLanguage.USER -> AppLanguage.USER
-        SharedPrefsAppLanguage.ENGLISH -> AppLanguage.ENGLISH
-        SharedPrefsAppLanguage.RUSSIAN -> AppLanguage.RUSSIAN
+        SharedPrefsAppLanguage.USER        -> AppLanguage.USER
+        SharedPrefsAppLanguage.CHINESE     -> AppLanguage.CHINESE
+        SharedPrefsAppLanguage.ENGLISH     -> AppLanguage.ENGLISH
+        SharedPrefsAppLanguage.FRENCH      -> AppLanguage.FRENCH
+        SharedPrefsAppLanguage.GERMAN      -> AppLanguage.GERMAN
+        SharedPrefsAppLanguage.HINDI       -> AppLanguage.HINDI
+        SharedPrefsAppLanguage.ITALIAN     -> AppLanguage.ITALIAN
+        SharedPrefsAppLanguage.JAPANESE    -> AppLanguage.JAPANESE
+        SharedPrefsAppLanguage.KOREAN      -> AppLanguage.KOREAN
+        SharedPrefsAppLanguage.PORTUGUESE  -> AppLanguage.PORTUGUESE
+        SharedPrefsAppLanguage.RUSSIAN     -> AppLanguage.RUSSIAN
+        SharedPrefsAppLanguage.SPANISH     -> AppLanguage.SPANISH
+        SharedPrefsAppLanguage.TURKISH     -> AppLanguage.TURKISH
     }
 }
 
@@ -41,15 +61,33 @@ fun SharedPrefsAppTheme.toAppTheme(): AppTheme {
 
 fun TestingLanguage.toSharedPrefsTestingLanguage(): SharedPrefsTestingLanguage {
     return when (this) {
-        TestingLanguage.ENGLISH -> SharedPrefsTestingLanguage.ENGLISH
-        TestingLanguage.SPANISH -> SharedPrefsTestingLanguage.SPANISH
+        TestingLanguage.CHINESE     -> SharedPrefsTestingLanguage.CHINESE
+        TestingLanguage.ENGLISH     -> SharedPrefsTestingLanguage.ENGLISH
+        TestingLanguage.FRENCH      -> SharedPrefsTestingLanguage.FRENCH
+        TestingLanguage.GERMAN      -> SharedPrefsTestingLanguage.GERMAN
+        TestingLanguage.HINDI       -> SharedPrefsTestingLanguage.HINDI
+        TestingLanguage.ITALIAN     -> SharedPrefsTestingLanguage.ITALIAN
+        TestingLanguage.JAPANESE    -> SharedPrefsTestingLanguage.JAPANESE
+        TestingLanguage.KOREAN      -> SharedPrefsTestingLanguage.KOREAN
+        TestingLanguage.PORTUGUESE  -> SharedPrefsTestingLanguage.PORTUGUESE
+        TestingLanguage.RUSSIAN     -> SharedPrefsTestingLanguage.RUSSIAN
+        TestingLanguage.SPANISH     -> SharedPrefsTestingLanguage.SPANISH
+        TestingLanguage.TURKISH     -> SharedPrefsTestingLanguage.TURKISH
     }
 }
-fun SharedPrefsTestingLanguage.toTestingLanguage(): TestingLanguage {
-    return when (this) {
-        SharedPrefsTestingLanguage.ENGLISH -> TestingLanguage.ENGLISH
-        SharedPrefsTestingLanguage.SPANISH -> TestingLanguage.SPANISH
-    }
+fun SharedPrefsTestingLanguage.toTestingLanguage(): TestingLanguage = when (this) {
+    SharedPrefsTestingLanguage.CHINESE     -> TestingLanguage.CHINESE
+    SharedPrefsTestingLanguage.ENGLISH     -> TestingLanguage.ENGLISH
+    SharedPrefsTestingLanguage.FRENCH      -> TestingLanguage.FRENCH
+    SharedPrefsTestingLanguage.GERMAN      -> TestingLanguage.GERMAN
+    SharedPrefsTestingLanguage.HINDI       -> TestingLanguage.HINDI
+    SharedPrefsTestingLanguage.ITALIAN     -> TestingLanguage.ITALIAN
+    SharedPrefsTestingLanguage.JAPANESE    -> TestingLanguage.JAPANESE
+    SharedPrefsTestingLanguage.KOREAN      -> TestingLanguage.KOREAN
+    SharedPrefsTestingLanguage.PORTUGUESE  -> TestingLanguage.PORTUGUESE
+    SharedPrefsTestingLanguage.RUSSIAN     -> TestingLanguage.RUSSIAN
+    SharedPrefsTestingLanguage.SPANISH     -> TestingLanguage.SPANISH
+    SharedPrefsTestingLanguage.TURKISH     -> TestingLanguage.TURKISH
 }
 
 fun AppStyle.toSharedPrefsAppStyle(): SharedPrefsAppStyle {

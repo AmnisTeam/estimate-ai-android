@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">EstimateAI</string>
+
+    <!--Registration screen-->
+    <string name="welcome">स्वागत है!</string>
+    <string name="create_account_progress">एक खाता बनाएं ताकि आपकी प्राथमिकताएं और प्रगति सुरक्षित रहें</string>
+    <string name="email">ईमेल</string>
+    <string name="enter_email">अपना ईमेल दर्ज करें</string>
+    <string name="password">पासवर्ड</string>
+    <string name="enter_password">अपना पासवर्ड दर्ज करें</string>
+    <string name="confirm_password">पासवर्ड की पुष्टि करें</string>
+    <string name="enter_password_again">अपना पासवर्ड पुनः दर्ज करें</string>
+    <string name="sign_up">साइन अप करें</string>
+    <string name="i_already_have_account">मेरे पास पहले से ही खाता है</string>
+
+    <string name="error_invalid_email">अमान्य ईमेल पता</string>
+    <string name="error_password_mismatch">पासवर्ड मेल नहीं खा रहे</string>
+    <string name="error_empty_password">पासवर्ड खाली नहीं हो सकता</string>
+    <string name="error_password_min_length">पासवर्ड की न्यूनतम लंबाई %1$d अक्षर होनी चाहिए</string>
+    <string name="error_password_max_length">पासवर्ड की अधिकतम लंबाई %1$d अक्षर हो सकती है</string>
+
+    <string name="registration_success">पंजीकरण सफल। कृपया अपना ईमेल जांचें</string>
+    <string name="request_timeout">अनुरोध समय समाप्त</string>
+    <string name="too_many_requests">बहुत सारे अनुरोध</string>
+    <string name="not_found">नहीं मिला</string>
+    <string name="server_error">सर्वर त्रुटि</string>
+    <string name="protocol_error">प्रोटोकॉल त्रुटि</string>
+    <string name="connect_error">कनेक्ट त्रुटि</string>
+    <string name="unknown_error">अज्ञात त्रुटि</string>
+    <string name="email_exists">ईमेल पहले से मौजूद है</string>
+    <string name="test_not_found">टेस्ट नहीं मिला</string>
+    <string name="tests_loading_error">टेस्ट लोड करने में त्रुटि</string>
+
+    <!--Login screen-->
+    <string name="log_in">लॉग इन करें</string>
+    <string name="wrong_email_or_password">ईमेल या पासवर्ड गलत है</string>
+    <string name="login_success">लॉगिन सफल!</string>
+    <string name="login_account_progress">अपने खाते में लॉग इन करें ताकि आपकी प्राथमिकताएं और प्रगति सुरक्षित रहें</string>
+    <string name="i_dont_have_account">मेरा कोई खाता नहीं है</string>
+    <string name="forgot_password">पासवर्ड भूल गए?</string>
+
+    <!--Registration screen-->
+    <string name="password_reset">पासवर्ड रीसेट</string>
+    <string name="reset">रीसेट करें</string>
+
+    <!--Password reset screen-->
+    <string name="letter_with_instructions_send_to_email">निर्देशों के साथ एक पत्र ईमेल पर भेज दिया गया है</string>
+    <string name="email_does_not_exist">ईमेल मौजूद नहीं है</string>
+
+    <!--Tests list screen-->
+    <string name="list_tests_is_empty">टेस्ट की सूची खाली है</string>
+    <string name="swipe_to_update">अपडेट के लिए स्वाइप करें</string>
+    <string name="reply_sent">आपकी प्रतिक्रिया भेज दी गई है</string>
+    <string name="estimated_level">अनुमानित स्तर</string>
+    <string name="tests_left">बचे हुए टेस्ट</string>
+    <string name="queue">कतार</string>
+    <string name="loading_tests">टेस्ट लोड हो रहे हैं</string>
+    <string name="loading_test">टेस्ट लोड हो रहा है</string>
+    <string name="test_id_ready">टेस्ट क्र. %1$d तैयार है</string>
+    <string name="test_id_failed">टेस्ट क्र. %1$d त्रुटि के साथ असफल हुआ</string>
+    <string name="number_in_queue">कतार में संख्या</string>
+    <string name="error_test">टेस्ट त्रुटि</string>
+    <string name="test">टेस्ट</string>
+    <string name="tests">टेस्ट</string>
+    <string name="statistics">सांख्यिकी</string>
+    <string name="account">खाता</string>
+
+    <!--Test select screen-->
+    <string name="select_test_type">टेस्ट प्रकार चुनें</string>
+    <string name="essay_test_description">किसी भी विषय पर निबंध लिखें। आपका अंग्रेजी स्तर इसके आधार पर आंका जाएगा।</string>
+
+    <!--Test essay screen-->
+    <string name="essay_test">निबंध परीक्षण</string>
+    <string name="characters">वर्ण</string>
+    <string name="number_characters">वर्णों की संख्या</string>
+    <string name="not_enough">पर्याप्त नहीं</string>
+    <string name="normal">सामान्य</string>
+    <string name="enough">पर्याप्त</string>
+    <string name="maximum">अधिकतम</string>
+    <string name="maximum_characters_exceeded">अधिकतम वर्ण सीमा पार हो गई है</string>
+    <string name="insufficient_characters">वर्णों की संख्या अपर्याप्त है</string>
+
+    <!--Statistics screen-->
+    <string name="week">सप्ताह</string>
+    <string name="month">महीना</string>
+    <string name="year">वर्ष</string>
+    <string name="calendar">कैलेंडर</string>
+    <string name="apply">लागू करें</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="select_date_range">दिनांक सीमा चुनें</string>
+    <string name="not_enough_data">पर्याप्त डेटा नहीं</string>
+    <string name="no_data">कोई डेटा नहीं</string>
+    <string name="monday">सोमवार</string>
+    <string name="tuesday">मंगलवार</string>
+    <string name="wednesday">बुधवार</string>
+    <string name="thursday">गुरुवार</string>
+    <string name="friday">शुक्रवार</string>
+    <string name="saturday">शनिवार</string>
+    <string name="sunday">रविवार</string>
+    <string name="frequent_level">अधिक बार देखा गया स्तर</string>
+    <string name="frequent_day">अधिक बार देखा गया दिन</string>
+
+    <!--Account screen-->
+    <string name="no_username">कोई उपयोगकर्ता नाम नहीं</string>
+    <string name="app_language">ऐप भाषा</string>
+    <string name="app_theme">ऐप थीम</string>
+    <string name="testing_language">परीक्षण भाषा</string>
+    <string name="system">सिस्टम</string>
+    <string name="english">अंग्रेज़ी</string>
+    <string name="chinese">चीनी</string>
+    <string name="spanish">स्पेनिश</string>
+    <string name="french">फ्रेंच</string>
+    <string name="russian">रूसी</string>
+    <string name="portuguese">पुर्तगाली</string>
+    <string name="german">जर्मन</string>
+    <string name="hindi">हिंदी</string>
+    <string name="japanese">जापानी</string>
+    <string name="turkish">तुर्की</string>
+    <string name="korean">कोरियाई</string>
+    <string name="italian">इतालवी</string>
+    <string name="dark">डार्क</string>
+    <string name="light">लाइट</string>
+    <string name="logout">लॉग आउट</string>
+
+</resources>
