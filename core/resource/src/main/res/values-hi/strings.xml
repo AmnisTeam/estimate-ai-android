@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">EstimateAI</string>
 
     <!--Registration screen-->
     <string name="welcome">स्वागत है!</string>
@@ -68,7 +67,7 @@
 
     <!--Test select screen-->
     <string name="select_test_type">टेस्ट प्रकार चुनें</string>
-    <string name="essay_test_description">किसी भी विषय पर निबंध लिखें। आपका अंग्रेजी स्तर इसके आधार पर आंका जाएगा।</string>
+    <string name="essay_test_description">किसी भी विषय पर एक निबंध लिखिए। आपकी भाषा का स्तर इसी के आधार पर आंका जाएगा।</string>
 
     <!--Test essay screen-->
     <string name="essay_test">निबंध परीक्षण</string>
@@ -122,5 +121,7 @@
     <string name="dark">डार्क</string>
     <string name="light">लाइट</string>
     <string name="logout">लॉग आउट</string>
+    <string name="start_date">प्रारंभ तिथि</string>
+    <string name="end_date">समाप्ति तिथि</string>
 
 </resources>

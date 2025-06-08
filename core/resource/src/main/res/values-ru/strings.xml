@@ -65,10 +65,10 @@
 
     <!--Test select screen-->
     <string name="select_test_type">Выберите тип теста</string>
-    <string name="essay_test_description">Напишите эссе на любую тему. Ваш уровень английского будет оцениваться на его основе.</string>
+    <string name="essay_test_description">Напишите эссе на любую тему. Ваш уровень языка будет оцениваться на его основе.</string>
 
     <!--Test essay screen-->
-    <string name="essay_test">Тест на эссе</string>
+    <string name="essay_test">Тест эссе</string>
     <string name="characters">Символы</string>
     <string name="number_characters">Количество символов</string>
     <string name="not_enough">Недостаточно</string>
@@ -119,4 +119,6 @@
     <string name="dark">Темная</string>
     <string name="light">Светлая</string>
     <string name="logout">Выйти из аккаунта</string>
+    <string name="start_date">Дата начала</string>
+    <string name="end_date">Дата окончания</string>
 </resources>

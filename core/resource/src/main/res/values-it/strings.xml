@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">EstimateAI</string>
 
     <!--Registration screen-->
     <string name="welcome">Benvenuto!</string>
@@ -68,7 +67,7 @@
 
     <!--Test select screen-->
     <string name="select_test_type">Seleziona il tipo di test</string>
-    <string name="essay_test_description">Scrivi un saggio su qualsiasi argomento. Il tuo livello d’inglese sarà stimato in base a esso.</string>
+    <string name="essay_test_description">Scrivi un saggio su un tema a tua scelta. Il tuo livello linguistico sarà valutato in base a questo.</string>
 
     <!--Test essay screen-->
     <string name="essay_test">Test di saggio</string>
@@ -122,5 +121,7 @@
     <string name="dark">Scuro</string>
     <string name="light">Chiaro</string>
     <string name="logout">Disconnetti</string>
+    <string name="start_date">Data di inizio</string>
+    <string name="end_date">Data di fine</string>
 
 </resources>

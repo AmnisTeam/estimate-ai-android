@@ -175,7 +175,7 @@ fun TestEssayScreen(
                     modifier = Modifier,
                     backgroundColor = AppTheme.colors.secondary,
                     icon = painterResource(id = R.drawable.send),
-                    iconColor = AppTheme.colors.text,
+                    iconColor = Color.White,
                     isLoading = state.isTestSending,
                     onClick = {
                         when (charactersState) {
@@ -242,7 +242,7 @@ fun TestsListScreenPreview(darkTheme: Boolean = true) {
                 dispatch = {},
                 scoreAI = 20,
                 scoreHuman = 60,
-                isEditable = false,
+                isEditable = true,
             )
         }
     }

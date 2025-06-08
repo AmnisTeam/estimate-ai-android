@@ -67,7 +67,7 @@
 
     <!--Test select screen-->
     <string name="select_test_type">Select the test type</string>
-    <string name="essay_test_description">Write an essay on any topic. Your English level will be estimated based on it.</string>
+    <string name="essay_test_description">Write an essay on any topic. Your language level will be assessed based on it.</string>
 
     <!--Test essay screen-->
     <string name="essay_test">The essay test</string>
@@ -87,6 +87,8 @@
     <string name="calendar">Calendar</string>
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
+    <string name="start_date">Start date</string>
+    <string name="end_date">End date</string>
     <string name="select_date_range">Select date range</string>
     <string name="not_enough_data">Not enough data</string>
     <string name="no_data">No data</string>

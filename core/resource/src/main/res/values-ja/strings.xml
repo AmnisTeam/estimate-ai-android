@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">EstimateAI</string>
 
     <!--Registration screen-->
     <string name="welcome">ようこそ！</string>
@@ -68,7 +67,7 @@
 
     <!--Test select screen-->
     <string name="select_test_type">テストの種類を選択</string>
-    <string name="essay_test_description">任意のトピックについてエッセイを書いてください。英語レベルを評価します。</string>
+    <string name="essay_test_description">任意のテーマでエッセイを書いてください。それに基づいてあなたの語学レベルが評価されます。</string>
 
     <!--Test essay screen-->
     <string name="essay_test">エッセイテスト</string>
@@ -122,5 +121,7 @@
     <string name="dark">ダーク</string>
     <string name="light">ライト</string>
     <string name="logout">ログアウト</string>
+    <string name="start_date">開始日</string>
+    <string name="end_date">終了日</string>
 
 </resources>

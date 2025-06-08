@@ -73,7 +73,7 @@ fun TestTypeTile(
                     modifier = Modifier
                         .weight(1f),
                     text = testType.title,
-                    style = AppTheme.typography.body,
+                    style = AppTheme.typography.heading,
                     color = AppTheme.colors.text,
                 )
                 Text(

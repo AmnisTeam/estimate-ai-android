@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">EstimateAI</string>
 
     <!--Registration screen-->
     <string name="welcome">Hoş geldiniz!</string>
@@ -68,7 +67,7 @@
 
     <!--Test select screen-->
     <string name="select_test_type">Test türünü seçin</string>
-    <string name="essay_test_description">Herhangi bir konuda bir deneme yazın. İngilizce seviyeniz buna göre tahmin edilecektir.</string>
+    <string name="essay_test_description">\tHerhangi bir konuda bir kompozisyon yazınız. Dil seviyeniz buna göre değerlendirilecektir.</string>
 
     <!--Test essay screen-->
     <string name="essay_test">Deneme Testi</string>
@@ -122,5 +121,7 @@
     <string name="dark">Koyu</string>
     <string name="light">Açık</string>
     <string name="logout">Çıkış Yap</string>
+    <string name="start_date">Başlangıç tarihi</string>
+    <string name="end_date">Bitiş tarihi</string>
 
 </resources>
