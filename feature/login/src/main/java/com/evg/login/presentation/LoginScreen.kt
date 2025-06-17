@@ -88,7 +88,7 @@ fun LoginScreen(
             )
             .verticalScroll(rememberScrollState()),
     ) {
-        Text(modifier = Modifier.clickableRipple { onTestsListScreen() }, text = "Go To Main", color = AppTheme.colors.text)
+        //Text(modifier = Modifier.clickableRipple { onTestsListScreen() }, text = "Go To Main", color = AppTheme.colors.text)
 
         Column(
             modifier = Modifier
@@ -176,7 +176,7 @@ fun LoginScreen(
             buttonText = logInText,
         )
 
-        Spacer(modifier = Modifier.height(AuthorizationTextFieldSpaceBy))
+        /*Spacer(modifier = Modifier.height(AuthorizationTextFieldSpaceBy))
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -226,7 +226,7 @@ fun LoginScreen(
                 icon = painterResource(R.drawable.discord),
                 onClick = {}
             )
-        }
+        }*/
 
         Spacer(modifier = Modifier.height(AuthorizationSpaceBy))
 

@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -22,6 +23,7 @@ import com.evg.charts.pie.PieChart
 import com.evg.charts.pie.PieChartData
 import com.evg.charts.pie.render.CustomSliceDrawer
 import com.evg.charts.simpleChartAnimation
+import com.evg.resource.R
 import com.evg.statistics.presentation.model.TestStatisticsUI
 import com.evg.ui.theme.AppTheme
 import com.evg.ui.theme.EstimateAITheme
@@ -114,7 +116,7 @@ fun StylizedPieChart(
                     centerHorizontallyTo(parent)
                     top.linkTo(centerText.bottom)
                 },
-                text = "average level",
+                text = stringResource(R.string.average_level),
                 color = AppTheme.colors.textFieldPlaceholder,
                 style = AppTheme.typography.small,
             )

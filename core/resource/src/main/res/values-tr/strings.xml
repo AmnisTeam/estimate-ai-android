@@ -97,6 +97,7 @@
     <string name="friday">Cuma</string>
     <string name="saturday">Cumartesi</string>
     <string name="sunday">Pazar</string>
+    <string name="average_level">ortalama seviye</string>
     <string name="frequent_level">En sık görülen seviye</string>
     <string name="frequent_day">En sık görülen gün</string>
 

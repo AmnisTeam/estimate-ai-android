@@ -97,6 +97,7 @@
     <string name="friday">शुक्रवार</string>
     <string name="saturday">शनिवार</string>
     <string name="sunday">रविवार</string>
+    <string name="average_level">माध्य तल</string>
     <string name="frequent_level">अधिक बार देखा गया स्तर</string>
     <string name="frequent_day">अधिक बार देखा गया दिन</string>
 

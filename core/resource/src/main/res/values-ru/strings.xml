@@ -95,6 +95,7 @@
     <string name="friday">Пятница</string>
     <string name="saturday">Суббота</string>
     <string name="sunday">Воскресенье</string>
+    <string name="average_level">средний уровень</string>
     <string name="frequent_level">Наиболее частый уровень</string>
     <string name="frequent_day">Наиболее частый день</string>
 
@@ -102,7 +103,7 @@
     <string name="no_username">Нет имени пользователя</string>
     <string name="app_language">Язык приложения</string>
     <string name="app_theme">Тема приложения</string>
-    <string name="testing_language">Язык тесторивания</string>
+    <string name="testing_language">Язык тестиривания</string>
     <string name="system">Система</string>
     <string name="english">Английский</string>
     <string name="chinese">Китайский</string>

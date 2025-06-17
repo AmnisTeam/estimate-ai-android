@@ -97,6 +97,7 @@
     <string name="friday">星期五</string>
     <string name="saturday">星期六</string>
     <string name="sunday">星期日</string>
+    <string name="average_level">平均水平</string>
     <string name="frequent_level">常见水平</string>
     <string name="frequent_day">常见日期</string>
 

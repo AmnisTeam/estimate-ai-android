@@ -97,6 +97,7 @@
     <string name="friday">금요일</string>
     <string name="saturday">토요일</string>
     <string name="sunday">일요일</string>
+    <string name="average_level">평균 수준</string>
     <string name="frequent_level">자주 나타나는 수준</string>
     <string name="frequent_day">자주 나타나는 날짜</string>
 

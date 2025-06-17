@@ -97,6 +97,7 @@
     <string name="friday">Vendredi</string>
     <string name="saturday">Samedi</string>
     <string name="sunday">Dimanche</string>
+    <string name="average_level">niveau moyen</string>
     <string name="frequent_level">Niveau fréquent</string>
     <string name="frequent_day">Jour fréquent</string>
 
